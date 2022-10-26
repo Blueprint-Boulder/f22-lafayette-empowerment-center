@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models import LECUser
-from org_admin.models import Program, Survey
+from org_admin.models import Program, Survey, SurveyField
 
 
 class Student(models.Model):
@@ -22,9 +22,11 @@ class ProgramRegistration(models.Model):
 
 
 class SurveyResponse(models.Model):
-    survey = models.ForeignKey(to=Survey, on_delete=models.CASCADE)
+    survey = models.ForeignKey(to=Survey, on_delete=models.CASCADE, related_name="responses")
+    respondent = models.ForeignKey(to=LECUser, on_delete=models.CASCADE, related_name="survey_responses")
 
 
 class SurveyFieldResponse(models.Model):
     text = models.TextField(max_length=500)
-    full_response = models.ForeignKey(to=SurveyResponse, on_delete=models.CASCADE)
+    field = models.ForeignKey(to=SurveyField, on_delete=models.CASCADE, related_name="responses")
+    full_response = models.ForeignKey(to=SurveyResponse, on_delete=models.CASCADE, related_name="field_responses")

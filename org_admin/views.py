@@ -50,3 +50,7 @@ def save_survey(request, program_pk):
     for label in labels:
         label.save()
     return redirect("org_admin:home")
+
+
+def survey_responses(request, survey_pk):
+    return render(request, "org_admin/survey_responses.html", {'survey': Survey.objects.get(pk=survey_pk)})

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}View survey responses{% endblock %}
+{% block content %}
+    <h3>Responses for {{ survey.name }}</h3>
+    {% for response in survey.responses.all %}
+        <h4>Response by {{ response.respondent }}<br></h4>
+        {% for field_response in response.field_responses.all %}
+            Field: {{ field_response.field.label }}<br>
+            Response: {{ field_response.text }}<br><br>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
