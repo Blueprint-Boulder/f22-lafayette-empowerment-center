@@ -5,7 +5,19 @@
     {% for user in users %}
         {% if user.requesting_org_admin == True %}
             <h2> {{ user.first_name }} {{ user.last_name }}</h2>
-{#            Accept/decline button#}
+            <button type="button" onclick="acceptRequest()">Accept</button>
+            <button type="button" onclick="declineRequest()">Decline</button>
+            <script>
+            function acceptRequest() {
+                {#Set account type to admin#}
+                {#Set user.requesting_org_admin to false#}
+                {#Refresh list#}
+            }
+            function declineRequest() {
+                {#Set user.requesting_org_admin to false#}
+                {#Refresh list#}
+            }
+            </script>
         {%  endif %}
     {% endfor %}
 {% endblock %}
