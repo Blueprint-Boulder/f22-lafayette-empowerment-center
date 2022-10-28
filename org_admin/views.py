@@ -3,6 +3,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView
 
 from org_admin.models import Program, ProgramAnnouncement
+from accounts.models import LECUser
 
 
 class AddProgram(CreateView):
@@ -10,6 +11,7 @@ class AddProgram(CreateView):
     fields = "__all__"
     template_name = "org_admin/add_program.html"
     success_url = reverse_lazy("org_admin:programs")
+
 
 class MakeAnnouncement(CreateView):
     model = ProgramAnnouncement
@@ -22,9 +24,15 @@ class MakeAnnouncement(CreateView):
         form.instance.save()
         return redirect("org_admin:view_program", program_pk)
 
+
 def view_program(request, program_pk):
     return render(request, "org_admin/view_program.html",
                   {'program': Program.objects.get(pk=program_pk)})
 
+
 def programs(request):
     return render(request, "org_admin/view_programs.html", {"programs": Program.objects.all()})
+
+
+def view_admin_requests(request):
+    return render(request, "org_admin/view_admin_requests.html", {"users": LECUser.objects.all()})

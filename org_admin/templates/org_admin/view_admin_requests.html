@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Admin Requests{% endblock %}
+{% block content %}
+    <h1>Users requesting admin permissions:</h1>
+    {% for user in users %}
+        {% if user.requesting_org_admin == True %}
+            <h2> {{ user.first_name }} {{ user.last_name }}</h2>
+{#            Accept/decline button#}
+        {%  endif %}
+    {% endfor %}
+{% endblock %}
