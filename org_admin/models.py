@@ -7,7 +7,11 @@ from accounts.models import LECUser
 class Program(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=1000)
-    is_active = models.BooleanField()
+    is_active = models.BooleanField(default=False)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    start_date = models.DateField(auto_now=True)
+    end_date = models.DateField()
 
     def __str__(self):
         return self.name
