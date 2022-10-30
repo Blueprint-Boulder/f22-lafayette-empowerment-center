@@ -24,7 +24,7 @@ class Survey(models.Model):
 
 class SurveyField(models.Model):
     label = models.CharField(max_length=100)
-    survey = models.ForeignKey(to=Survey, on_delete=models.CASCADE)
+    survey = models.ForeignKey(to=Survey, on_delete=models.CASCADE, related_name="fields")
 
     def __str__(self):
         return self.label

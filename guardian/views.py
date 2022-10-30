@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 
 from guardian.forms import ProgramRegistrationForm
-from guardian.models import ProgramRegistration, Student
-from org_admin.models import Program, ProgramAnnouncement
+from guardian.models import ProgramRegistration, Student, SurveyResponse, SurveyFieldResponse
+from org_admin.models import Program, ProgramAnnouncement, Survey, SurveyField
 
 
 def programs(request):
@@ -53,3 +53,27 @@ class RegisterForProgram(CreateView):
         form.instance.save()
         form.instance.students.set(self.request.POST.getlist("students"))
         return super().form_valid(form)
+
+
+def take_survey(request, survey_pk):
+    survey = Survey.objects.get(pk=survey_pk)
+    return render(request, "guardian/take_survey.html", {'survey': survey})
+
+
+def save_survey_response(request, survey_pk):
+    survey_response = SurveyResponse()
+    survey_response.survey = Survey.objects.get(pk=survey_pk)
+    survey_response.respondent = request.user
+
+    field_responses = []
+    for key in request.POST:
+        if key.startswith("field"):
+            _, field_pk = key.split("_")
+            field_responses.append(SurveyFieldResponse(text=request.POST[key], full_response=survey_response,
+                                                       field=SurveyField.objects.get(pk=field_pk)))
+    survey_response.save()
+    for field_response in field_responses:
+        field_response.save()
+    survey_response.save()
+
+    return redirect("guardian:home")
