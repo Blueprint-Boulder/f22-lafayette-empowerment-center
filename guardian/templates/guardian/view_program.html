@@ -11,7 +11,7 @@
         None of your children are registered for this program.
     {% endif %}
     <br>
-    <a href="{% url "guardian:register_for_program" %}">Register children for this program</a>
+    <a href="{% url "guardian:register_for_program" program_pk=program.pk %}">Register children for this program</a>
     <br><br>
     Description: {{ program.description|linebreaks }}
     <br><br>
@@ -28,6 +28,18 @@
             <a href="{% url "guardian:view_announcement" announcement_pk=announcement.pk %}">View</a>
         {% empty %}
             No announcements yet.
+        {% endfor %}
+        <h2>Surveys: </h2>
+        {% for survey in program.surveys.all %}
+            Title: {{ survey.name }}<br>
+            {% if user|has_taken_survey:survey %}
+                You've already taken this survey.<br>
+            {% else %}
+                <a href="{% url "guardian:take_survey" survey_pk=survey.pk %}">Take survey</a><br>
+                <br>
+            {% endif %}
+        {% empty %}
+            No surveys have been sent out.
         {% endfor %}
     {% endif %}
 {% endblock %}

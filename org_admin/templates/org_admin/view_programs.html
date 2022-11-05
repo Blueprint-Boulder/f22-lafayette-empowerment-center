@@ -6,5 +6,7 @@
     {{ program.name }}
     <a href="{% url "org_admin:view_program" program_pk=program.pk %}">[View]</a>
     <br>
+{% empty %}
+    No programs have been added yet.
 {% endfor %}
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from org_admin.models import Program, ProgramAnnouncement, Survey, SurveyField
@@ -7,9 +7,13 @@ from org_admin.models import Program, ProgramAnnouncement, Survey, SurveyField
 
 class AddProgram(CreateView):
     model = Program
-    fields = "__all__"
+    fields = ["name", "description"]
     template_name = "org_admin/add_program.html"
     success_url = reverse_lazy("org_admin:programs")
+
+    def form_valid(self, form):
+        form.instance.is_active = True
+        return super().form_valid(form)
 
 
 class MakeAnnouncement(CreateView):
@@ -34,22 +38,21 @@ def programs(request):
 
 
 def create_survey(request, program_pk):
-    return render(request, "org_admin/create_survey.html", {'program': Program.objects.get(pk=program_pk)})
+    if request.method == "GET":
+        return render(request, "org_admin/create_survey.html", {'program': Program.objects.get(pk=program_pk)})
 
-
-def save_survey(request, program_pk):
-    survey = Survey(program=Program.objects.get(pk=program_pk))
-    survey.name = request.POST['survey-title']
-    labels = []
-    for key in request.POST:
-        val: str = request.POST[key]
-        if key.startswith("field"):
-            labels.append(SurveyField(label=val, survey=survey))
-    survey.is_active = True
-    survey.save()
-    for label in labels:
-        label.save()
-    return redirect("org_admin:home")
+    elif request.method == "POST":
+        survey = Survey(program=Program.objects.get(pk=program_pk))
+        survey.name = request.POST['survey_title']
+        labels = []
+        for key in request.POST:
+            if key.startswith("field"):
+                labels.append(SurveyField(label=request.POST[key], survey=survey))
+        survey.is_active = True
+        survey.save()
+        for label in labels:
+            label.save()
+        return redirect("org_admin:view_program", program_pk)
 
 
 def survey_responses(request, survey_pk):

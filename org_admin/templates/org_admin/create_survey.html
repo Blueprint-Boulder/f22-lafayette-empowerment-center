@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block title %}Create survey{% endblock %}
 {% block content %}
-    <h3>Create survey for program {{ program.name }}</h3>
-    <form method="post" id="form" action="{% url "org_admin:save_survey" program_pk=program.pk %}">
+    <h3>Create survey for program "{{ program.name }}"</h3>
+    <form method="post" id="form" action="{% url "org_admin:create_survey" program_pk=program.pk %}">
         {% csrf_token %}
-        <label for="survey-title">Title</label>
-        <input type="text" id="survey-title" name="survey-title">
+        <label for="survey_title">Title</label>
+        <input type="text" id="survey_title" name="survey_title">
         <br>
-        <input type="button" value="Add Field" onclick="add_field()">
+        <input type="button" value="Add another question" onclick="add_field()">
         <input type="submit" value="Create Survey">
     </form>
 
@@ -15,13 +15,11 @@
         var fieldsCounter = 0;
         function add_field() {
             var labelInput = document.createElement('div');
-            labelInput.innerHTML = `<label for='field${fieldsCounter}'>Label</label>
+            labelInput.innerHTML = `<label for='field${fieldsCounter}'>Question:</label>
             <input type='text' name='field${fieldsCounter}' id='field${fieldsCounter}'>`;
-            var respondentInput = document.createElement('div');
-            respondentInput.innerHTML = "<input type='text' value='response will go here' disabled>"
             document.getElementById('form').appendChild(labelInput);
-            document.getElementById('form').appendChild(respondentInput);
             fieldsCounter++;
         }
+        add_field();
     </script>
 {% endblock %}

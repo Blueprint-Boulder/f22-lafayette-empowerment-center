@@ -10,7 +10,6 @@ urlpatterns = [
     path('programs/add/', views.AddProgram.as_view(), name="add_program"),
     path('programs/<int:program_pk>/', views.view_program, name="view_program"),
     path('programs/<int:program_pk>/surveys/add/', views.create_survey, name="create_survey"),
-    path('programs/<int:program_pk>/surveys/save/', views.save_survey, name="save_survey"),
-    path('surveys/<int:survey_pk>/responses/', views.survey_responses, name="view_survey_responses"),
     path('programs/<int:program_pk>/announcements/add/', views.MakeAnnouncement.as_view(), name="make_announcement"),
+    path('surveys/<int:survey_pk>/responses/', views.survey_responses, name="view_survey_responses"),
 ]

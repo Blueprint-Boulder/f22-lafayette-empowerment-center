@@ -8,11 +8,11 @@ from accounts.models import LECUser
 
 
 def profile(request):
-    return render(request, "accounts/profile.html")
+    return render(request, "accounts/profile.html", {"account_types": LECUser.AccountTypes})
 
 class Login(base_auth_views.LoginView):
     template_name = "accounts/login.html"
-    success_url = ""
+    success_url = "/"
 
 class CreateAccount(CreateView):
     model = LECUser

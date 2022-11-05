@@ -4,6 +4,16 @@
     <a href="{% url "org_admin:programs" %}">Back to all programs</a>
     <h1>Program: {{ program.name }}</h1>
     Description: {{ program.description|linebreaks }}
+    <h2>Surveys for this program:</h2>
+    <a href="{% url "org_admin:create_survey" program_pk=program.pk %}">Create survey</a>
+    <br>
+    {% for survey in program.surveys.all %}
+        Name: {{ survey.name }}
+        <a href="{% url "org_admin:view_survey_responses" survey_pk=survey.pk %}">View responses</a>
+        <br>
+    {% empty %}
+        No surveys have been created for this program yet.
+   {% endfor %}
     <h2>Announcements for this program:</h2>
     <a href="{% url "org_admin:make_announcement" program_pk=program.pk %}">Make announcement</a>
     {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}

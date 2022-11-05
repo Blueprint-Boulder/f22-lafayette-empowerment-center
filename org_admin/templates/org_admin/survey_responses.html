@@ -5,8 +5,10 @@
     {% for response in survey.responses.all %}
         <h4>Response by {{ response.respondent }}<br></h4>
         {% for field_response in response.field_responses.all %}
-            Field: {{ field_response.field.label }}<br>
+            Question: {{ field_response.field.label }}<br>
             Response: {{ field_response.text }}<br><br>
         {% endfor %}
+    {% empty %}
+        No responses yet.
     {% endfor %}
 {% endblock %}

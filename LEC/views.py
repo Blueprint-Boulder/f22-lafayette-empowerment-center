@@ -1,6 +1,5 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.urls import reverse
 
 from accounts.models import LECUser
 
@@ -16,12 +15,12 @@ def index(request):
             case LECUser.AccountTypes.SITE_ADMIN:
                 return HttpResponse("site admin app doesn't exist yet")
             case LECUser.AccountTypes.ORG_ADMIN:
-                return redirect(reverse("org_admin:home"))
+                return redirect("org_admin:home")
             case LECUser.AccountTypes.GUARDIAN:
-                return redirect(reverse("guardian:home"))
+                return redirect("guardian:home")
             case _:
                 # TODO make actual error page, option to report etc
                 return HttpResponse("Internal error: Your account type either is not set, or was not set to a valid value.")
     else:
-        return redirect(reverse("accounts:login"))
+        return redirect("accounts:login")
 

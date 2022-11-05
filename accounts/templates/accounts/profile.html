@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Title{% endblock %}
 {% block content %}
+
 Username: {{ user.username }}<br>
 Name: {{ user.first_name }} {{ user.last_name }}<br>
 Account type: {{ user.account_type }}
@@ -11,8 +12,15 @@ Account type: {{ user.account_type }}
 {% endif %}
 <br>
 Email: {{ user.email }}<br>
-Children:
-{% for child in user.children.all %}
-    - {{ child.name }}<br>
-{% endfor %}
+
+{% if user.account_type == account_types.GUARDIAN %}
+    Children:<br>
+        {% for child in user.children.all %}
+            {{ child.name }}<br>
+        {% empty %}
+            You haven't added any children yet.
+        {% endfor %}
+        <a href="{% url "guardian:add_child_then_redirect" redirect_to=request.path %}">Add child</a>
+{% endif %}
+
 {% endblock %}

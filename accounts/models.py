@@ -4,11 +4,11 @@ from django.db import models
 
 # Create your models here.
 class LECUser(AbstractUser):
-
     class AccountTypes(models.TextChoices):
         GUARDIAN = "Parent/Guardian", "Parent/Guardian"
         ORG_ADMIN = "LEC Admin", "LEC Admin"
         SITE_ADMIN = "Site Admin (Developer)", "Site Admin (Developer)"
+
     ALL_ACCOUNT_TYPES = [account_type for account_type in AccountTypes]
 
     account_type = models.CharField(
@@ -23,7 +23,6 @@ class LECUser(AbstractUser):
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     email = models.EmailField()
-
 
     class NoSuchAccountType(Exception):
         pass

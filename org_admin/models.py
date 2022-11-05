@@ -15,8 +15,8 @@ class Program(models.Model):
 
 class Survey(models.Model):
     name = models.CharField(max_length=100)
-    is_active = models.BooleanField()
     program = models.ForeignKey(to=Program, on_delete=models.CASCADE, related_name="surveys")
+    is_active = models.BooleanField()
 
     def __str__(self):
         return self.name

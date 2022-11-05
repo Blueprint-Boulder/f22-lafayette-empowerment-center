@@ -1,8 +1,8 @@
-from django.db.models import QuerySet
 from django.template import Library
 
 from accounts.models import LECUser
-from org_admin.models import Program
+from guardian.models import SurveyResponse, Student
+from org_admin.models import Program, Survey
 
 register = Library()
 
@@ -14,19 +14,20 @@ def has_unread_announcements_in(user: LECUser, program: Program):
             return True
     return False
 
+
 @register.filter
 def has_children_in(user: LECUser, program: Program):
-    for registration in program.registrations.all():
-        for student in registration.students.all():
-            if student in user.children.all():
-                return True
+    # don't know of a way to do this with a single query
+    for student in program.students.all():
+        if student in user.children.all():
+            return True
     return False
+
 
 @register.filter
 def children_in(user: LECUser, program: Program):
-    result = set()
-    for registration in program.registrations.all():
-        for student in registration.students.all():
-            if student in user.children.all():
-                result.add(student)
-    return result
+    return set(student for student in program.students.all() if student in user.children.all())
+
+@register.filter
+def has_taken_survey(user: LECUser, survey: Survey):
+    return SurveyResponse.objects.filter(respondent=user, survey=survey).exists()
