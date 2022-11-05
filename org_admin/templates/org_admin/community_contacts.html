@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Community contacts{% endblock %}
+{% block content %}
+{% for contact in contacts %}
+    Name: {{ contact.name }}<br>
+    Description: {{ contact.description }}<br>
+    Email: {{ contact.email|default:"None" }}<br>
+    Phone number: {{ contact.phone_number|default:"None" }}<br>
+    Other contact info: {{ contact.other_contact_info|default:"None" }}<br>
+    <br>
+{% empty %}
+    No community contacts added yet.
+{% endfor %}
+<a href="{% url "org_admin:add_community_contact" %}">Add community contact</a>
+{% endblock %}

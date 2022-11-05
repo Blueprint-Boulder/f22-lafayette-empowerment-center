@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from org_admin.models import Program, ProgramAnnouncement, Survey, SurveyField
+from org_admin.models import Program, ProgramAnnouncement, Survey, SurveyField, CommunityContact
 
 
 class AddProgram(CreateView):
@@ -57,3 +57,14 @@ def create_survey(request, program_pk):
 
 def survey_responses(request, survey_pk):
     return render(request, "org_admin/survey_responses.html", {'survey': Survey.objects.get(pk=survey_pk)})
+
+
+def community_contacts(request):
+    return render(request, "org_admin/community_contacts.html", {'contacts': CommunityContact.objects.all()})
+
+
+class AddCommunityContact(CreateView):
+    model = CommunityContact
+    fields = "__all__"
+    success_url = reverse_lazy("org_admin:community_contacts")
+    template_name = "org_admin/add_community_contact.html"

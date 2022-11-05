@@ -39,3 +39,10 @@ class ProgramAnnouncement(models.Model):
 
     def __str__(self):
         return self.title
+
+class CommunityContact(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(max_length=2000, blank=True)
+    email = models.EmailField(blank=True)
+    phone_number = models.CharField(max_length=25, blank=True)
+    other_contact_info = models.TextField(max_length=500, blank=True)
