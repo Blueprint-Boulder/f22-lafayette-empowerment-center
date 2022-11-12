@@ -36,3 +36,15 @@ def programs(request):
 
 def view_admin_requests(request):
     return render(request, "org_admin/view_admin_requests.html", {"users": LECUser.objects.all()})
+
+
+def accept_admin_request(request, user_rq):
+    user_rq.account_type = LECUser.AccountTypes.ORG_ADMIN
+    user_rq.save()
+    return render(request, "org_admin/view_admin_requests.html", {"users": LECUser.objects.all()})
+
+
+def decline_admin_request(request, user_rq):
+    user_rq.account_type = LECUser.AccountTypes.GUARDIAN
+    user_rq.save()
+    return render(request, "org_admin/view_admin_requests.html", {"users": LECUser.objects.all()})
