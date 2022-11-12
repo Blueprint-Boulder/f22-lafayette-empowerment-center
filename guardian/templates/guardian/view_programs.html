@@ -6,6 +6,15 @@
 <a href={% url "guardian:register_for_program" %}>Register for a program</a>
 <br>
 <h3>Programs:</h3>
+<label for="program_types">Sort By:</label>
+<select name="program_types" id="program_types">
+    <option value="name_az" selected>Name (A-Z)</option>
+    <option value="name_za">Name (Z-A)</option>
+    <option value="is_active">Active</option>
+    <option value="start_date_new">Start Date (newest)</option>
+    <option value="start_date_old">Start Date (oldest)</option>
+</select>
+<br>
 {% for program in programs %}
     {{ program.name }}
     <a href="{% url "guardian:view_program" program_pk=program.pk %}">[View]</a>

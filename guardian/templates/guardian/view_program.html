@@ -14,6 +14,9 @@
     <a href="{% url "guardian:register_for_program" %}">Register children for this program</a>
     <br><br>
     Description: {{ program.description|linebreaks }}
+    <br> {{ program.start_date }} - {{ program.end_date }}
+    <br> {{ program.start_time }} - {{ program.end_time }}
+
     <br><br>
     {% if user|has_children_in:program %}
         <h2>Announcements: </h2>

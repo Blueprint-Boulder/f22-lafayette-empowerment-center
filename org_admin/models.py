@@ -8,9 +8,9 @@ class Program(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=1000)
     is_active = models.BooleanField(default=False)
-    start_time = models.TimeField()
+    start_time = models.TimeField()  # ex. 12:00
     end_time = models.TimeField()
-    start_date = models.DateField()
+    start_date = models.DateField()  # ex. 08/15/22
     end_date = models.DateField()
 
     def __str__(self):
