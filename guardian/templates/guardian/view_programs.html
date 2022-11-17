@@ -5,16 +5,20 @@
 {% block content %}
 <h3>Programs:</h3>
 {% for program in programs %}
-    {{ program.name }}
-    <a href="{% url "guardian:view_program" program_pk=program.pk %}">[View]</a>
-    <br>
-    {% if user|has_children_in:program %}
-        Your children registered for this program: {{ user|children_in:program|join:", " }}<br>
-    {% else %}
-        None of your children are registered for this program.
-    {% endif %}
-    {% if user|has_unread_announcements_in:program and user|has_children_in:program %}
-            This program has new announcements.<br>
+    {{ now }}
+    {% if now <= program.program_ends %}
+        {{ program.name }}
+        <a href="{% url "guardian:view_program" program_pk=program.pk %}">[View]</a>
+        <br>
+        {% if user|has_children_in:program %}
+            Your children registered for this program: {{ user|children_in:program|join:", " }}<br>
+        {% else %}
+            None of your children are registered for this program.
+        {% endif %}
+        {% if user|has_unread_announcements_in:program and user|has_children_in:program %}
+                This program has new announcements.<br>
+        {% endif %}
+        <br>
     {% endif %}
 {% empty %}
     No programs are available yet.

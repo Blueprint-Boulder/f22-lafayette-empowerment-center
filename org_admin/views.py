@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -7,7 +9,7 @@ from org_admin.models import Program, ProgramAnnouncement, Survey, SurveyField, 
 
 class AddProgram(CreateView):
     model = Program
-    fields = ["name", "description"]
+    fields = ["name", "description", "registration_opens", "registration_closes", "program_starts", "program_ends"]
     template_name = "org_admin/add_program.html"
     success_url = reverse_lazy("org_admin:programs")
 
@@ -30,7 +32,7 @@ class MakeAnnouncement(CreateView):
 
 def view_program(request, program_pk):
     return render(request, "org_admin/view_program.html",
-                  {'program': Program.objects.get(pk=program_pk)})
+                  {'program': Program.objects.get(pk=program_pk), 'now': datetime.now()})
 
 
 def programs(request):

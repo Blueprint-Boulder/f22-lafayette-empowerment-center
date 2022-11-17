@@ -8,6 +8,10 @@ class Program(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=1000)
     is_active = models.BooleanField()
+    registration_opens = models.DateTimeField()
+    registration_closes = models.DateTimeField()
+    program_starts = models.DateTimeField()
+    program_ends = models.DateTimeField()
 
     def __str__(self):
         return self.name

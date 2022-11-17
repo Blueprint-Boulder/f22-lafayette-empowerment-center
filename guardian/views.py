@@ -4,14 +4,15 @@ from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 
 from guardian.models import Student, SurveyResponse, SurveyFieldResponse
 from org_admin.models import Program, ProgramAnnouncement, Survey, SurveyField
+from django.utils import timezone
 
 
 def programs(request):
-    return render(request, "guardian/view_programs.html", {'programs': Program.objects.all()})
+    return render(request, "guardian/view_programs.html", {'programs': Program.objects.all(), 'now': timezone.now()})
 
 
 def view_program(request, program_pk):
-    return render(request, "guardian/view_program.html", {'program': Program.objects.get(pk=program_pk)})
+    return render(request, "guardian/view_program.html", {'program': Program.objects.get(pk=program_pk), 'now': timezone.now()})
 
 
 def view_announcement(request, announcement_pk):

@@ -11,7 +11,14 @@
         None of your children are registered for this program.
     {% endif %}
     <br>
-    <a href="{% url "guardian:register_for_program" program_pk=program.pk %}">Register children for this program</a>
+    {% if program.registration_opens <= now and now <= program.registration_closes %}
+        <a href="{% url "guardian:register_for_program" program_pk=program.pk %}">Register children for this program</a>
+        Registration for this program will close on {{ program.registration_closes }}.
+    {% elif program.registration_opens > now %}
+        Registration for this program will be open from {{ program.registration_opens }} to {{ program.registration_closes }}.
+    {% elif now > program.registration_closes %}
+        Registration for this program closed on {{ program.registration_closes }}.
+    {% endif %}
     <br><br>
     Description: {{ program.description|linebreaks }}
     <br><br>

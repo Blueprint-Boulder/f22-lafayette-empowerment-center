@@ -3,7 +3,10 @@
 {% block content %}
     <a href="{% url "org_admin:programs" %}">Back to all programs</a>
     <h1>Program: {{ program.name }}</h1>
-    Description: {{ program.description|linebreaks }}
+    Description: {{ program.description|linebreaks }}<br>
+    Registration: {{ program.registration_opens }} until {{ program.registration_closes }}<br>
+    Program starts: {{ program.program_starts }} and ends: {{ program.program_ends }}<br>
+
     <h2>Surveys for this program:</h2>
     <a href="{% url "org_admin:create_survey" program_pk=program.pk %}">Create survey</a>
     <br>
