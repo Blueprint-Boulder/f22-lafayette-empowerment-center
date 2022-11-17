@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %} | Lafayette Empowerment Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     {% block head %}{% endblock %}
 </head>
-<body>
+<body {% block body_attributes %}{% endblock %}>
 {% block content %}{% endblock %}
 </body>
 </html>

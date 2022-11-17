@@ -10,9 +10,15 @@ from accounts.models import LECUser
 def profile(request):
     return render(request, "accounts/profile.html", {"account_types": LECUser.AccountTypes})
 
+
+def login_register(request):
+    return render(request, "accounts/login_register.html")
+
+
 class Login(base_auth_views.LoginView):
     template_name = "accounts/login.html"
     success_url = "/"
+
 
 class CreateAccount(CreateView):
     model = LECUser
