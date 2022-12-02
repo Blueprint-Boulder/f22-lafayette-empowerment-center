@@ -23,5 +23,7 @@ urlpatterns = [
     path('guardian/', include('guardian.urls')),
     path('org_admin/', include('org_admin.urls')),
     # Weird URL name but a lot of Django views depend on it being "accounts"
-    path('accounts/', include('accounts.urls'))
+    path('accounts/', include('accounts.urls')),
+
+    path('donate/', views.donate)
 ]

@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from accounts.models import LECUser
@@ -25,3 +25,5 @@ def index(request):
     else:
         return redirect(reverse("accounts:login"))
 
+def donate(request):
+    return render(request, "donate.html")

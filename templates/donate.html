@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+    <title>Title</title>
+
+</head>
+<body>
+    <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
+
+    <h1>Donations</h1>
+    <form action="https://www.paypal.com/donate" method="post" target="_top">
+        <input type="hidden" name="business" value="J7FVYMM8FF5AG" />
+        <input type="hidden" name="no_recurring" value="0" />
+        <input type="hidden" name="item_name" value="Help us empower young children through education with a donation! Any amount helps us do what we do." />
+        <input type="hidden" name="currency_code" value="USD" />
+        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+        <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+    </form>
+
+    <div id="paypal-donate-button-container"></div>
+
+      <script>
+       PayPal.Donation.Button({
+           env: 'sandbox',
+           hosted_button_id: 'MHCAQZSA5ZMWN',
+           // business: 'YOUR_EMAIL_OR_PAYERID',
+           image: {
+               src: 'https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif',
+               title: 'PayPal - The safer, easier way to pay online!',
+               alt: 'Donate with PayPal button'
+           },
+           onComplete: function (params) {
+               // Your onComplete handler
+           },
+       }).render('#paypal-donate-button-container');
+    </script>
+
+</body>
+</html>
