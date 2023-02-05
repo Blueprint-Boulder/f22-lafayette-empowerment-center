@@ -2,6 +2,7 @@
 {% block title %}Title{% endblock %}
 {% block content %}
 
+[<a href="{% url "accounts:edit_profile" %}">Edit</a>]<br>
 Username: {{ user.username }}<br>
 Name: {{ user.first_name }} {{ user.last_name }}<br>
 Account type: {{ user.account_type }}
@@ -20,6 +21,7 @@ Email: {{ user.email }}<br>
         {% empty %}
             You haven't added any children yet.
         {% endfor %}
+        <a href="{% url "guardian:children" %}">Manage children</a>
         <a href="{% url "guardian:add_child_then_redirect" redirect_to=request.path %}">Add child</a>
 {% endif %}
 

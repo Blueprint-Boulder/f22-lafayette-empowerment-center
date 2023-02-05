@@ -1,7 +1,7 @@
 from django.shortcuts import render
 import django.contrib.auth.views as base_auth_views
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 
 from accounts.forms import LECUserCreationForm
 from accounts.models import LECUser
@@ -10,6 +10,15 @@ from accounts.models import LECUser
 def profile(request):
     return render(request, "accounts/profile.html", {"account_types": LECUser.AccountTypes})
 
+class EditProfile(UpdateView):
+    """View for a user to edit their profile."""
+    model = LECUser
+    template_name = "accounts/edit_profile.html"
+    fields = ["username", "first_name", "last_name", "email"]
+    success_url = reverse_lazy("accounts:profile")
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 def login_register(request):
     return render(request, "accounts/login_register.html")
