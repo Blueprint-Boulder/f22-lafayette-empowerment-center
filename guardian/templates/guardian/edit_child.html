@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Add child{% endblock %}
+{% block title %}Edit child{% endblock %}
 {% block content %}
 
 <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Add">
+    <input type="submit" value="Save">
 </form>
 
 {% endblock %}

@@ -2,13 +2,18 @@
 {% block title %}Children{% endblock %}
 {% block content %}
 {% for child in children %}
+    <a href="{% url "guardian:edit_child" pk=child.pk %}">Edit child</a><br>
     Name: {{ child.name }}<br>
     Pronouns: {{ child.pronouns }}<br>
     Allergies: {{ child.allergies }}<br>
+    Additional info: {{ child.additional_info }}<br>
     Registered for the following programs:<br>
     {% for program in child.programs.all %}
         - {{ program.name }}<br>
     {% endfor %}
     <br><br>
+{% empty %}
+    You haven't added any children yet.
 {% endfor %}
+<a href="{% url "guardian:add_child_then_redirect" redirect_to=request.path %}">Add child</a>
 {% endblock %}

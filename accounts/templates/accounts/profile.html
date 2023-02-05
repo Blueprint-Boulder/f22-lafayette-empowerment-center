@@ -22,7 +22,6 @@ Email: {{ user.email }}<br>
             You haven't added any children yet.
         {% endfor %}
         <a href="{% url "guardian:children" %}">Manage children</a>
-        <a href="{% url "guardian:add_child_then_redirect" redirect_to=request.path %}">Add child</a>
 {% endif %}
 
 {% endblock %}

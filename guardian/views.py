@@ -42,6 +42,11 @@ class AddChild(CreateView):
         else:
             return default_redirect
 
+class EditChild(UpdateView):
+    model = Student
+    fields = ["name", "pronouns", "allergies", "additional_info"]
+    template_name = "guardian/edit_child.html"
+    success_url = reverse_lazy("guardian:children")
 
 def register_for_program(request, program_pk):
     program = Program.objects.get(pk=program_pk)
