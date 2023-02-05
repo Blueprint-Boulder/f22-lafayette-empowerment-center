@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+    <a href="{% url "guardian:edit_child" pk=child.pk %}">Edit child</a><br>
+    Name: {{ child.name }}<br>
+    Pronouns: {{ child.pronouns }}<br>
+    Allergies: {{ child.allergies }}<br>
+    Additional info: {{ child.additional_info }}<br>
+    Registered for the following programs:<br>
+    {% for program in child.programs.all %}
+        - {{ program.name }}<br>
+    {% endfor %}
+    <br><br>
+{% endblock %}

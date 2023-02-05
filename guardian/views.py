@@ -48,6 +48,9 @@ class EditChild(UpdateView):
     template_name = "guardian/edit_child.html"
     success_url = reverse_lazy("guardian:children")
 
+def view_child(request, child_pk):
+    return render(request, "guardian/view_child.html", {'child': Student.objects.get(pk=child_pk)})
+
 def register_for_program(request, program_pk):
     program = Program.objects.get(pk=program_pk)
 

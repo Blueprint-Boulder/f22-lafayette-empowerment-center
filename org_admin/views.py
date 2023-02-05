@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
+from guardian.models import Student
 from org_admin.models import Program, ProgramAnnouncement, Survey, SurveyField, CommunityContact
 
 
@@ -38,6 +39,8 @@ def view_program(request, program_pk):
 def programs(request):
     return render(request, "org_admin/view_programs.html", {"programs": Program.objects.all()})
 
+def view_child(request, child_pk):
+    return render(request, "org_admin/view_child.html", {'child': Student.objects.get(pk=child_pk)})
 
 def create_survey(request, program_pk):
     if request.method == "GET":

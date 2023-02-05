@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+    Name: {{ child.name }}<br>
+    Pronouns: {{ child.pronouns }}<br>
+    Allergies: {{ child.allergies }}<br>
+    Additional info: {{ child.additional_info }}<br>
+    Registered for the following programs:<br>
+    {% for program in child.programs.all %}
+        - <a href="{% url "org_admin:view_program" program_pk=program.pk %}">{{ program.name }}</a><br>
+    {% endfor %}
+    <br><br>
+{% endblock %}
