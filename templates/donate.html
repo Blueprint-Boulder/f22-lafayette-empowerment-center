@@ -10,7 +10,7 @@
 <body>
     <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
 
-    <h1>Donations</h1>
+    <h1 className=" text-3xl">Donate</h1>
     <form action="https://www.paypal.com/donate" method="post" target="_top">
         <input type="hidden" name="business" value="J7FVYMM8FF5AG" />
         <input type="hidden" name="no_recurring" value="0" />
@@ -22,13 +22,13 @@
 
     <div id="paypal-donate-button-container"></div>
 
-      <script>
+    <script>
        PayPal.Donation.Button({
            env: 'sandbox',
            hosted_button_id: 'MHCAQZSA5ZMWN',
            // business: 'YOUR_EMAIL_OR_PAYERID',
            image: {
-               src: 'https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif',
+               src: 'https://www.gannett-cdn.com/authoring/2015/07/21/NETN/ghows-PA-4a7bca53-5869-4f90-9088-3b11c12a9a99-4f6cdd55.jpeg?width=660&height=409&fit=crop&format=pjpg&auto=webp',
                title: 'PayPal - The safer, easier way to pay online!',
                alt: 'Donate with PayPal button'
            },
