@@ -7,6 +7,7 @@ app_name = "org_admin"
 urlpatterns = [
     path('', lambda request: HttpResponse("not implemented"), name="home"),
     path('children/<int:child_pk>/', views.view_child, name="view_child"),
+    path('students/', views.view_students, name="view_students"),
     path('programs/', views.programs, name="programs"),
     path('programs/add/', views.AddProgram.as_view(), name="add_program"),
     path('programs/<int:program_pk>/', views.view_program, name="view_program"),

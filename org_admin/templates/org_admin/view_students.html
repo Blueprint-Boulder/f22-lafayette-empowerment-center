@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Student roster{% endblock %}
+{% block content %}
+    {% if ascending %}
+        {% for student in students|dictsort:sort_by %}
+            <a href="{% url "guardian:view_child" child_pk=student.pk %}">{{ student.name }}</a>
+        {% endfor %}
+    {% else %}
+        {% for student in students|dictsortreversed:sort_by %}
+            <a href="{% url "guardian:view_child" child_pk=student.pk %}">{{ student.name }}</a>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

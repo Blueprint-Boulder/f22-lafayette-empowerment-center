@@ -86,3 +86,10 @@ class AddCommunityContact(CreateView):
     fields = "__all__"
     success_url = reverse_lazy("org_admin:community_contacts")
     template_name = "org_admin/add_community_contact.html"
+
+
+def view_students(request):
+    return render(request, "org_admin/view_students.html",
+                  {"students": Student.objects.all(),
+                   "sort_by": request.GET["sort_by"],
+                   "ascending": request.GET["ascending"] == "t"})
