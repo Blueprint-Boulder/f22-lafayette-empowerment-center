@@ -1,0 +1,7 @@
+<!-- Include this snippet inside the content block if you want to force the page to always update,
+even if it was accessed through the back button. For example, the notifications page uses this. -->
+<script type="text/javascript">
+if(performance.navigation.type === 2){
+   location.reload();
+}
+</script>

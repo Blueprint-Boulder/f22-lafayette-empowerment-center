@@ -1,11 +1,12 @@
 from datetime import datetime
 
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView
 
 from guardian.models import Student
 from org_admin.models import Program, ProgramAnnouncement, Survey, SurveyField, CommunityContact
+from accounts.models import Notification
 
 
 class AddProgram(CreateView):
@@ -28,6 +29,11 @@ class MakeAnnouncement(CreateView):
         program_pk = int(self.kwargs["program_pk"])
         form.instance.program = Program.objects.get(pk=program_pk)
         form.instance.save()
+        notif = Notification(message=form.instance.title,
+                             link=reverse("guardian:view_announcement", kwargs={'announcement_pk': form.instance.pk}))
+        notif.save()
+        for student in form.instance.program.students.all():
+            notif.recipients.add(student.guardian)
         return redirect("org_admin:view_program", program_pk)
 
 
@@ -57,6 +63,13 @@ def create_survey(request, program_pk):
         survey.save()
         for label in labels:
             label.save()
+
+        notif = Notification(message=survey.name,
+                             link=reverse("guardian:take_survey", kwargs={'survey_pk': survey.pk}))
+        notif.save()
+        for student in survey.program.students.all():
+            notif.recipients.add(student.guardian)
+
         return redirect("org_admin:view_program", program_pk)
 
 

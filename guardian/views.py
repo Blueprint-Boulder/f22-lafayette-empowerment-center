@@ -4,6 +4,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 
 from guardian.models import Student, SurveyResponse, SurveyFieldResponse
 from org_admin.models import Program, ProgramAnnouncement, Survey, SurveyField
+from accounts.models import Notification
 from django.utils import timezone
 
 
@@ -86,3 +87,13 @@ def take_survey(request, survey_pk):
         survey_response.save()
 
         return redirect("guardian:view_program", survey.program.pk)
+
+def notifications(request):
+    unread_notifs = Notification.objects.filter(recipients__pk=request.user.pk).exclude(read_by__pk=request.user.pk)
+    return render(request, "guardian/notifications.html", {"notifs": unread_notifs})
+
+def view_notification(request, notification_pk):
+    notif = Notification.objects.get(pk=notification_pk)
+    notif.read_by.add(request.user)
+    notif.save()
+    return redirect(notif.link)

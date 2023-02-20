@@ -16,4 +16,6 @@ urlpatterns = [
     path('children/<int:pk>/edit', views.EditChild.as_view(), name="edit_child"),
     path('children/add/', views.AddChild.as_view(), name="add_child"),
     path('children/add/<path:redirect_to>/', views.AddChild.as_view(), name="add_child_then_redirect"),
+    path('notifications/', views.notifications, name="notifications"),
+    path('notifications/<int:notification_pk>/', views.view_notification, name="view_notification"),
 ]

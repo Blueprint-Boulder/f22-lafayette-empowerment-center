@@ -86,3 +86,9 @@ class LECUser(AbstractUser):
 
         # 7) Finally, saves the user to the database again, in order to save the changes that were made in steps 4-6.
         super().save(*args, **kwargs)
+
+class Notification(models.Model):
+    message = models.TextField(max_length=300)
+    link = models.URLField()
+    recipients = models.ManyToManyField(to=LECUser, related_name="notifications")
+    read_by = models.ManyToManyField(to=LECUser, related_name="read_notifications")

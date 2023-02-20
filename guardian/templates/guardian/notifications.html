@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "force_refresh_snippet.html" %}
+{% for notif in notifs %}
+    <a href="{% url "guardian:view_notification" notification_pk=notif.pk %}">{{ notif.message }}</a> <br>
+{% endfor %}
+{% endblock %}
