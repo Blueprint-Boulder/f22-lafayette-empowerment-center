@@ -1,14 +1,29 @@
 from datetime import datetime
 
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
+from django.utils.decorators import method_decorator
 from django.views.generic import CreateView
 
 from guardian.models import Student
 from org_admin.models import Program, ProgramAnnouncement, Survey, SurveyField, CommunityContact
-from accounts.models import Notification
+from accounts.models import Notification, LECUser
 
 
+def is_org_admin(user: User):
+    if not user.is_authenticated:
+        return False
+    assert isinstance(user, LECUser)
+    return user.account_type == LECUser.AccountTypes.ORG_ADMIN
+
+# like @user_passes_test(is_org_admin), but for class-based views
+cbv_user_must_be_org_admin = method_decorator(user_passes_test(is_org_admin), "dispatch")
+
+
+@cbv_user_must_be_org_admin
 class AddProgram(CreateView):
     model = Program
     fields = ["name", "description", "registration_opens", "registration_closes", "program_starts", "program_ends"]
@@ -19,7 +34,7 @@ class AddProgram(CreateView):
         form.instance.is_active = True
         return super().form_valid(form)
 
-
+@cbv_user_must_be_org_admin
 class MakeAnnouncement(CreateView):
     model = ProgramAnnouncement
     fields = ["title", "content"]
@@ -36,18 +51,20 @@ class MakeAnnouncement(CreateView):
             notif.recipients.add(student.guardian)
         return redirect("org_admin:view_program", program_pk)
 
-
+@user_passes_test(is_org_admin)
 def view_program(request, program_pk):
     return render(request, "org_admin/view_program.html",
                   {'program': Program.objects.get(pk=program_pk), 'now': datetime.now()})
 
-
+@user_passes_test(is_org_admin)
 def programs(request):
     return render(request, "org_admin/view_programs.html", {"programs": Program.objects.all()})
 
+@user_passes_test(is_org_admin)
 def view_child(request, child_pk):
     return render(request, "org_admin/view_child.html", {'child': Student.objects.get(pk=child_pk)})
 
+@user_passes_test(is_org_admin)
 def create_survey(request, program_pk):
     if request.method == "GET":
         return render(request, "org_admin/create_survey.html", {'program': Program.objects.get(pk=program_pk)})
@@ -72,14 +89,13 @@ def create_survey(request, program_pk):
 
         return redirect("org_admin:view_program", program_pk)
 
-
+@user_passes_test(is_org_admin)
 def survey_responses(request, survey_pk):
     return render(request, "org_admin/survey_responses.html", {'survey': Survey.objects.get(pk=survey_pk)})
 
-
+@user_passes_test(is_org_admin)
 def community_contacts(request):
     return render(request, "org_admin/community_contacts.html", {'contacts': CommunityContact.objects.all()})
-
 
 class AddCommunityContact(CreateView):
     model = CommunityContact
@@ -87,7 +103,7 @@ class AddCommunityContact(CreateView):
     success_url = reverse_lazy("org_admin:community_contacts")
     template_name = "org_admin/add_community_contact.html"
 
-
+@user_passes_test(is_org_admin)
 def view_students(request):
     return render(request, "org_admin/view_students.html",
                   {"students": Student.objects.all(),

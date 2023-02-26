@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 import django.contrib.auth.views as base_auth_views
 from django.urls import reverse_lazy
@@ -6,11 +8,11 @@ from django.views.generic import CreateView, UpdateView
 from accounts.forms import LECUserCreationForm
 from accounts.models import LECUser
 
-
+@login_required
 def profile(request):
     return render(request, "accounts/profile.html", {"account_types": LECUser.AccountTypes})
 
-class EditProfile(UpdateView):
+class EditProfile(LoginRequiredMixin, UpdateView):
     """View for a user to edit their profile."""
     model = LECUser
     template_name = "accounts/edit_profile.html"
@@ -28,6 +30,8 @@ class Login(base_auth_views.LoginView):
     template_name = "accounts/login.html"
     success_url = "/"
 
+class Logout(base_auth_views.LogoutView):
+    pass
 
 class CreateAccount(CreateView):
     model = LECUser

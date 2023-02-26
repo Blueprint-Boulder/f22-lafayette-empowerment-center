@@ -5,7 +5,6 @@
 {% block content %}
 <h3>Programs:</h3>
 {% for program in programs %}
-    {{ now }}
     {% if now <= program.program_ends %}
         {{ program.name }}
         <a href="{% url "guardian:view_program" program_pk=program.pk %}">[View]</a>

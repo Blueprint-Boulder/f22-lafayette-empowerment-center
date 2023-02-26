@@ -1,21 +1,38 @@
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views import View
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 
+from django.conf import settings
 from guardian.models import Student, SurveyResponse, SurveyFieldResponse
 from org_admin.models import Program, ProgramAnnouncement, Survey, SurveyField
-from accounts.models import Notification
+from accounts.models import Notification, LECUser
 from django.utils import timezone
 
 
+def is_guardian(user: User):
+    if not user.is_authenticated:
+        return False
+    assert isinstance(user, LECUser)
+    return user.account_type == LECUser.AccountTypes.GUARDIAN
+
+# like @user_passes_test(is_guardian), but for class-based views
+cbv_user_must_be_guardian = method_decorator(user_passes_test(is_guardian), "dispatch")
+
+@user_passes_test(is_guardian)
 def programs(request):
     return render(request, "guardian/view_programs.html", {'programs': Program.objects.all(), 'now': timezone.now()})
 
-
+@user_passes_test(is_guardian)
 def view_program(request, program_pk):
     return render(request, "guardian/view_program.html", {'program': Program.objects.get(pk=program_pk), 'now': timezone.now()})
 
-
+@user_passes_test(is_guardian)
 def view_announcement(request, announcement_pk):
     announcement = ProgramAnnouncement.objects.get(pk=announcement_pk)
     announcement.read_by.add(request.user)
@@ -23,11 +40,11 @@ def view_announcement(request, announcement_pk):
     return render(request, "guardian/view_announcement.html",
                   {'announcement': ProgramAnnouncement.objects.get(pk=announcement_pk)})
 
-
+@user_passes_test(is_guardian)
 def children(request):
     return render(request, "guardian/view_children.html", {'children': Student.objects.filter(guardian=request.user)})
 
-
+@cbv_user_must_be_guardian
 class AddChild(CreateView):
     model = Student
     fields = ["name", "pronouns", "allergies", "additional_info"]
@@ -43,15 +60,18 @@ class AddChild(CreateView):
         else:
             return default_redirect
 
+@cbv_user_must_be_guardian
 class EditChild(UpdateView):
     model = Student
     fields = ["name", "pronouns", "allergies", "additional_info"]
     template_name = "guardian/edit_child.html"
     success_url = reverse_lazy("guardian:children")
 
+@user_passes_test(is_guardian)
 def view_child(request, child_pk):
     return render(request, "guardian/view_child.html", {'child': Student.objects.get(pk=child_pk)})
 
+@user_passes_test(is_guardian)
 def register_for_program(request, program_pk):
     program = Program.objects.get(pk=program_pk)
 
@@ -63,7 +83,7 @@ def register_for_program(request, program_pk):
         program.save()
         return redirect("guardian:programs")
 
-
+@user_passes_test(is_guardian)
 def take_survey(request, survey_pk):
     survey = Survey.objects.get(pk=survey_pk)
 
@@ -88,10 +108,12 @@ def take_survey(request, survey_pk):
 
         return redirect("guardian:view_program", survey.program.pk)
 
+@user_passes_test(is_guardian)
 def notifications(request):
     unread_notifs = Notification.objects.filter(recipients__pk=request.user.pk).exclude(read_by__pk=request.user.pk)
     return render(request, "guardian/notifications.html", {"notifs": unread_notifs})
 
+@user_passes_test(is_guardian)
 def view_notification(request, notification_pk):
     notif = Notification.objects.get(pk=notification_pk)
     notif.read_by.add(request.user)
