@@ -14,6 +14,8 @@ from org_admin.models import Program, ProgramAnnouncement, Survey, SurveyField
 from accounts.models import Notification, LECUser
 from django.utils import timezone
 
+def home(request):
+    return render(request, "guardian/home.html", {"children": Student.objects.filter(guardian=request.user)})
 
 def is_guardian(user: User):
     if not user.is_authenticated:

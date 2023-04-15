@@ -1,0 +1,14 @@
+{% load custom_tags %}
+
+{% csrf_token %}
+{% for field in form %}
+    {% if field.widget_type == "text" or field.widget_type == "email" or field.widget_type == "password" %}
+        {% render_field field placeholder=field.label class="form-control block w-full px-3 py-1.5 mb-3 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" %}
+    {% elif field.widget_type == "select" %}
+        {% render_field field class="form-select block w-full px-3 py-1.5 mb-3 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" %}
+    {% elif field.widget_type == "textarea" %}
+        {% render_field field placeholder=field.label class="form-textarea block w-full px-3 py-1.5 mb-3 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" %}
+    {% elif field.widget_type == "checkbox" %}
+        {% render_field field class="form-checkbox text-blue-600 border-gray-300 focus:border-blue-600 focus:ring-blue-600 rounded" %}
+    {% endif %}
+{% endfor %}

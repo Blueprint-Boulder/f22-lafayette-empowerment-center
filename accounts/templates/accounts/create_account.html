@@ -1,9 +1,35 @@
+<!--NOT FINISHED-->
+
 {% extends "base.html" %}
-{% block title %}Create Account{% endblock %}
+{% load static %} <!-- Lets you add CSS -->
+{% load custom_tags %}
 {% block content %}
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Create">
-</form>
-{% endblock %}
+<div class="bg-[#F0F0F0] flex justify-center min-h-screen">
+    <div class="mt-[5vh] flex flex-col items-center">
+        <img src="{% static "LEC_logo.png" %}" class="w-[30vw]" alt="Lafayette Empowerment Center logo">
+
+        <div class="bg-white w-full px-[10%] pt-[10%] pb-[5%] rounded-2xl">
+            <p class="text-3xl font-medium text-center mb-3">Create Account</p>
+            <form method="POST">
+                {% include "stylized_form.html" with form=form %}
+                <button class="form-control block w-full bg-blue-500 py-1.5 hover:bg-blue-700 text-white font-bold bg-clip-padding py-3 px-4 border focus:border-blue-600 rounded">Sign Up</button>
+            </form>
+
+            <div class="text-center mt-8 cursor-pointer">
+                <p class="text-[#4E87DD] text-lg">Need help? Click here to contact us.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
+{% endblock content %}
+{##}
+{#{% extends "base.html" %}#}
+{#{% block title %}Create Account{% endblock %}#}
+{#{% block content %}#}
+{#<form method="POST">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <input type="submit" value="Create">#}
+{#</form>#}
+{#{% endblock %}#}

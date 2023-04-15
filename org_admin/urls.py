@@ -1,4 +1,6 @@
+from django.forms import Form
 from django.http import HttpResponse
+from django.shortcuts import render
 from django.urls import path
 from org_admin import views
 
@@ -6,6 +8,7 @@ app_name = "org_admin"
 
 urlpatterns = [
     path('', lambda request: HttpResponse("not implemented"), name="home"),
+    path('delete_this/', lambda request: render(request, "stylized_form.html", {'form': Form()})),
     path('children/<int:child_pk>/', views.view_child, name="view_child"),
     path('students/', views.view_students, name="view_students"),
     path('programs/', views.programs, name="programs"),
