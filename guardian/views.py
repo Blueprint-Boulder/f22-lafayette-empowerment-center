@@ -14,9 +14,6 @@ from org_admin.models import Program, ProgramAnnouncement, Survey, SurveyField
 from accounts.models import Notification, LECUser
 from django.utils import timezone
 
-def home(request):
-    return render(request, "guardian/home.html", {"children": Student.objects.filter(guardian=request.user)})
-
 def is_guardian(user: User):
     if not user.is_authenticated:
         return False
@@ -25,6 +22,10 @@ def is_guardian(user: User):
 
 # like @user_passes_test(is_guardian), but for class-based views
 cbv_user_must_be_guardian = method_decorator(user_passes_test(is_guardian), "dispatch")
+
+@user_passes_test(is_guardian)
+def home(request):
+    return render(request, "guardian/home.html", {"children": Student.objects.filter(guardian=request.user)})
 
 @user_passes_test(is_guardian)
 def programs(request):

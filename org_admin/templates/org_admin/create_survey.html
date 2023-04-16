@@ -18,10 +18,25 @@
             <script>
                 var fieldsCounter = 0;
                 function add_field() {
-                    var labelInput = document.createElement('div');
-                    labelInput.innerHTML = `<input required type='text' name='field${fieldsCounter}' id='field${fieldsCounter}'
-                                            placeholder="e.g. Did you feel like your child was adequately supported?" class="relative flex border-[1px] rounded-xl border-gray-300 h-12 w-full p-3">`;
-                    document.getElementById('questions').appendChild(labelInput);
+                    let question = document.createElement('div');
+                    question.id = `question${fieldsCounter}`
+
+                    let questionInput = document.createElement('div');
+                    questionInput.innerHTML = `<input required type='text' name='field${fieldsCounter}' id='field${fieldsCounter}'
+                                               placeholder="e.g. Was your child adequately supported?" class="relative flex border-[1px] rounded-xl border-gray-300 h-12 w-96 p-3">`;
+                    questionInput.style.display = "inline-block"
+
+                    let removeQuestionButton = document.createElement('div');
+                    removeQuestionButton.innerHTML = `<a href="javascript:document.getElementById('questions').removeChild(document.getElementById('question${fieldsCounter}'));"
+                                                        class="relative flex h-12 w-12 text-white font-semibold text-l bg-red-600 hover:bg-red-500 rounded-xl justify-center items-center">
+                                                       X
+                                                      </a>`;
+                    removeQuestionButton.style.display = "inline-block";
+
+                    question.appendChild(questionInput);
+                    question.appendChild(removeQuestionButton);
+
+                    document.getElementById('questions').appendChild(question)
                     fieldsCounter++;
                 }
                 add_field();
