@@ -1,12 +1,19 @@
 {% extends "base.html" %}
 {% block title %}Take survey{% endblock %}
 {% block content %}
-    <form method="post" action="{% url "guardian:take_survey" survey_pk=survey.pk %}">
-        {% csrf_token %}
-        {% for field in survey.fields.all %}
-            <label for="field_{{ field.pk }}">{{ field.label }}</label>
-            <input type="text" name="field_{{ field.pk }}" id="field_{{ field.pk }}">
-        {% endfor %}
-        <input type="submit" value="Submit">
-    </form>
+    <div class="relative flex w-screen h-screen max-w-screen flex-col">
+        <div class="relative flex p-10 flex-col space-y-5">
+            <h1 class="relative flex text-3xl pb-5 font-semibold">
+                {{ survey.name }}
+            </h1>
+            <form method="post" action="{% url "guardian:take_survey" survey_pk=survey.pk %}" class="relative space-y-5 pb-12 flex-col overflow-y-auto">
+                {% csrf_token %}
+                {% for field in survey.fields.all %}
+                    <label for="field_{{ field.pk }}" class="relative flex text-l">{{ field.label }}</label>
+                    <input type="text" name="field_{{ field.pk }}" id="field_{{ field.pk }}" class="relative flex border-[1px] rounded-xl border-gray-300 h-12 w-72 p-3">
+                {% endfor %}
+                <input type="submit" value="Submit" class="relative flex h-12 w-52 text-white font-semibold text-l bg-sky-400 hover:bg-sky-500 rounded-xl justify-center items-center">
+            </form>
+        </div>
+    </div>
 {% endblock %}

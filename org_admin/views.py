@@ -44,7 +44,7 @@ class MakeAnnouncement(CreateView):
         program_pk = int(self.kwargs["program_pk"])
         form.instance.program = Program.objects.get(pk=program_pk)
         form.instance.save()
-        notif = Notification(message=form.instance.title,
+        notif = Notification(message=f"New announcement: {form.instance.title}",
                              link=reverse("guardian:view_announcement", kwargs={'announcement_pk': form.instance.pk}))
         notif.save()
         for student in form.instance.program.students.all():
@@ -81,7 +81,7 @@ def create_survey(request, program_pk):
         for label in labels:
             label.save()
 
-        notif = Notification(message=survey.name,
+        notif = Notification(message=f"You have a new survey to take for {survey.program.name}: \"{survey.name}\"",
                              link=reverse("guardian:take_survey", kwargs={'survey_pk': survey.pk}))
         notif.save()
         for student in survey.program.students.all():
