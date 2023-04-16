@@ -1,11 +1,12 @@
 {% extends "base.html" %}
-{% block title %}Add child{% endblock %}
+
 {% block content %}
-
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Add">
-</form>
-
-{% endblock %}
+    <div class="relative flex w-screen h-screen max-w-screen flex-col">
+        <div class="relative flex p-10 flex-col space-y-5">
+            <h1 class="relative flex text-3xl pb-5 font-semibold">
+                Add Child
+            </h1>
+            {% include "stylized_form.html" with form=form method="post" submit_text="Submit" %}
+        </div>
+    </div>
+{% endblock content %}

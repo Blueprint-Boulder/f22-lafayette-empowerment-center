@@ -10,10 +10,8 @@
 
         <div class="bg-white w-full px-[10%] pt-[10%] pb-[5%] rounded-2xl">
             <p class="text-3xl font-medium text-center mb-3">Create Account</p>
-            <form method="POST">
-                {% include "stylized_form.html" with form=form %}
-                <button class="form-control block w-full bg-blue-500 py-1.5 hover:bg-blue-700 text-white font-bold bg-clip-padding py-3 px-4 border focus:border-blue-600 rounded">Sign Up</button>
-            </form>
+
+            {% include "stylized_form.html" with form=form method="post" submit_text="Create" %}
 
             <div class="text-center mt-8 cursor-pointer">
                 <p class="text-[#4E87DD] text-lg">Need help? Click here to contact us.</p>

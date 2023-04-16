@@ -49,7 +49,8 @@ def children(request):
 @cbv_user_must_be_guardian
 class AddChild(CreateView):
     model = Student
-    fields = ["name", "pronouns", "allergies", "additional_info"]
+    fields = ["name", "pronouns", "age", "grade", "emergency_contact_name", "emergency_contact_phone_number",
+              "allergies", "additional_info"]
     template_name = "guardian/add_child.html"
     success_url = reverse_lazy("guardian:children")
 
@@ -65,7 +66,8 @@ class AddChild(CreateView):
 @cbv_user_must_be_guardian
 class EditChild(UpdateView):
     model = Student
-    fields = ["name", "pronouns", "allergies", "additional_info"]
+    fields = ["name", "pronouns", "age", "grade", "emergency_contact_name", "emergency_contact_phone_number",
+              "allergies", "additional_info"]
     template_name = "guardian/edit_child.html"
     success_url = reverse_lazy("guardian:children")
 

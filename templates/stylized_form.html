@@ -1,14 +1,21 @@
 {% load custom_tags %}
-
-{% csrf_token %}
-{% for field in form %}
-    {% if field.widget_type == "text" or field.widget_type == "email" or field.widget_type == "password" %}
-        {% render_field field placeholder=field.label class="form-control block w-full px-3 py-1.5 mb-3 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" %}
-    {% elif field.widget_type == "select" %}
-        {% render_field field class="form-select block w-full px-3 py-1.5 mb-3 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" %}
-    {% elif field.widget_type == "textarea" %}
-        {% render_field field placeholder=field.label class="form-textarea block w-full px-3 py-1.5 mb-3 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" %}
-    {% elif field.widget_type == "checkbox" %}
-        {% render_field field class="form-checkbox text-blue-600 border-gray-300 focus:border-blue-600 focus:ring-blue-600 rounded" %}
-    {% endif %}
-{% endfor %}
+<form method="{{ method }}" class="relative space-y-5 pb-12 flex-col overflow-y-auto">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="relative flex space-y-2 flex-col">
+            <h1 class="relative flex text-l">{{ field.label }}</h1>
+            {% if field.widget_type == "text" or field.widget_type == "password" or field.widget_type == "select" or field.widget_type == "email" %}
+                {% render_field field class="relative flex border-[1px] rounded-xl border-gray-300 h-12 w-72 p-3" %}
+            {% elif field.widget_type == "textarea" %}
+                {% render_field field class="relative flex border-[1px] rounded-xl border-gray-300 h-52 w-96 items-center justify-center overflow-visible w p-3" %}
+            {% elif field.widget_type == "number" %}
+                {% render_field field class="relative flex border-[1px] rounded-xl border-gray-300 h-12 w-16 items-center justify-center overflow-visible w p-3" %}
+            {% else %}
+                THE WIDGET TYPE {{ field.widget_type }} DOESN'T HAVE A STYLE CLASS! FIX IT!
+            {% endif %}
+        </div>
+    {% endfor %}
+    <button type="submit" class="relative flex h-12 w-52 text-white font-semibold text-l bg-sky-400 hover:bg-sky-500 rounded-xl justify-center items-center">
+    {{ submit_text }}
+    </button>
+</form>

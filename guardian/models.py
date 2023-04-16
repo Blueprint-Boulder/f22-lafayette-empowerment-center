@@ -6,6 +6,8 @@ from org_admin.models import Program, Survey, SurveyField
 class Student(models.Model):
     name = models.CharField(max_length=500)
     pronouns = models.CharField(max_length=50)
+    age = models.IntegerField()
+    grade = models.IntegerField()
     allergies = models.TextField(max_length=1000, blank=True)
     emergency_contact_name = models.CharField(max_length=200)
     emergency_contact_phone_number = models.CharField(max_length=25)
