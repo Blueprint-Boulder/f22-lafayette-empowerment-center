@@ -10,6 +10,8 @@
                 {% render_field field class="relative flex border-[1px] rounded-xl border-gray-300 h-52 w-96 items-center justify-center overflow-visible w p-3" %}
             {% elif field.widget_type == "number" %}
                 {% render_field field class="relative flex border-[1px] rounded-xl border-gray-300 h-12 w-16 items-center justify-center overflow-visible w p-3" %}
+            {% elif field.widget_type == "datetime" %}
+                {% render_field field placeholder="e.g. 2023-04-23 13:01" class="relative flex border-[1px] rounded-xl border-gray-300 h-12 w-72 p-3" %}
             {% else %}
                 THE WIDGET TYPE {{ field.widget_type }} DOESN'T HAVE A STYLE CLASS! FIX IT!
             {% endif %}

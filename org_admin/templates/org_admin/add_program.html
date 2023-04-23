@@ -1,9 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Title{% endblock %}
+
+{% block title %}Add program{% endblock %}
 {% block content %}
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Create">
-</form>
+    {% include "stylized_form_only_page.html" with title="Add program" form=form method="POST" submit_text="Add" %}
 {% endblock %}

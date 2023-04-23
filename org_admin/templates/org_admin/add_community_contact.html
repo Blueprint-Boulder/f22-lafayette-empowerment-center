@@ -1,9 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Add community contact{% endblock %}
+
+{% block title %}Add program{% endblock %}
 {% block content %}
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Add">
-    </form>
+    {% include "stylized_form_only_page.html" with title="Add community contact" form=form method="POST" submit_text="Add" %}
 {% endblock %}

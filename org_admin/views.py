@@ -42,6 +42,7 @@ class MakeAnnouncement(CreateView):
 
     def form_valid(self, form):
         program_pk = int(self.kwargs["program_pk"])
+        print(program_pk)
         form.instance.program = Program.objects.get(pk=program_pk)
         form.instance.save()
         notif = Notification(message=f"New announcement: {form.instance.title}",

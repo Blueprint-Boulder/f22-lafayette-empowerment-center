@@ -6,7 +6,7 @@
             <h1 class="relative flex text-3xl pb-5 font-semibold">
                 {{ survey.name }}
             </h1>
-            <form method="post" action="{% url "guardian:take_survey" survey_pk=survey.pk %}" class="relative space-y-5 pb-12 flex-col overflow-y-auto">
+            <form method="POST" action="{% url "guardian:take_survey" survey_pk=survey.pk %}" class="relative space-y-5 pb-12 flex-col overflow-y-auto">
                 {% csrf_token %}
                 {% for field in survey.fields.all %}
                     <label for="field_{{ field.pk }}" class="relative flex text-l">{{ field.label }}</label>
