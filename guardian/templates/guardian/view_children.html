@@ -1,20 +1,42 @@
 {% extends "base.html" %}
 {% block title %}Children{% endblock %}
 {% block content %}
-{% for child in children %}
-    <a href="{% url "guardian:edit_child" pk=child.pk %}">Edit child</a><br>
-    <a href="{% url "guardian:view_child" child_pk=child.pk %}">View child</a><br>
-    Name: {{ child.name }}<br>
-    Pronouns: {{ child.pronouns }}<br>
-    Allergies: {{ child.allergies }}<br>
-    Additional info: {{ child.additional_info }}<br>
-    Registered for the following programs:<br>
-    {% for program in child.programs.all %}
-        - {{ program.name }}<br>
-    {% endfor %}
-    <br><br>
-{% empty %}
-    You haven't added any children yet.
-{% endfor %}
-<a href="{% url "guardian:add_child_then_redirect" redirect_to=request.path %}">Add child</a>
+
+    <div class="relative flex w-screen h-screen max-w-screen flex-col">
+        <div class="p-5 w-1/2">
+            <table class="relative mt-5 flex rounded-lg  w-full pl-5 bg-whiteflex-col space-y-3 flex-col">
+                    <tr class="flex-row relative flex w-full items-start px-1 py-2 space-x-5 whitespace-nowrap">
+                        <th class="relative flex font-semibold text-3xl">My Children</th>
+                    </tr>
+                </thead>
+                <tbody class="h-[500px] relative flex w-full rounded-xl space-y-2 flex-col items-center py-2 items center bg-gray-200  ">
+                    {% for child in children %}
+                        <tr class="relative flex w-[97%] flex-row items-center justify-between px-10 space-x-10 whitespace-nowrap h-16 rounded-3xl bg-gray-300">
+                            <td class="relative flex">
+                                {{ child.name }}
+                            </td>
+                            <td class="relative flex flex-row items-center space-x-5">
+                                <img class="relative flex h-5" src="http://cdn.onlinewebfonts.com/svg/img_489991.png" />
+                                <a class="translate-y-1 text-2xl text-gray-500 mb-3 hover:opacity-60 hover:scale-[115%]" href="{% url "guardian:view_child" child_pk=child.pk %}">
+                                    >
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                            You haven't added any children yet.
+                        {% endfor %}
+                        <tr class="relative flex w-[97%] flex-row items-center justify-center space-x-10 hover:bg-sky-500 whitespace-nowrap h-16 rounded-3xl bg-sky-400">
+                            <td class="relative flex text-2xl h-full w-full text-white justify-center items-center">
+                                <a class="relative flex h-full w-full justify-center items-center" href="{% url "guardian:add_child_then_redirect" redirect_to=request.path %}">
+                                    +
+                                </a>
+                            </td>
+                        </tr>
+                    </a>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
 {% endblock %}
