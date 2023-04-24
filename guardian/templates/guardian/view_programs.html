@@ -3,25 +3,53 @@
 
 {% block title %}Programs list{% endblock %}
 {% block content %}
-<h3>Programs:</h3>
-{% for program in programs %}
-    {{ program.name }}
-    {% if now > program.program_ends %} (Program has ended)
-    {% elif now <= program.registration_opens %} (Open for registration)
-    {% elif now > program.registration_opens %} (Registration closed)
-    {% endif %}
-    <a href="{% url "guardian:view_program" program_pk=program.pk %}">[View]</a>
-    <br>
-    {% if user|has_children_in:program %}
-        Your children registered for this program: {{ user|children_in:program|join:", " }}
-    {% else %}
-        None of your children are registered for this program.
-    {% endif %}
-    {% if user|has_unread_announcements_in:program and user|has_children_in:program %}
-            This program has new announcements.<br>
-    {% endif %}
-    <br>
-{% empty %}
-    No programs are available yet.
-{% endfor %}
+
+<div class="relative flex w-screen h-screen max-w-screen flex-col">
+    <div class="relative flex flex-row h-full w-full">
+        <div class="relative flex h-full w-1/5 justify-center items-center bg-gray-200">
+            <div class="relative flex w-[82%] h-[90%]">
+                <div class="relative flex flex-col w-full bg-gray-200 overflow-visible space-y-5">
+                    <div class="relative flex truncate whitespace-nowrap  cursor-pointer hover:bg-gray-200 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
+                        <a class="relative flex font-semibold text-black hover:bg-gray-200 bg-gray-200  ">This is a selected program element</a>
+                    </div>
+                    <div class="relative flex truncate whitespace-nowrap cursor-pointer hover:bg-gray-200 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
+                        <a class="relative flex  text-black hover:bg-gray-200 bg-gray-200">This is a non-selected program element</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="relative flex flex-row flex-wrap w-full m-5">
+            {% for program in programs %}
+            <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-black mx-3 my-3">
+                <img class="bg-blue-900 rounded-2xl w-full h-full absolute full object-cover" src="https://images.unsplash.com/photo-1607211851821-8be3cd6146f0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZCUyMHBhaW50aW5nfGVufDB8fDB8fA%3D%3D&w=1000&q=80"/>
+                <div class="flex relative h-3/5 my-4 mx-5 flex-row justify-end">
+                </div>
+                <div class="flex relative h-2/5 flex-col my-5 mx-5">
+                    <h1 class="text-white text-xl font-semibold">{{ program.name }}</h1>
+                    <a class="text-white text-lg underline cursor-pointer hover:opacity-70 transition-all duration-100 ease-out" href="{% url "guardian:view_program" program_pk=program.pk %}">View More</a>
+                </div>
+            </div>
+
+            {% if now > program.program_ends %} (Program has ended)
+                {% elif now <= program.registration_opens %} (Open for registration)
+                {% elif now > program.registration_opens %} (Registration closed)
+            {% endif %}
+            <br>
+            {% if user|has_children_in:program %}
+                Your children registered for this program: {{ user|children_in:program|join:", " }}
+            {% else %}
+                None of your children are registered for this program.
+            {% endif %}
+            <br>
+            {% if user|has_unread_announcements_in:program and user|has_children_in:program %}
+                    This program has new announcements.<br>
+            {% endif %}
+            <br>
+
+            {% empty %}
+                No programs are available yet.
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock %}
