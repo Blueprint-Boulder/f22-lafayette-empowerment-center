@@ -3,6 +3,7 @@
 {% block content %}
 {% for child in children %}
     <a href="{% url "guardian:edit_child" pk=child.pk %}">Edit child</a><br>
+    <a href="{% url "guardian:view_child" child_pk=child.pk %}">View child</a><br>
     Name: {{ child.name }}<br>
     Pronouns: {{ child.pronouns }}<br>
     Allergies: {{ child.allergies }}<br>
