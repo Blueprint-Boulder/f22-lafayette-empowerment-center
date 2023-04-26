@@ -4,39 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
     <title>Title</title>
-
 </head>
-<body>
-    <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
+<body class="flex-container" style="background-color: #F8F8F8; flex-direction: column">
+<main>
+    <h1 id="page_title">Make a Contribution</h1>
 
-    <h1 className=" text-3xl">Donate</h1>
-    <form action="https://www.paypal.com/donate" method="post" target="_top">
-        <input type="hidden" name="business" value="J7FVYMM8FF5AG" />
-        <input type="hidden" name="no_recurring" value="0" />
-        <input type="hidden" name="item_name" value="Help us empower young children through education with a donation! Any amount helps us do what we do." />
-        <input type="hidden" name="currency_code" value="USD" />
-        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-        <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
-    </form>
+    <div class="flex-container">
+        <div style="flex-basis: 60vw;">
+            <img id="stock_photo" src="../static/children_stock.jpg" />
+        </div>
+        <div id="flex-text">
+            <h2 style="font-size: 40px; font-family: sans-serif;">Support Us!</h2>
+            <p style="font-size: 20px; font-family: sans-serif;">Short blurb. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                labore et dolore magna aliqua. Enim diam vulputate ut pharetra. Fames ac turpis egestas sed tempus urna et
+                pharetra. Sollicitudin ac orci phasellus egestas tellus.</p>
 
-    <div id="paypal-donate-button-container"></div>
+           <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
 
-    <script>
-       PayPal.Donation.Button({
-           env: 'sandbox',
-           hosted_button_id: 'MHCAQZSA5ZMWN',
-           // business: 'YOUR_EMAIL_OR_PAYERID',
-           image: {
-               src: 'https://www.gannett-cdn.com/authoring/2015/07/21/NETN/ghows-PA-4a7bca53-5869-4f90-9088-3b11c12a9a99-4f6cdd55.jpeg?width=660&height=409&fit=crop&format=pjpg&auto=webp',
-               title: 'PayPal - The safer, easier way to pay online!',
-               alt: 'Donate with PayPal button'
-           },
-           onComplete: function (params) {
-               // Your onComplete handler
-           },
-       }).render('#paypal-donate-button-container');
-    </script>
+            <div id="paypal-donate-button-container"></div>
 
+            <script>
+               PayPal.Donation.Button({
+                   env: 'sandbox',
+                   hosted_button_id: 'MHCAQZSA5ZMWN',
+                   // business: 'YOUR_EMAIL_OR_PAYERID',
+                   image: {
+                       src: '../',
+                       title: 'PayPal - The safer, easier way to pay online!',
+                       alt: 'Donate with PayPal button'
+                   },
+                   onComplete: function (params) {
+                       // Your onComplete handler
+                   },
+               }).render('#paypal-donate-button-container');
+            </script>
+
+        </div>
+    </div>
+</main>
 </body>
 </html>
