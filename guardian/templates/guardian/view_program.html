@@ -3,22 +3,76 @@
 
 {% block title %}Program: {{ program.name }}{% endblock %}
 {% block content %}
+<div class="relative flex w-screen h-screen max-w-screen flex-col">
+    <div class="relative flex flex-row h-full w-full">
+        <div class="relative flex h-full w-1/5 justify-center items-center bg-gray-200">
+            <div class="relative flex w-[82%] h-[90%]">
+                <div class="relative flex flex-col w-full bg-gray-200 overflow-visible space-y-5">
+                    <div class="relative flex truncate whitespace-nowrap  cursor-pointer hover:bg-gray-200 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
+                        <a class="relative flex font-semibold text-black hover:bg-gray-200 bg-gray-200  ">{{ program.name }}</a>
+                    </div>
+                    {% for program in programs %}
+                    <div class="relative flex truncate whitespace-nowrap cursor-pointer hover:bg-gray-200 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
+                        <a class="relative flex  text-black hover:bg-gray-200 bg-gray-200" href="{% url "org_admin:view_program" program_pk=program.pk %}">{{program.name}}</a>
+                    </div>
+                    {% empty %}
+                        No programs are available yet.
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="relative flex m-5 w-full h-full flex-col justify-center items-center">
+            <div class="relative flex flex-col w-[90%] my-10 h-full space-y-14">
+                <div class="relative flex w-full h-1/2 flex-row justify-between">
+                    <div class="realtive grid grid-col-2 w-1/2 flex-col space-y-9">
+                        <h1 class="relative flex text-3xl text-black font-semibold">{{ program.name }}</h1>
+                        <div class="relative flex space-y-5 flex-col">
+                            <div class="relative flex">
+                                <text class="text-black text-lg">Grade Range: </text>
+                            </div>
+                            <div class="relative flex">
+                                <text class="text-black text-lg">Dates: </text>
+                            </div>
+                            <div class="relative flex">
+                                <text class="text-black text-lg">Time:</text>
+                            </div>
+                            <div class="relative flex">
+                                <text class="text-black text-lg">
+                                    {% if program.registration_opens <= now and now <= program.registration_closes %}
+                                        Registration for this program will close on {{ program.registration_closes }}.
+                                    {% elif program.registration_opens > now %}
+                                        Registration for this program will be open from {{ program.registration_opens }} to {{ program.registration_closes }}.
+                                    {% elif now > program.registration_closes %}
+                                        Registration for this program closed on {{ program.registration_closes }}.
+                                    {% endif %}
+                                </text>
+                            </div>
+                        </div>
+                        {% if program.registration_opens <= now and now <= program.registration_closes %}
+                            <a class="text-white text-mg relative font-semibold flex rounded-2xl h-12 w-48 bg-sky-400 flex-col justify-center items-center cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out" href="{% url "guardian:register_for_program" program_pk=program.pk %}">Register Children</a>
+                        {% endif %}
+                    </div>
+                    <div class="select2-dropdown relative flex h-full aspect-square bg-blue-900 justify-center items-center rounded-lg">
+                        <text class="text-white">img</text>
+                    </div>
+                </div>
+                <div class="relative flex w-full h-1/2 flex-col space-y-5">
+                    <h1 class="">Desciption: </h1>
+                    <p class="relative flex text-black">{{ program.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <a href="{% url "guardian:programs" %}">Back to all programs</a>
-    <h1>Program: {{ program.name }}</h1>
+    <h1>Program: </h1>
     {% if user|has_children_in:program %}
         Your children in this program: {{ user|children_in:program|join:", " }}
     {% else %}
         None of your children are registered for this program.
     {% endif %}
     <br>
-    {% if program.registration_opens <= now and now <= program.registration_closes %}
-        <a href="{% url "guardian:register_for_program" program_pk=program.pk %}">Register children for this program</a>
-        Registration for this program will close on {{ program.registration_closes }}.
-    {% elif program.registration_opens > now %}
-        Registration for this program will be open from {{ program.registration_opens }} to {{ program.registration_closes }}.
-    {% elif now > program.registration_closes %}
-        Registration for this program closed on {{ program.registration_closes }}.
-    {% endif %}
+    
     <br><br>
     Description: {{ program.description|linebreaks }}
     <br><br>

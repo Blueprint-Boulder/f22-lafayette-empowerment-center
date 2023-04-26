@@ -1,12 +1,38 @@
 {% extends "base.html" %}
 {% block title %}Title{% endblock %}
 {% block content %}
-<a href="{% url "org_admin:add_program" %}">Add program</a><br>
-{% for program in programs %}
-    {{ program.name }}
-    <a href="{% url "org_admin:view_program" program_pk=program.pk %}">[View]</a>
-    <br>
-{% empty %}
-    No programs have been added yet.
-{% endfor %}
+<div class="relative flex w-screen h-screen max-w-screen flex-col">
+    <div class="relative flex flex-row h-full w-full">
+        <div class="relative flex h-full w-1/5 justify-center items-center bg-gray-200">
+            <div class="relative flex w-[82%] h-[90%]">
+                <div class="relative flex flex-col w-full bg-gray-200 overflow-visible space-y-5">
+                    {% for program in programs %}
+                    <div class="relative flex truncate whitespace-nowrap cursor-pointer hover:bg-gray-200 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
+                        <a class="relative flex  text-black hover:bg-gray-200 bg-gray-200" href="{% url "org_admin:view_program" program_pk=program.pk %}">{{program.name}}</a>
+                    </div>
+                    {% empty %}
+                        No programs are available yet.
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="relative flex flex-row flex-wrap w-full m-5">
+            {% for program in programs %}
+            <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-black m-3">
+                <img class="bg-blue-900 rounded-2xl w-full h-full absolute full object-cover" src="https://images.unsplash.com/photo-1607211851821-8be3cd6146f0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZCUyMHBhaW50aW5nfGVufDB8fDB8fA%3D%3D&w=1000&q=80"/>
+                <div class="flex relative h-3/5 my-4 mx-5 flex-row justify-end">
+                    <a class="text-white text-lg underline cursor-pointer  hover:opacity-70  transition-all duration-100 ease-out" href="./admin_programs">Edit</a>
+                </div>
+                <div class="flex relative h-2/5 flex-col my-5 mx-5">
+                    <h1 class="text-white text-xl font-semibold">{{ program.name }}</h1>
+                    <a class="text-white text-lg underline cursor-pointer hover:opacity-70 transition-all duration-100 ease-out" href="{% url "org_admin:view_program" program_pk=program.pk %}">View More</a>
+                </div>
+            </div>
+            {% empty %}
+                No programs are available yet.
+            {% endfor %}
+            <a class="flex relative h-52 w-60 rounded-2xl items-center text-white justify-center flex-col m-3 bg-sky-400 text-2xl hover:opacity-90" href="{% url "org_admin:add_program" %}">+</a><br>
+        </div>
+    </div>
+</div>
 {% endblock %}

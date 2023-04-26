@@ -29,23 +29,6 @@
                     <a class="text-white text-lg underline cursor-pointer hover:opacity-70 transition-all duration-100 ease-out" href="{% url "guardian:view_program" program_pk=program.pk %}">View More</a>
                 </div>
             </div>
-
-            {% if now > program.program_ends %} (Program has ended)
-                {% elif now <= program.registration_opens %} (Open for registration)
-                {% elif now > program.registration_opens %} (Registration closed)
-            {% endif %}
-            <br>
-            {% if user|has_children_in:program %}
-                Your children registered for this program: {{ user|children_in:program|join:", " }}
-            {% else %}
-                None of your children are registered for this program.
-            {% endif %}
-            <br>
-            {% if user|has_unread_announcements_in:program and user|has_children_in:program %}
-                    This program has new announcements.<br>
-            {% endif %}
-            <br>
-
             {% empty %}
                 No programs are available yet.
             {% endfor %}
