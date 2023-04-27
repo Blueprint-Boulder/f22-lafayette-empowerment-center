@@ -9,12 +9,13 @@
         <div class="relative flex h-full w-1/5 justify-center items-center bg-gray-200">
             <div class="relative flex w-[82%] h-[90%]">
                 <div class="relative flex flex-col w-full bg-gray-200 overflow-visible space-y-5">
-                    <div class="relative flex truncate whitespace-nowrap  cursor-pointer hover:bg-gray-200 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
-                        <a class="relative flex font-semibold text-black hover:bg-gray-200 bg-gray-200  ">This is a selected program element</a>
-                    </div>
+                    {% for program in programs %}
                     <div class="relative flex truncate whitespace-nowrap cursor-pointer hover:bg-gray-200 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
-                        <a class="relative flex  text-black hover:bg-gray-200 bg-gray-200">This is a non-selected program element</a>
+                        <a class="relative flex  text-black hover:bg-gray-200 bg-gray-200" href="{% url "guardian:view_program" program_pk=program.pk %}">{{program.name}}</a>
                     </div>
+                    {% empty %}
+                        No programs are available yet.
+                    {% endfor %}
                 </div>
             </div>
         </div>

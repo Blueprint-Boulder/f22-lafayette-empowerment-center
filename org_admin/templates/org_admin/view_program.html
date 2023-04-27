@@ -6,13 +6,17 @@
             <div class="relative flex h-full w-1/5 justify-center items-center bg-gray-200 overflow-y-auto">
                 <div class="relative flex w-[82%] h-[90%]">
                     <ul class="relative flex flex-col w-full justify-start space-y-5 overflow-visible bg-gray-200">
-                        <li class="relative flex truncate whitespace-nowrap h-10 cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
-                            <a class="relative flex font-semibold text-black bg-gray-200 hover:bg-gray-200">{{ program.name }}</a>
-                        </li>
-                        {% for program in programs %}
-                        <div class="relative flex truncate whitespace-nowrap cursor-pointer hover:bg-gray-200 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
-                            <a class="relative flex  text-black hover:bg-gray-200 bg-gray-200">{{program.name}}</a>
-                        </div>
+                        
+                        {% for program_ in programs %}
+                        {% if program_.name == program.name %}
+                            <li class="relative flex truncate whitespace-nowrap h-10 cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
+                                <a class="relative flex font-semibold text-black bg-gray-200 hover:bg-gray-200" href="{% url "org_admin:view_program" program_pk=program.pk %}">{{ program.name }}</a>
+                            </li>
+                        {% else %}
+                            <div class="relative flex truncate whitespace-nowrap cursor-pointer hover:bg-gray-200 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
+                                <a class="relative flex  text-black hover:bg-gray-200 bg-gray-200" href="{% url "org_admin:view_program" program_pk=program_.pk %}">{{program_.name}}</a>
+                            </div>
+                        {% endif %}
                         {% empty %}
                             No programs are available yet.
                         {% endfor %}
@@ -22,7 +26,7 @@
             <div class="relative flex flex-grow justify-center flex-col items-center bg-white overflow-y-auto">
                 <div class="relative flex w-[90%] mb-2 justify-between">
                     <a class="relative flex truncate whitespace-nowrap text-blue-400 cursor-pointer hover:text-blue-500 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out " href="{% url "org_admin:programs" %}">Back to all programs</a>
-                    <a class="relative flex truncate whitespace-nowrap text-blue-400 cursor-pointer hover:text-blue-500 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">Edit Program Layout</a>
+                    <a class="relative flex truncate whitespace-nowrap text-blue-400 cursor-pointer hover:text-blue-500 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">Edit Program</a>
                 </div>
                 <div class="relative flex h-[90%] w-[90%] flex-col justify-start items-start space-y-3">
                     <div class="relative flex w-full h-[5%] flex-row justify-between">
@@ -78,7 +82,7 @@
                         <thead class="relative rounded-t-lg flex flex-row bg-gray-300 h-16 w-full items-center pr-20">
                             <tr class="flex-row relative flex items-center justify-around w-full space-x-5 whitespace-nowrap">
                                 <th class="relative flex font-normal">Last Name</th>
-                                <th class="relative flex font-normal">First Name</th>
+                                <th class="relative flex font-normal">Pronouns</th>
                                 <th class="relative flex font-normal">Age</th>
                                 <th class="relative flex font-normal">Grade</th>
                                 <th class="relative flex font-normal">Allergies</th>
@@ -92,16 +96,16 @@
                                     {{ child.name }}
                                 </td>
                                 <td class="relative flex">
-                                    John
+                                    {{ child.pronouns }}
                                 </td>
                                 <td class="relative flex">
-                                    13th
+                                    {{ child.age }}
                                 </td>
                                 <td class="relative flex">
-                                    7th
+                                    {{ child.grade }}
                                 </td>
-                                <td class="relative flex">
-                                    Peanuts, po...
+                                <td class="relative flex overflow-ellipsis">
+                                    {{ child.allergies }}
                                 </td>
                                 <td class="relative flex text-gray-400 text-xl">
                                     <a href="{% url "org_admin:view_child" child_pk=child.pk %}">></a>
@@ -113,27 +117,27 @@
                 </div>
                 <div class="relative flex flex-col w-[90%]">
                     <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Surveys</h1>
-                    <div class="relative flex flex-col space-x-10">
-                        {% for survey in program.surveys.all %}
-                            Name: {{ survey.name }}
-                            <a href="{% url "org_admin:view_survey_responses" survey_pk=survey.pk %}">View responses</a>
-                        {% empty %}
-                            No surveys have been created for this program yet.
-                        {% endfor %}
-                        <a href="{% url "org_admin:create_survey" program_pk=program.pk %}">Create survey</a>
+                    {% for survey in program.surveys.all %}
+                    <div class="relative flex flex-row space-x-10 p-3 bg-gray-200 w-96 h-10 items-center rounded-xl justify-between">
+                            <div> Name: {{ survey.name }} </div>
+                            <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" href="{% url "org_admin:view_survey_responses" survey_pk=survey.pk %}">View responses</a>
                     </div>
+                    {% empty %}
+                            No surveys have been created for this program yet.
+                    {% endfor %}
+                    <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" href="{% url "org_admin:create_survey" program_pk=program.pk %}">Create survey</a>
                 </div>
                 <div class="relative flex flex-col w-[90%]">
                     <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Announcements</h1>
-                    <div class="relative flex flex-col space-x-10">
-                        {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}
-                            <h3>Title: {{ announcement.title }}</h3>
-                            {{ announcement.content|linebreaks }}
-                            (Sent on {{ announcement.time_sent }})<br>
-                            <br>
-                        {% endfor %}
-                        <a href="{% url "org_admin:make_announcement" program_pk=program.pk %}">Make announcement</a>
+                    {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}
+                    <div class="relative flex flex-row space-x-10 p-3 bg-gray-200 w-96 h-10 items-center rounded-xl justify-between"> 
+                        <div>Title: {{ announcement.title }}</div>
+                        <div></div>
+                        {{ announcement.content|linebreaks }}
+                        (Sent on {{ announcement.time_sent }})
                     </div>
+                    {% endfor %}
+                    <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" class="secondary-button" href="{% url "org_admin:make_announcement" program_pk=program.pk %}">Make announcement</a>
                 </div>
             </div>
         </div>

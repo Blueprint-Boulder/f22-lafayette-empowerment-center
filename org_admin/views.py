@@ -55,7 +55,7 @@ class MakeAnnouncement(CreateView):
 @user_passes_test(is_org_admin)
 def view_program(request, program_pk):
     return render(request, "org_admin/view_program.html",
-                  {'program': Program.objects.get(pk=program_pk), 'now': datetime.now()})
+                  {"programs": Program.objects.all(), 'program': Program.objects.get(pk=program_pk), 'now': datetime.now()})
 
 @user_passes_test(is_org_admin)
 def programs(request):

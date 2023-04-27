@@ -8,16 +8,19 @@
         <div class="relative flex h-full w-1/5 justify-center items-center bg-gray-200">
             <div class="relative flex w-[82%] h-[90%]">
                 <div class="relative flex flex-col w-full bg-gray-200 overflow-visible space-y-5">
-                    <div class="relative flex truncate whitespace-nowrap  cursor-pointer hover:bg-gray-200 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
-                        <a class="relative flex font-semibold text-black hover:bg-gray-200 bg-gray-200  ">{{ program.name }}</a>
-                    </div>
-                    {% for program in programs %}
-                    <div class="relative flex truncate whitespace-nowrap cursor-pointer hover:bg-gray-200 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
-                        <a class="relative flex  text-black hover:bg-gray-200 bg-gray-200" href="{% url "org_admin:view_program" program_pk=program.pk %}">{{program.name}}</a>
-                    </div>
-                    {% empty %}
-                        No programs are available yet.
-                    {% endfor %}
+                    {% for program_ in programs %}
+                        {% if program_.name == program.name %}
+                            <li class="relative flex truncate whitespace-nowrap h-10 cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
+                                <a class="relative flex font-semibold text-black bg-gray-200 hover:bg-gray-200" href="{% url "guardian:view_program" program_pk=program.pk %}">{{ program.name }}</a>
+                            </li>
+                        {% else %}
+                            <div class="relative flex truncate whitespace-nowrap cursor-pointer hover:bg-gray-200 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
+                                <a class="relative flex  text-black hover:bg-gray-200 bg-gray-200" href="{% url "guardian:view_program" program_pk=program_.pk %}">{{program_.name}}</a>
+                            </div>
+                        {% endif %}
+                        {% empty %}
+                            No programs are available yet.
+                        {% endfor %}
                 </div>
             </div>
         </div>
@@ -56,75 +59,37 @@
                         <text class="text-white">img</text>
                     </div>
                 </div>
-                <div class="relative flex w-full h-1/2 flex-col space-y-5">
+                <div class="relative flex w-full h-1/2 translate-y-12 flex-col space-y-5">
                     <h1 class="">Desciption: </h1>
                     <p class="relative flex text-black">{{ program.description }}</p>
                 </div>
+                                
                 <div class="relative flex flex-col w-[90%]">
                     <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Surveys</h1>
-                    <div class="relative flex flex-col space-x-10">
-                        {% for survey in program.surveys.all %}
-                            Name: {{ survey.name }}
-                            <a href="{% url "org_admin:view_survey_responses" survey_pk=survey.pk %}">View responses</a>
-                        {% empty %}
-                            No surveys have been created for this program yet.
-                        {% endfor %}
-                        <a href="{% url "org_admin:create_survey" program_pk=program.pk %}">Create survey</a>
+                    {% for survey in program.surveys.all %}
+                    <div class="relative flex flex-row space-x-10 p-3 bg-gray-200 w-96 h-10 items-center rounded-xl justify-between">
+                            <div> Name: {{ survey.name }} </div>
+                            <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" href="{% url "guardian:take_survey" survey_pk=survey.pk %}">Take Survey</a>
                     </div>
+                    {% empty %}
+                            No surveys have been created for this program yet.
+                    {% endfor %}
                 </div>
                 <div class="relative flex flex-col w-[90%]">
                     <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Announcements</h1>
-                    <div class="relative flex flex-col space-x-10">
-                        {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}
-                            <h3>Title: {{ announcement.title }}</h3>
-                            {{ announcement.content|linebreaks }}
-                            (Sent on {{ announcement.time_sent }})<br>
-                            <br>
-                        {% endfor %}
-                        <a href="{% url "org_admin:make_announcement" program_pk=program.pk %}">Make announcement</a>
+                    {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}
+                    <div class="relative flex flex-row space-x-10 p-3 bg-gray-200 w-96 h-10 items-center rounded-xl justify-between"> 
+                        <div>Title: {{ announcement.title }}</div>
+                        <div></div>
+                        {{ announcement.content|linebreaks }}
+                        (Sent on {{ announcement.time_sent }})
                     </div>
+                    {% endfor %}
+                    <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" class="secondary-button" href="{% url "guardian:view_announcement" announcement_pk=program.pk %}">Make announcement</a>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
-    <a href="{% url "guardian:programs" %}">Back to all programs</a>
-    <h1>Program: </h1>
-    {% if user|has_children_in:program %}
-        Your children in this program: {{ user|children_in:program|join:", " }}
-    {% else %}
-        None of your children are registered for this program.
-    {% endif %}
-    <br>
-    
-    <br><br>
-    Description: {{ program.description|linebreaks }}
-    <br><br>
-    {% if user|has_children_in:program %}
-        <h2>Announcements: </h2>
-        {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}
-            <h3>
-                {% if user not in announcement.read_by.all %}
-                    (unread)
-                {% endif %}
-                {{ announcement.title }}
-            </h3>
-            {{ announcement.time_sent }}<br>
-            <a href="{% url "guardian:view_announcement" announcement_pk=announcement.pk %}">View</a>
-        {% empty %}
-            No announcements yet.
-        {% endfor %}
-        <h2>Surveys: </h2>
-        {% for survey in program.surveys.all %}
-            Title: {{ survey.name }}<br>
-            {% if user|has_taken_survey:survey %}
-                You've already taken this survey.<br>
-            {% else %}
-                <a href="{% url "guardian:take_survey" survey_pk=survey.pk %}">Take survey</a><br>
-                <br>
-            {% endif %}
-        {% empty %}
-            No surveys have been sent out.
-        {% endfor %}
-    {% endif %}
 {% endblock %}

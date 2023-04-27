@@ -33,7 +33,7 @@ def programs(request):
 
 @user_passes_test(is_guardian)
 def view_program(request, program_pk):
-    return render(request, "guardian/view_program.html", {'program': Program.objects.get(pk=program_pk), 'now': timezone.now()})
+    return render(request, "guardian/view_program.html", {'program': Program.objects.get(pk=program_pk), 'now': timezone.now(), 'programs': Program.objects.all()})
 
 @user_passes_test(is_guardian)
 def view_announcement(request, announcement_pk):
