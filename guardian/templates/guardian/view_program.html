@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="relative flex m-5 w-full h-full flex-col justify-center items-center">
-            <div class="relative flex flex-col w-[90%] my-10 h-full space-y-14">
+            <div class="relative flex flex-col w-[90%] my-10 h-full space-y-3">
                 <div class="relative flex w-full h-1/2 flex-row justify-between">
                     <div class="realtive grid grid-col-2 w-1/2 flex-col space-y-9">
                         <h1 class="relative flex text-3xl text-black font-semibold">{{ program.name }}</h1>
@@ -59,6 +59,30 @@
                 <div class="relative flex w-full h-1/2 flex-col space-y-5">
                     <h1 class="">Desciption: </h1>
                     <p class="relative flex text-black">{{ program.description }}</p>
+                </div>
+                <div class="relative flex flex-col w-[90%]">
+                    <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Surveys</h1>
+                    <div class="relative flex flex-col space-x-10">
+                        {% for survey in program.surveys.all %}
+                            Name: {{ survey.name }}
+                            <a href="{% url "org_admin:view_survey_responses" survey_pk=survey.pk %}">View responses</a>
+                        {% empty %}
+                            No surveys have been created for this program yet.
+                        {% endfor %}
+                        <a href="{% url "org_admin:create_survey" program_pk=program.pk %}">Create survey</a>
+                    </div>
+                </div>
+                <div class="relative flex flex-col w-[90%]">
+                    <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Announcements</h1>
+                    <div class="relative flex flex-col space-x-10">
+                        {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}
+                            <h3>Title: {{ announcement.title }}</h3>
+                            {{ announcement.content|linebreaks }}
+                            (Sent on {{ announcement.time_sent }})<br>
+                            <br>
+                        {% endfor %}
+                        <a href="{% url "org_admin:make_announcement" program_pk=program.pk %}">Make announcement</a>
+                    </div>
                 </div>
             </div>
         </div>

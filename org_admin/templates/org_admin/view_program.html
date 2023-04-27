@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Program: {{ program.name }}{% endblock %}
 {% block content %}
-    <div class="relative flex w-screen h-screen max-w-screen flex-col">
-        <div class="relative flex flex-row h-full w-full">
-            <div class="relative flex h-full w-1/5 justify-center items-center bg-gray-200">
+    <div class="relative flex w-screen h-screen max-w-screen flex-col overflow-y-auto">
+        <div class="relative flex flex-row h-full w-full overflow-y-auto">
+            <div class="relative flex h-full w-1/5 justify-center items-center bg-gray-200 overflow-y-auto">
                 <div class="relative flex w-[82%] h-[90%]">
                     <ul class="relative flex flex-col w-full justify-start space-y-5 overflow-visible bg-gray-200">
                         <li class="relative flex truncate whitespace-nowrap h-10 cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
@@ -19,9 +19,7 @@
                     </ul>
                 </div>
             </div>
-
-            
-            <div class="relative flex flex-col h-full w-4/5 justify-center items-center bg-white">
+            <div class="relative flex flex-grow justify-center flex-col items-center bg-white overflow-y-auto">
                 <div class="relative flex w-[90%] mb-2 justify-between">
                     <a class="relative flex truncate whitespace-nowrap text-blue-400 cursor-pointer hover:text-blue-500 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out " href="{% url "org_admin:programs" %}">Back to all programs</a>
                     <a class="relative flex truncate whitespace-nowrap text-blue-400 cursor-pointer hover:text-blue-500 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">Edit Program Layout</a>
@@ -113,27 +111,31 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="relative flex flex-col w-[90%]">
+                    <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Surveys</h1>
+                    <div class="relative flex flex-col space-x-10">
+                        {% for survey in program.surveys.all %}
+                            Name: {{ survey.name }}
+                            <a href="{% url "org_admin:view_survey_responses" survey_pk=survey.pk %}">View responses</a>
+                        {% empty %}
+                            No surveys have been created for this program yet.
+                        {% endfor %}
+                        <a href="{% url "org_admin:create_survey" program_pk=program.pk %}">Create survey</a>
+                    </div>
+                </div>
+                <div class="relative flex flex-col w-[90%]">
+                    <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Announcements</h1>
+                    <div class="relative flex flex-col space-x-10">
+                        {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}
+                            <h3>Title: {{ announcement.title }}</h3>
+                            {{ announcement.content|linebreaks }}
+                            (Sent on {{ announcement.time_sent }})<br>
+                            <br>
+                        {% endfor %}
+                        <a href="{% url "org_admin:make_announcement" program_pk=program.pk %}">Make announcement</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-        
-    
-    <h2>Surveys for this program:</h2>
-    <a href="{% url "org_admin:create_survey" program_pk=program.pk %}">Create survey</a>
-    <br>
-    {% for survey in program.surveys.all %}
-        Name: {{ survey.name }}
-        <a href="{% url "org_admin:view_survey_responses" survey_pk=survey.pk %}">View responses</a>
-        <br>
-    {% empty %}
-        No surveys have been created for this program yet.
-   {% endfor %}
-    <h2>Announcements for this program:</h2>
-    <a href="{% url "org_admin:make_announcement" program_pk=program.pk %}">Make announcement</a>
-    {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}
-        <h3>Title: {{ announcement.title }}</h3>
-        {{ announcement.content|linebreaks }}
-        (Sent on {{ announcement.time_sent }})<br>
-        <br>
-    {% endfor %}
 {% endblock %}
