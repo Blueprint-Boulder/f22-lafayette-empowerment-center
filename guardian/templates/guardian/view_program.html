@@ -80,12 +80,9 @@
                     {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}
                     <div class="relative flex flex-row space-x-10 p-3 bg-gray-200 w-96 h-10 items-center rounded-xl justify-between"> 
                         <div>Title: {{ announcement.title }}</div>
-                        <div></div>
-                        {{ announcement.content|linebreaks }}
-                        (Sent on {{ announcement.time_sent }})
+                        <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" class="secondary-button" href="{% url "guardian:view_announcement" announcement_pk=announcement.pk %}">View announcement</a>
                     </div>
                     {% endfor %}
-                    <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" class="secondary-button" href="{% url "guardian:view_announcement" announcement_pk=program.pk %}">Make announcement</a>
                 </div>
 
             </div>
