@@ -25,7 +25,9 @@ cbv_user_must_be_guardian = method_decorator(user_passes_test(is_guardian), "dis
 
 @user_passes_test(is_guardian)
 def home(request):
-    return render(request, "guardian/home.html", {"children": Student.objects.filter(guardian=request.user)})
+    unread_notifs = Notification.objects.filter(recipients__pk=request.user.pk).exclude(read_by__pk=request.user.pk)
+    return render(request, "guardian/home.html", {"children": Student.objects.filter(guardian=request.user),
+                                                  "unread_notifs": unread_notifs})
 
 @user_passes_test(is_guardian)
 def programs(request):
@@ -33,7 +35,11 @@ def programs(request):
 
 @user_passes_test(is_guardian)
 def view_program(request, program_pk):
-    return render(request, "guardian/view_program.html", {'program': Program.objects.get(pk=program_pk), 'now': timezone.now(), 'programs': Program.objects.all()})
+    program = Program.objects.get(pk=program_pk)
+    return render(request, "guardian/view_program.html",
+                  {'program': program, 'programs': Program.objects.all(),
+                  'untaken_surveys': program.surveys.exclude(responses__respondent=request.user),
+                  'now': timezone.now()})
 
 @user_passes_test(is_guardian)
 def view_announcement(request, announcement_pk):
@@ -78,15 +84,17 @@ def view_child(request, child_pk):
 
 @user_passes_test(is_guardian)
 def register_for_program(request, program_pk):
+    assert isinstance(request.user, LECUser)  # Without this, PyCharm complains: "Unresolved attribute reference 'children' for class 'User'"
     program = Program.objects.get(pk=program_pk)
 
     if request.method == "GET":
-        return render(request, "guardian/register_for_program.html", {'program': program})
+        return render(request, "guardian/register_for_program.html",
+                      {'program': program, 'unregistered_children': request.user.children.exclude(programs=program)})
 
     elif request.method == "POST":
-        program.students.set(request.POST.getlist("students"))
+        program.students.add(*request.POST.getlist("students"))
         program.save()
-        return redirect("guardian:programs")
+        return redirect("guardian:view_program", program_pk=program.pk)
 
 @user_passes_test(is_guardian)
 def take_survey(request, survey_pk):

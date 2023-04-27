@@ -31,13 +31,15 @@
                         <h1 class="relative flex text-3xl text-black font-semibold">{{ program.name }}</h1>
                         <div class="relative flex space-y-5 flex-col">
                             <div class="relative flex">
-                                <text class="text-black text-lg">Grade Range: </text>
+                                <text class="text-black text-lg">Grade Range: TBA</text>
                             </div>
                             <div class="relative flex">
-                                <text class="text-black text-lg">Dates: </text>
+                                <text class="text-black text-lg">Dates:
+                                starts {{ program.program_starts }}; ends {{ program.program_ends }}</text>
+
                             </div>
                             <div class="relative flex">
-                                <text class="text-black text-lg">Time:</text>
+                                <text class="text-black text-lg">Time: TBA</text>
                             </div>
                             <div class="relative flex">
                                 <text class="text-black text-lg">
@@ -51,6 +53,11 @@
                                 </text>
                             </div>
                         </div>
+                        {% if user|has_children_in:program %}
+                            Your children in this program: {{ user|children_in:program|join:", " }}
+                        {% else %}
+                            None of your children are registered for this program.
+                        {% endif %}
                         {% if program.registration_opens <= now and now <= program.registration_closes %}
                             <a class="text-white text-mg relative font-semibold flex rounded-2xl h-12 w-48 bg-sky-400 flex-col justify-center items-center cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out" href="{% url "guardian:register_for_program" program_pk=program.pk %}">Register Children</a>
                         {% endif %}
@@ -59,32 +66,35 @@
                         <text class="text-white">img</text>
                     </div>
                 </div>
-                <div class="relative flex w-full h-1/2 translate-y-12 flex-col space-y-5">
-                    <h1 class="">Desciption: </h1>
+                <div class="relative flex w-full h-1/2 translate-y-24 flex-col space-y-5">
+                    <h1 class="">Description: </h1>
                     <p class="relative flex text-black">{{ program.description }}</p>
                 </div>
-                                
-                <div class="relative flex flex-col w-[90%]">
-                    <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Surveys</h1>
-                    {% for survey in program.surveys.all %}
-                    <div class="relative flex flex-row space-x-10 p-3 bg-gray-200 w-96 h-10 items-center rounded-xl justify-between">
-                            <div> Name: {{ survey.name }} </div>
-                            <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" href="{% url "guardian:take_survey" survey_pk=survey.pk %}">Take Survey</a>
-                    </div>
-                    {% empty %}
-                            No surveys have been created for this program yet.
-                    {% endfor %}
-                </div>
-                <div class="relative flex flex-col w-[90%]">
-                    <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Announcements</h1>
-                    {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}
-                    <div class="relative flex flex-row space-x-10 p-3 bg-gray-200 w-96 h-10 items-center rounded-xl justify-between"> 
-                        <div>Title: {{ announcement.title }}</div>
-                        <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" class="secondary-button" href="{% url "guardian:view_announcement" announcement_pk=announcement.pk %}">View announcement</a>
-                    </div>
-                    {% endfor %}
-                </div>
 
+                {% if user|has_children_in:program %}
+                    <div class="relative flex flex-col w-[90%]">
+                        <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Surveys</h1>
+                        {% for survey in untaken_surveys %}
+                            <div class="relative flex flex-row space-x-10 p-3 bg-gray-200 w-96 h-10 items-center rounded-xl justify-between">
+                                    <div> Name: {{ survey.name }} </div>
+                                    <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" href="{% url "guardian:take_survey" survey_pk=survey.pk %}">Take Survey</a>
+                            </div>
+                        {% empty %}
+                                There aren't any surveys for you to take right now.
+                        {% endfor %}
+                    </div>
+                    <div class="relative flex flex-col w-[90%]">
+                        <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Announcements</h1>
+                        {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}
+                            <div class="relative flex flex-row space-x-10 p-3 bg-gray-200 w-96 h-10 items-center rounded-xl justify-between">
+                                <div>Title: {{ announcement.title }}</div>
+                                <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out secondary-button" href="{% url "guardian:view_announcement" announcement_pk=announcement.pk %}">View announcement</a>
+                            </div>
+                        {% empty %}
+                            No announcements yet.
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

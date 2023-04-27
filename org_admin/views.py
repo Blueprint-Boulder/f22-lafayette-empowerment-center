@@ -45,7 +45,7 @@ class MakeAnnouncement(CreateView):
         print(program_pk)
         form.instance.program = Program.objects.get(pk=program_pk)
         form.instance.save()
-        notif = Notification(message=f"New announcement: {form.instance.title}",
+        notif = Notification(message=f"New announcement for {form.instance.program.name}: {form.instance.title}",
                              link=reverse("guardian:view_announcement", kwargs={'announcement_pk': form.instance.pk}))
         notif.save()
         for student in form.instance.program.students.all():

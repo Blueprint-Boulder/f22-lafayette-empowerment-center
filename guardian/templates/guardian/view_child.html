@@ -57,8 +57,8 @@
                 <thead class="relative rounded-t-lg flex flex-row bg-gray-300 h-16 w-full items-center pr-20">
                     <tr class="flex-row relative flex items-center justify-around w-full space-x-5 whitespace-nowrap">
                         <th class="relative flex font-normal">Program Name</th>
-                        <th class="relative flex font-normal">Date Enrolled</th>
-                        <th class="relative flex font-normal">Date Graduates</th>
+                        <th class="relative flex font-normal">Date program starts</th>
+                        <th class="relative flex font-normal">Date program ends</th>
                         <th class="relative flex font-normal"></th>
                     </tr>
                 </thead>
@@ -69,13 +69,13 @@
                             {{ program.name }}
                         </td>
                         <td class="relative flex -translate-x-12">
-                            9/12/21
+                            {{ program.program_starts }}
                         </td>
                         <td class="relative flex -translate-x-12">
-                            1/12/80
+                            {{ program.program_ends }}
                         </td>
                         <td class="relative flex translate-x-10 text-gray-400 text-xl">
-                            >
+                            <a href="{% url "guardian:view_program" program_pk=program.pk %}">></a>
                         </td>
                     </tr>
                     {% endfor %}
