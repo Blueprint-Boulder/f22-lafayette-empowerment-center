@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="relative w-full h-full overflow-y-auto">
-                <div class="relative flex justify-center flex-col items-center bg-white pt-5">
+                <div class="relative flex justify-center flex-col items-center bg-white py-5">
                     <div class="relative flex w-[90%] mb-2 justify-between">
                         <a class="relative flex truncate whitespace-nowrap text-blue-400 cursor-pointer hover:text-blue-500 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out " href="{% url "org_admin:programs" %}">Back to all programs</a>
                         <a class="relative flex truncate whitespace-nowrap text-blue-400 cursor-pointer hover:text-blue-500 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">Edit Program</a>
@@ -42,17 +42,23 @@
                         <div class="relative flex w-full h-[5%] flex-row justify-between">
                             <h1 class="relative flex text-2xl font-semibold">Registration</h1>
                         </div>
-                        <div class="relative flex items-center mt-3 max-h-[20%] truncate bg-gray-200 rounded-lg py-2 px-3 w-full">
+                        <div class="relative flex flex-col space-y-1 justify-center mt-3 max-h-[20%] truncate bg-gray-200 rounded-lg py-2 px-3 w-full">
                             <p class="relative flex">
-                                {{ program.registration_opens }} until {{ program.registration_closes }}
+                                Starts: {{ program.registration_opens }}
+                            </p>
+                            <p class="relative flex">
+                                Ends: {{ program.registration_closes }}
                             </p>
                         </div>
                         <div class="relative flex w-full h-[5%] flex-row justify-between">
                             <h1 class="relative flex text-2xl font-semibold">Program Starts</h1>
                         </div>
-                        <div class="relative flex items-center mt-3 max-h-[20%] truncate bg-gray-200 rounded-lg py-2 px-3 w-full">
+                        <div class="relative flex flex-col space-y-1 justify-center mt-3 max-h-[20%] truncate bg-gray-200 rounded-lg py-2 px-3 w-full">
                             <p class="relative flex">
-                                {{ program.program_starts }} and ends: {{ program.program_ends }}
+                                Starts: {{ program.program_starts }} 
+                            </p>
+                            <p class="relative flex"></p>
+                                Ends: {{ program.program_ends }}
                             </p>
                             
                         </div>
@@ -116,7 +122,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="relative flex flex-col w-[90%]">
+                    <div class="relative flex flex-col w-[90%] space-y-3 mt-3">
                         <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Surveys</h1>
                         {% for survey in program.surveys.all %}
                         <div class="relative flex flex-row space-x-10 p-3 bg-gray-200 w-96 h-10 items-center rounded-xl justify-between">
@@ -126,19 +132,24 @@
                         {% empty %}
                                 No surveys have been created for this program yet.
                         {% endfor %}
-                        <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" href="{% url "org_admin:create_survey" program_pk=program.pk %}">Create survey</a>
+                        <a class=" text-white bg-sky-400 relative font-semibold flex rounded-2xl h-12 w-48 third-color flex-col justify-center items-center cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out" href="{% url "org_admin:create_survey" program_pk=program.pk %}">Create survey</a>
                     </div>
-                    <div class="relative flex flex-col w-[90%]">
+                    <div class="relative flex flex-col w-[90%] space-y-8 mt-3">
                         <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Announcements</h1>
-                        {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}
-                        <div class="relative flex flex-row space-x-10 p-3 bg-gray-200 w-96 h-10 items-center rounded-xl justify-between"> 
-                            <div>Title: {{ announcement.title }}</div>
-                            <div></div>
-                            {{ announcement.content|linebreaks }}
-                            (Sent on {{ announcement.time_sent }})
+                        <div class="space-y-12">
+                            {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}
+                            <div class="relative flex flex-col w-full h-10 items-center justify-center space-y-1"> 
+                                <div class="relative flex flex-row w-full justify-between">
+                                    <div class="text-xl font-medium">{{ announcement.title }}</div>
+                                    <div class="overflow-auto">(Sent on {{ announcement.time_sent }})</div>
+                                </div>
+                                <div class="realtive flex bg-gray-200 h-52 w-full p-3 rounded-xl">
+                                {{ announcement.content}}
+                                </div>
+                            </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
-                        <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" class="secondary-button" href="{% url "org_admin:make_announcement" program_pk=program.pk %}">Make announcement</a>
+                        <a class="text-white bg-sky-400 relative font-semibold flex rounded-2xl h-12 w-48 third-color flex-col justify-center items-center cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out" class="secondary-button" href="{% url "org_admin:make_announcement" program_pk=program.pk %}">Make announcement</a>
                     </div>
                 </div>
             </div>
