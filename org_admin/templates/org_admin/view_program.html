@@ -23,121 +23,134 @@
                     </ul>
                 </div>
             </div>
-            <div class="relative flex flex-grow justify-center flex-col items-center bg-white overflow-y-auto">
-                <div class="relative flex w-[90%] mb-2 justify-between">
-                    <a class="relative flex truncate whitespace-nowrap text-blue-400 cursor-pointer hover:text-blue-500 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out " href="{% url "org_admin:programs" %}">Back to all programs</a>
-                    <a class="relative flex truncate whitespace-nowrap text-blue-400 cursor-pointer hover:text-blue-500 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">Edit Program</a>
-                </div>
-                <div class="relative flex h-[90%] w-[90%] flex-col justify-start items-start space-y-3">
-                    <div class="relative flex w-full h-[5%] flex-row justify-between">
-                        <h1 class="relative flex text-2xl font-semibold">Description</h1>
-                        
+            <div class="relative w-full h-full overflow-y-auto">
+                <div class="relative flex justify-center flex-col items-center bg-white py-5">
+                    <div class="relative flex w-[90%] mb-2 justify-between">
+                        <a class="relative flex truncate whitespace-nowrap text-blue-400 cursor-pointer hover:text-blue-500 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out " href="{% url "org_admin:programs" %}">Back to all programs</a>
+                        <a class="relative flex truncate whitespace-nowrap text-blue-400 cursor-pointer hover:text-blue-500 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">Edit Program</a>
                     </div>
-                    <div class="relative flex mt-3 max-h-[20%] truncate bg-gray-200 items-center rounded-lg py-2 px-5 w-full">
-                        <p class="relative flex">
-                            {{ program.description }}
-                        </p>
-                    </div>
-                    <div class="relative flex w-full h-[5%] flex-row justify-between">
-                        <h1 class="relative flex text-2xl font-semibold">Registration</h1>
-                    </div>
-                    <div class="relative flex items-center mt-3 max-h-[20%] truncate bg-gray-200 rounded-lg py-2 px-5 w-full">
-                        <p class="relative flex">
-                            {{ program.registration_opens }} until {{ program.registration_closes }}
-                        </p>
-                    </div>
-                    <div class="relative flex w-full h-[5%] flex-row justify-between">
-                        <h1 class="relative flex text-2xl font-semibold">Program Starts</h1>
-                    </div>
-                    <div class="relative flex items-center mt-3 max-h-[20%] truncate bg-gray-200 rounded-lg py-2 px-5 w-full">
-                        <p class="relative flex">
-                            {{ program.program_starts }} and ends: {{ program.program_ends }}
-                        </p>
-                        
-                    </div>
-                    <div class="relative flex mt-5 w-full h-[5%] flex-row justify-between items-center">
-                        <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Student Roster</h1>
-                        <div class="relative flex flex-row space-x-10">
-                            <div class="relative flex ring-1 ring-gray-300 w-40 h-10 rounded-xl flex-row justify-between px-5 items-center">
-                                <div class="text-gray-400">
-                                    Sort by...
-                                </div>
-                                <div class="text-2xl text-gray-500 mb-3">
-                                    &#8964;
-                                </div>
-                            </div>
-                            <div class="relative flex ring-1 ring-gray-300 w-40 h-10 rounded-xl flex-row justify-between px-5 items-center">
-                                <div class="text-gray-400">
-                                    Ascending
-                                </div>
-                                <div class="text-2xl text-gray-500 mb-3">
-                                    &#8964;
-                                </div>
-                            </div>
-                            <input class="relative flex ring-1 text-gray-500 ring-gray-300 w-40 h-10 rounded-xl flex-row justify-start px-5 items-center" placeholder="Search..." />
-                            </input>
+                    <div class="relative flex h-[90%] w-[90%] flex-col justify-start items-start space-y-3">
+                        <div class="relative flex w-full h-[5%] flex-row justify-between">
+                            <h1 class="relative flex text-2xl font-semibold">Description</h1>
+                            
                         </div>
+                        <div class="relative flex mt-3 max-h-[20%] truncate bg-gray-200 items-center rounded-lg py-2 px-3 w-full">
+                            <p class="relative flex">
+                                {{ program.description }}
+                            </p>
+                        </div>
+                        <div class="relative flex w-full h-[5%] flex-row justify-between">
+                            <h1 class="relative flex text-2xl font-semibold">Registration</h1>
+                        </div>
+                        <div class="relative flex flex-col space-y-1 justify-center mt-3 max-h-[20%] truncate bg-gray-200 rounded-lg py-2 px-3 w-full">
+                            <p class="relative flex">
+                                Starts: {{ program.registration_opens }}
+                            </p>
+                            <p class="relative flex">
+                                Ends: {{ program.registration_closes }}
+                            </p>
+                        </div>
+                        <div class="relative flex w-full h-[5%] flex-row justify-between">
+                            <h1 class="relative flex text-2xl font-semibold">Program Dates</h1>
+                        </div>
+                        <div class="relative flex flex-col space-y-1 justify-center mt-3 max-h-[20%] truncate bg-gray-200 rounded-lg py-2 px-3 w-full">
+                            <p class="relative flex">
+                                Starts: {{ program.program_starts }} 
+                            </p>
+                            <p class="relative flex"></p>
+                                Ends: {{ program.program_ends }}
+                            </p>
+                            
+                        </div>
+                        <div class="relative flex mt-5 w-full h-[5%] flex-row justify-between items-center">
+                            <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Student Roster</h1>
+                            <div class="relative flex flex-row space-x-10">
+                                <div class="relative flex ring-1 ring-gray-300 w-40 h-10 rounded-xl flex-row justify-between px-5 items-center">
+                                    <div class="text-gray-400">
+                                        Sort by...
+                                    </div>
+                                    <div class="text-2xl text-gray-500 mb-3">
+                                        &#8964;
+                                    </div>
+                                </div>
+                                <div class="relative flex ring-1 ring-gray-300 w-40 h-10 rounded-xl flex-row justify-between px-5 items-center">
+                                    <div class="text-gray-400">
+                                        Ascending
+                                    </div>
+                                    <div class="text-2xl text-gray-500 mb-3">
+                                        &#8964;
+                                    </div>
+                                </div>
+                                <input class="relative flex ring-1 text-gray-500 ring-gray-300 w-40 h-10 rounded-xl flex-row justify-start px-5 items-center" placeholder="Search..." />
+                                </input>
+                            </div>
+                        </div>
+                        <table class="relative mt-5 flex rounded-lg h-[75%] w-full bg-gray-200 flex-col items-center space-y-3">
+                            <thead class="relative rounded-t-lg flex flex-row bg-gray-300 h-16 w-full items-center pr-20">
+                                <tr class="flex-row relative flex items-center justify-around w-full space-x-5 whitespace-nowrap">
+                                    <th class="relative flex font-normal">Last Name</th>
+                                    <th class="relative flex font-normal">Pronouns</th>
+                                    <th class="relative flex font-normal">Age</th>
+                                    <th class="relative flex font-normal">Grade</th>
+                                    <th class="relative flex font-normal">Allergies</th>
+                                    <th class="relative flex font-normal"></th>
+                                </tr>         
+                            </thead>
+                            <tbody class="relative flex w-full flex-col items-center space-y-3 pb-3">
+                                {% for child in program.students.all %}
+                                <tr class="relative flex w-[97%] flex-row items-center justify-around space-x-10 whitespace-nowrap h-16 rounded-3xl bg-gray-300">
+                                    <td class="relative flex">
+                                        {{ child.name }}
+                                    </td>
+                                    <td class="relative flex">
+                                        {{ child.pronouns }}
+                                    </td>
+                                    <td class="relative flex">
+                                        {{ child.age }}
+                                    </td>
+                                    <td class="relative flex">
+                                        {{ child.grade }}
+                                    </td>
+                                    <td class="relative flex overflow-ellipsis">
+                                        {{ child.allergies }}
+                                    </td>
+                                    <td class="relative flex text-gray-400 text-xl">
+                                        <a href="{% url "org_admin:view_child" child_pk=child.pk %}">></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
-                    <table class="relative mt-5 flex rounded-lg h-[75%] w-full bg-gray-200 flex-col items-center space-y-3">
-                        <thead class="relative rounded-t-lg flex flex-row bg-gray-300 h-16 w-full items-center pr-20">
-                            <tr class="flex-row relative flex items-center justify-around w-full space-x-5 whitespace-nowrap">
-                                <th class="relative flex font-normal">Last Name</th>
-                                <th class="relative flex font-normal">Pronouns</th>
-                                <th class="relative flex font-normal">Age</th>
-                                <th class="relative flex font-normal">Grade</th>
-                                <th class="relative flex font-normal">Allergies</th>
-                                <th class="relative flex font-normal"></th>
-                            </tr>         
-                        </thead>
-                        <tbody class="relative flex w-full flex-col items-center">
-                            {% for child in program.students.all %}
-                            <tr class="relative flex w-[97%] flex-row items-center justify-around space-x-10 whitespace-nowrap h-16 rounded-3xl bg-gray-300">
-                                <td class="relative flex">
-                                    {{ child.name }}
-                                </td>
-                                <td class="relative flex">
-                                    {{ child.pronouns }}
-                                </td>
-                                <td class="relative flex">
-                                    {{ child.age }}
-                                </td>
-                                <td class="relative flex">
-                                    {{ child.grade }}
-                                </td>
-                                <td class="relative flex overflow-ellipsis">
-                                    {{ child.allergies }}
-                                </td>
-                                <td class="relative flex text-gray-400 text-xl">
-                                    <a href="{% url "org_admin:view_child" child_pk=child.pk %}">></a>
-                                </td>
-                            </tr>
+                    <div class="relative flex flex-col w-[90%] space-y-3 mt-3">
+                        <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Surveys</h1>
+                        {% for survey in program.surveys.all %}
+                        <div class="relative flex flex-row space-x-10 p-3 bg-gray-200 w-96 h-10 items-center rounded-xl justify-between">
+                                <div> Name: {{ survey.name }} </div>
+                                <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" href="{% url "org_admin:view_survey_responses" survey_pk=survey.pk %}">View responses</a>
+                        </div>
+                        {% empty %}
+                                No surveys have been created for this program yet.
+                        {% endfor %}
+                        <a class=" text-white bg-sky-400 relative font-semibold flex rounded-2xl h-12 w-48 third-color flex-col justify-center items-center cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out" href="{% url "org_admin:create_survey" program_pk=program.pk %}">Create survey</a>
+                    </div>
+                    <div class="relative flex flex-col w-[90%] space-y-8 mt-3">
+                        <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Announcements</h1>
+                        <div class="space-y-12">
+                            {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}
+                            <div class="relative flex flex-col w-full h-10 items-center justify-center space-y-1"> 
+                                <div class="relative flex flex-row w-full justify-between">
+                                    <div class="text-xl font-medium">{{ announcement.title }}</div>
+                                    <div class="overflow-auto">(Sent on {{ announcement.time_sent }})</div>
+                                </div>
+                                <div class="realtive flex bg-gray-200 h-52 w-full p-3 rounded-xl">
+                                {{ announcement.content}}
+                                </div>
+                            </div>
                             {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="relative flex flex-col w-[90%]">
-                    <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Surveys</h1>
-                    {% for survey in program.surveys.all %}
-                    <div class="relative flex flex-row space-x-10 p-3 bg-gray-200 w-96 h-10 items-center rounded-xl justify-between">
-                            <div> Name: {{ survey.name }} </div>
-                            <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" href="{% url "org_admin:view_survey_responses" survey_pk=survey.pk %}">View responses</a>
+                        </div>
+                        <a class="text-white bg-sky-400 relative font-semibold flex rounded-2xl h-12 w-48 third-color flex-col justify-center items-center cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out" class="secondary-button" href="{% url "org_admin:make_announcement" program_pk=program.pk %}">Make announcement</a>
                     </div>
-                    {% empty %}
-                            No surveys have been created for this program yet.
-                    {% endfor %}
-                    <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" href="{% url "org_admin:create_survey" program_pk=program.pk %}">Create survey</a>
-                </div>
-                <div class="relative flex flex-col w-[90%]">
-                    <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Announcements</h1>
-                    {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}
-                    <div class="relative flex flex-row space-x-10 p-3 bg-gray-200 w-96 h-10 items-center rounded-xl justify-between"> 
-                        <div>Title: {{ announcement.title }}</div>
-                        <div></div>
-                        {{ announcement.content|linebreaks }}
-                        (Sent on {{ announcement.time_sent }})
-                    </div>
-                    {% endfor %}
-                    <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" class="secondary-button" href="{% url "org_admin:make_announcement" program_pk=program.pk %}">Make announcement</a>
                 </div>
             </div>
         </div>
