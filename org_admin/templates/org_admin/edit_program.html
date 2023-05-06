@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+{% block title %}Edit program{% endblock %}
+{% block content %}
+    {% include "stylized_form_only_page.html" with title="Edit program" form=form method="POST" submit_text="Save" %}
+{% endblock %}

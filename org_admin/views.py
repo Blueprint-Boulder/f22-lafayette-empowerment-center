@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 
 from guardian.models import Student
 from org_admin.models import Program, ProgramAnnouncement, Survey, SurveyField, CommunityContact
@@ -33,6 +33,14 @@ class AddProgram(CreateView):
     def form_valid(self, form):
         form.instance.is_active = True
         return super().form_valid(form)
+
+@cbv_user_must_be_org_admin
+class EditProgram(UpdateView):
+    model = Program
+    fields = ["name", "description", "registration_opens", "registration_closes", "program_starts", "program_ends"]
+    template_name = "org_admin/edit_program.html"
+    success_url = reverse_lazy("org_admin:programs")  # TODO change to specific program URL
+
 
 @cbv_user_must_be_org_admin
 class MakeAnnouncement(CreateView):

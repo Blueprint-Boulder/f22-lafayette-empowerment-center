@@ -11,9 +11,26 @@
             {% elif field.widget_type == "number" %}
                 {% render_field field class="relative flex border-[1px] rounded-xl border-gray-300 h-12 w-16 items-center justify-center overflow-visible w p-3" %}
             {% elif field.widget_type == "datetime" %}
-                {% render_field field placeholder="e.g. 2023-04-23 13:01" class="relative flex border-[1px] rounded-xl border-gray-300 h-12 w-72 p-3" %}
+                {% render_field field class="relative flex border-[1px] rounded-xl border-gray-300 h-12 w-72 p-3" %}
             {% else %}
                 THE WIDGET TYPE {{ field.widget_type }} DOESN'T HAVE A STYLE CLASS! FIX IT!
+            {% endif %}
+            {% if field.errors %}
+                <div class="text-red-500 text-sm">
+                    {% for error in field.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if field.help_text %}
+                <div class="text-gray-500 text-sm">
+                    {{ field.help_text }}
+                </div>
+            {% endif %}
+            {% if field.widget_type == "datetime" %}
+                <div class="text-gray-500 text-sm">
+                    Enter as YYYY-MM-DD HH:MM (24 hour time). For example, April 15, 2023 at 1:02PM would be 2023-04-15 13:02.
+                </div>
             {% endif %}
         </div>
     {% endfor %}

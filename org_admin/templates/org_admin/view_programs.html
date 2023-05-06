@@ -21,7 +21,7 @@
             <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-black m-3">
                 <img class="bg-blue-900 rounded-2xl w-full h-full absolute full object-cover" src="https://images.unsplash.com/photo-1607211851821-8be3cd6146f0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZCUyMHBhaW50aW5nfGVufDB8fDB8fA%3D%3D&w=1000&q=80"/>
                 <div class="flex relative h-3/5 my-4 mx-5 flex-row justify-end">
-                    <a class="text-white text-lg underline cursor-pointer  hover:opacity-70  transition-all duration-100 ease-out" href="./admin_programs">Edit</a>
+                    <a class="text-white text-lg underline cursor-pointer  hover:opacity-70  transition-all duration-100 ease-out" href="{% url "org_admin:edit_program" pk=program.pk %}">Edit</a>
                 </div>
                 <div class="flex relative h-2/5 flex-col my-5 mx-5">
                     <h1 class="text-white text-xl font-semibold">{{ program.name }}</h1>
