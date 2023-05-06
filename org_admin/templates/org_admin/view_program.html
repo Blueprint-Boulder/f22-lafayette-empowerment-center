@@ -67,25 +67,26 @@
                             <div class="relative flex flex-row space-x-10">
                                 <form class="relative flex flex-row space-x-10 items-center " method="GET">
                                         <select class="relative flex ring-1 bg-white ring-gray-300 w-40 h-10 rounded-xl flex-row justify-between px-5 items-center" name="roster-sort-by">
-                                            <option value="" selected>Sort by...</option>
-                                            <option value="name">Name</option>
-                                            <option value="age">Age</option>
-                                            <option value="grade">Grade</option>
+                                            <option value="" disabled>Sort by...</option>
+                                            <option value="name" {% if sort_by == "name" %}selected{% endif %}>Name</option>
+                                            <option value="age" {% if sort_by == "age" %}selected{% endif %}>Age</option>
+                                            <option value="grade" {% if sort_by == "grade" %}selected{% endif %}>Grade</option>
                                         </select>
                                         <select class="relative flex ring-1 bg-white ring-gray-300 w-40 h-10 rounded-xl flex-row justify-between px-5 items-center" name="roster-asc">
+                                            <option value="" disabled>Order as...</option>
                                             <option value="ascending" {% if ascending %}selected{% endif %}>Ascending</option>
                                             <option value="descending" {% if not ascending %}selected{% endif %}>Descending</option>
                                         </select>
-                                    <input placeholder="{{ search }}" name="roster-search" class="relative flex ring-1 text-gray-500 ring-gray-300 w-40 h-10 rounded-xl flex-row justify-start px-5 items-center"/>
-                                    <button class="text-white bg-sky-400 relative font-semibold flex rounded-2xl h-10 w-32 third-color flex-col justify-center items-center cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out" type="submit">Submit</button>
-                                    <a class="relative flex truncate whitespace-nowrap text-blue-400 cursor-pointer hover:text-blue-500 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out " href="{% url "org_admin:view_program" program_pk=program.pk %}">Clear filters</a>
+                                    <input value="{{ search }}" placeholder="Search by name" name="roster-search" class="relative flex ring-1 text-gray-500 ring-gray-300 w-40 h-10 rounded-xl flex-row justify-start px-5 items-center"/>
+                                    <button class="text-white bg-sky-400 relative font-semibold flex rounded-2xl h-10 w-32 third-color flex-col justify-center items-center cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out" type="submit">View results</button>
+                                    <a class="relative flex truncate whitespace-nowrap text-blue-400 cursor-pointer hover:text-blue-500 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out " href="{% url "org_admin:view_program" program_pk=program.pk %}">Reset filters</a>
                                 </form>
                             </div>
                         </div>
                         <table class="relative mt-5 flex rounded-lg h-[75%] w-full bg-gray-200 flex-col items-center space-y-3">
                             <thead class="relative rounded-t-lg flex flex-row bg-gray-300 h-16 w-full items-center pr-20">
                                 <tr class="flex-row relative flex items-center justify-around w-full space-x-5 whitespace-nowrap">
-                                    <th class="relative flex font-normal">Last Name</th>
+                                    <th class="relative flex font-normal">Name</th>
                                     <th class="relative flex font-normal">Pronouns</th>
                                     <th class="relative flex font-normal">Age</th>
                                     <th class="relative flex font-normal">Grade</th>

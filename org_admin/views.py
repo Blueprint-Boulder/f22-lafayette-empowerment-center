@@ -59,7 +59,7 @@ def view_program(request, program_pk):
                    "now": datetime.now(),
                    "sort_by": request.GET.get("roster-sort-by", default="name") or "name",
                    "ascending": request.GET.get("roster-asc", default="ascending") == "ascending",
-                   "search": request.GET.get("roster-search", default="Search...") or "Search...",
+                   "search": request.GET.get("roster-search", default=""),
                    "students": Student.objects.filter(name__contains=request.GET.get("roster-search", default=""))})
 
 @user_passes_test(is_org_admin)
