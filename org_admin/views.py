@@ -54,13 +54,14 @@ class MakeAnnouncement(CreateView):
 
 @user_passes_test(is_org_admin)
 def view_program(request, program_pk):
-        return render(request, "org_admin/view_program.html",
-                  {"programs": Program.objects.all(), "program": Program.objects.get(pk=program_pk),
-                   "now": datetime.now(),
-                   "sort_by": request.GET.get("roster-sort-by", default="name") or "name",
-                   "ascending": request.GET.get("roster-asc", default="ascending") == "ascending",
-                   "search": request.GET.get("roster-search", default=""),
-                   "students": Student.objects.filter(name__contains=request.GET.get("roster-search", default=""))})
+    program = Program.objects.get(pk=program_pk)
+    return render(request, "org_admin/view_program.html",
+              {"programs": Program.objects.all(), "program": program,
+               "now": datetime.now(),
+               "sort_by": request.GET.get("roster-sort-by", default="name") or "name",
+               "ascending": request.GET.get("roster-asc", default="ascending") == "ascending",
+               "search": request.GET.get("roster-search", default=""),
+               "students": program.students.filter(name__contains=request.GET.get("roster-search", default=""))})
 
 @user_passes_test(is_org_admin)
 def programs(request):
@@ -112,6 +113,7 @@ class AddCommunityContact(CreateView):
 @user_passes_test(is_org_admin)
 def view_students(request):
     return render(request, "org_admin/view_students.html",
-                  {"students": Student.objects.all(),
-                   "sort_by": request.GET["sort_by"],
-                   "ascending": request.GET["ascending"] == "t"})
+                  {"sort_by": request.GET.get("roster-sort-by", default="name") or "name",
+                   "ascending": request.GET.get("roster-asc", default="ascending") == "ascending",
+                   "search": request.GET.get("roster-search", default=""),
+                   "students": Student.objects.filter(name__contains=request.GET.get("roster-search", default=""))})

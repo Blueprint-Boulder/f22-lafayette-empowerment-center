@@ -15,7 +15,7 @@
                 </select>
             <input value="{{ search }}" placeholder="Search by name" name="roster-search" class="relative flex ring-1 text-gray-500 ring-gray-300 w-40 h-10 rounded-xl flex-row justify-start px-5 items-center"/>
             <button class="text-white bg-sky-400 relative font-semibold flex rounded-2xl h-10 w-32 third-color flex-col justify-center items-center cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out" type="submit">View results</button>
-            <a class="relative flex truncate whitespace-nowrap text-blue-400 cursor-pointer hover:text-blue-500 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out " href="{% url "org_admin:view_program" program_pk=program.pk %}">Reset filters</a>
+            <a class="relative flex truncate whitespace-nowrap text-blue-400 cursor-pointer hover:text-blue-500 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out " href="{{ request.path }}">Reset filters</a>
         </form>
     </div>
 </div>

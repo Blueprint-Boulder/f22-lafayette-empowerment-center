@@ -1,13 +1,7 @@
 {% extends "base.html" %}
-{% block title %}Student roster{% endblock %}
+{% block title %}All students{% endblock %}
 {% block content %}
-    {% if ascending %}
-        {% for student in students|dictsort:sort_by %}
-            <a href="{% url "guardian:view_child" child_pk=student.pk %}">{{ student.name }}</a>
-        {% endfor %}
-    {% else %}
-        {% for student in students|dictsortreversed:sort_by %}
-            <a href="{% url "guardian:view_child" child_pk=student.pk %}">{{ student.name }}</a>
-        {% endfor %}
-    {% endif %}
+<div class="relative flex h-[90%] w-[95%] flex-col justify-start items-start space-y-3 mx-auto">
+    {% include "org_admin/student_roster_snippet.html" with students=students sort_by=sort_by ascending=ascending search=search %}
+</div>
 {% endblock %}
