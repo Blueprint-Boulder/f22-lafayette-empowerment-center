@@ -10,6 +10,7 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('delete_this/', lambda request: render(request, "stylized_form_snippet.html", {'form': Form()})),
     path('children/<int:child_pk>/', views.view_child, name="view_child"),
+    path('unregister/child=<int:child_pk>/program=<int:program_pk>/redirect_to=<path:redirect_to>', views.unregister_student, name="unregister_student"),
     path('students/', views.view_students, name="view_students"),
     path('programs/', views.programs, name="programs"),
     path('programs/add/', views.AddProgram.as_view(), name="add_program"),

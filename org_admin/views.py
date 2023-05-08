@@ -135,3 +135,10 @@ def view_students(request):
                    "ascending": request.GET.get("roster-asc", default="ascending") == "ascending",
                    "search": request.GET.get("roster-search", default=""),
                    "students": Student.objects.filter(name__contains=request.GET.get("roster-search", default=""))})
+
+@user_passes_test(is_org_admin)
+def unregister_student(request, child_pk, program_pk, redirect_to):
+    student = Student.objects.get(pk=child_pk)
+    program = Program.objects.get(pk=program_pk)
+    student.programs.remove(program)
+    return redirect(redirect_to)
