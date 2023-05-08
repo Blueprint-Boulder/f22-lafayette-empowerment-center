@@ -1,0 +1,70 @@
+
+{% extends "base.html" %}
+
+{% block title %}Example Page{% endblock %}
+{% block content %}
+{% include "force_refresh_snippet.html" %}
+
+<div class="h-screen w-screen mx-14 my-10 items-center justify-center">
+    <div class="relative flex items-center justify-start flex-col h-full w-[90%]">
+        <div class="flex flex-row justify-between w-full h-[25%] space-x-10">
+            
+            <div class = "flex flex-col w-full h-full">
+                <div class = "h-48">
+                    <p class="font-semibold text-6xl text-black mt-10">Welcome back!</p>
+                    <p class="font-semibold text-6xl text-black"></p>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col w-full h-[75%]">
+                <div class = "flex flex-col h-48 cursor-pointer">
+                    <div class = "mb-4 rounded-lg border-2 border-gray-500 hover:bg-gray-200 h-16 flex items-center justify-between bg-gray-100">
+                        <span class = "text-2xl text-black h-fit ml-4"><a href="{% url "org_admin:programs" %}">Browse programs</a></span>
+                        <div class="text-2xl flex items-center mr-4 justify-center">
+                            <i class="text-sky-400">-></i>
+                        </div>
+                    </div>
+                    <div class = "mb-4 rounded-lg border-2 border-gray-500 hover:bg-gray-200 h-16 flex items-center justify-between bg-gray-100">
+                        <span class = "text-2xl text-black h-fit ml-4"><a href="{% url "org_admin:community_contacts" %}">View Community Contacts</a></span>
+                        <div class="text-2xl flex items-center mr-4 justify-center">
+                            <i class="text-sky-400">-></i>
+                        </div>
+                    </div>
+                    <div class = "mb-4 rounded-lg border-2 border-gray-500 hover:bg-gray-200 h-16 flex items-center justify-between bg-gray-100">
+                        <span class = "text-2xl text-black h-fit ml-4"><a href="{% url "org_admin:view_students" %}">View Students</a></span>
+                        <div class="text-2xl flex items-center mr-4 justify-center">
+                            <i class="text-sky-400">-></i>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+        <table class="relative my-10 flex rounded-lg h-full w-full bg-gray-100 flex-col items-center space-y-3">
+            <thead class="relative rounded-t-lg flex flex-row bg-[#0066B0] h-16 text-white w-full items-center pr-20">
+                <tr class="flex-row relative flex w-full space-x-5 whitespace-nowrap">
+                    <th class="relative flex font-normal text-2xl ml-4">Unread Admin Requests</th>
+                </tr>
+            </thead>
+            <tbody class="relative flex w-full flex-col items-center overflow-auto h-full">
+            {% for notif in unread_notifs %}
+                <tr class="relative w-[97%] items-centerspace-x-10 whitespace-nowrap h-16 rounded-lg bg-gray-200 mb-3 cursor-pointer">
+                    <td class="flex justify-between items-center h-full">
+                        <div class="flex flex-col justify-center ml-4">
+                            <div class="realtive flex text-xl">{{ notif.message }}</div>
+                        </div>
+                        <i class="mr-4"><a href="{% url "org_admin:view_admin_requests" notification_pk=notif.pk %}">
+                            >
+                        </a></i>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

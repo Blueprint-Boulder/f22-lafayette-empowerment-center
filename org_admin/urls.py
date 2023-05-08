@@ -7,7 +7,7 @@ from org_admin import views
 app_name = "org_admin"
 
 urlpatterns = [
-    path('', lambda request: HttpResponse("not implemented"), name="home"),
+    path('', views.home, name="home"),
     path('delete_this/', lambda request: render(request, "stylized_form_snippet.html", {'form': Form()})),
     path('children/<int:child_pk>/', views.view_child, name="view_child"),
     path('students/', views.view_students, name="view_students"),

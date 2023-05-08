@@ -59,6 +59,11 @@ class MakeAnnouncement(CreateView):
         for student in form.instance.program.students.all():
             notif.recipients.add(student.guardian)
         return redirect("org_admin:view_program", program_pk)
+    
+@user_passes_test(is_org_admin)
+def home(request):
+     return render(request, "org_admin/home.html",
+                   {})
 
 @user_passes_test(is_org_admin)
 def view_program(request, program_pk):
@@ -107,6 +112,11 @@ def create_survey(request, program_pk):
 @user_passes_test(is_org_admin)
 def survey_responses(request, survey_pk):
     return render(request, "org_admin/survey_responses.html", {'survey': Survey.objects.get(pk=survey_pk), "programs": Program.objects.all()})
+
+@user_passes_test(is_org_admin)
+def survey_responses(request, survey_pk):
+    return render(request, "org_admin/survey_responses.html", {'survey': Survey.objects.get(pk=survey_pk), "programs": Program.objects.all()})
+
 
 @user_passes_test(is_org_admin)
 def community_contacts(request):
