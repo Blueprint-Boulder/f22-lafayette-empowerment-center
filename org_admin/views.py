@@ -26,7 +26,7 @@ cbv_user_must_be_org_admin = method_decorator(user_passes_test(is_org_admin), "d
 @cbv_user_must_be_org_admin
 class AddProgram(CreateView):
     model = Program
-    fields = ["name", "description", "registration_opens", "registration_closes", "program_starts", "program_ends"]
+    fields = ["name", "image", "description", "registration_opens", "registration_closes", "program_starts", "program_ends"]
     template_name = "org_admin/add_program.html"
     success_url = reverse_lazy("org_admin:programs")
 
@@ -37,7 +37,7 @@ class AddProgram(CreateView):
 @cbv_user_must_be_org_admin
 class EditProgram(UpdateView):
     model = Program
-    fields = ["name", "description", "registration_opens", "registration_closes", "program_starts", "program_ends"]
+    fields = ["name", "image", "description", "registration_opens", "registration_closes", "program_starts", "program_ends"]
     template_name = "org_admin/edit_program.html"
     success_url = reverse_lazy("org_admin:programs")  # TODO change to specific program URL
 

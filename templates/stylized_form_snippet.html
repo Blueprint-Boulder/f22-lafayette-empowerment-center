@@ -1,5 +1,5 @@
 {% load custom_tags %}
-<form method="{{ method }}" class="relative space-y-5 pb-12 flex-col overflow-y-auto">
+<form method="{{ method }}" enctype="multipart/form-data" class="relative space-y-5 pb-12 flex-col overflow-y-auto">
     {% csrf_token %}
     {% for field in form %}
         <div class="relative flex space-y-2 flex-col">
@@ -11,6 +11,8 @@
             {% elif field.widget_type == "number" %}
                 {% render_field field class="relative flex border-[1px] rounded-xl border-gray-300 h-12 w-16 items-center justify-center overflow-visible w p-3" %}
             {% elif field.widget_type == "datetime" %}
+                {% render_field field class="relative flex border-[1px] rounded-xl border-gray-300 h-12 w-72 p-3" %}
+            {% elif field.widget_type == "clearablefile" %} {# images #}
                 {% render_field field class="relative flex border-[1px] rounded-xl border-gray-300 h-12 w-72 p-3" %}
             {% else %}
                 THE WIDGET TYPE {{ field.widget_type }} DOESN'T HAVE A STYLE CLASS! FIX IT!
