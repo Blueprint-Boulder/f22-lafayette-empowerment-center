@@ -1,7 +1,7 @@
-<div class="relative flex mt-5 w-full h-[5%] flex-row justify-between items-center">
+<div class="relative flex mt-5 w-full h-[5%] flex-row justify-between items-center space-x-8">
     <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Student Roster</h1>
     <div class="relative flex flex-row space-x-10">
-        <form class="relative flex flex-row space-x-10 items-center " method="GET">
+        <form class="relative flex flex-row space-x-8 items-center " method="GET">
                 <select class="relative flex ring-1 bg-white ring-gray-300 w-40 h-10 rounded-xl flex-row justify-between px-5 items-center" name="roster-sort-by">
                     <option value="" disabled>Sort by...</option>
                     <option value="name" {% if sort_by == "name" %}selected{% endif %}>Name</option>
