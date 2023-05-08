@@ -1,0 +1,85 @@
+.navbar {
+  --background-color: #f8f8f8;
+  --primary-color: #0060A6;
+  --secondary-color: #AB2B6E;
+  --hyperlink: #4E87DD;
+  --selected: #5593f0;
+}
+
+.navbar ul {
+  list-style-type: none;
+  margin:0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--primary-color);
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  width: 100vw;
+}
+
+.navbar li {
+  float: left;
+  height: 100%;
+}
+
+.navbar li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 15px 20px;
+  text-decoration: none;
+  font-family: Arial;
+  background-color: var(--primary-color);
+}
+
+.navbar li a:hover {
+  background-color: var(--hyperlink);
+}
+
+.navbar li a:active{
+  background-color: var(--selected);
+}
+
+.navbar button{
+  background-color: gray;
+}
+
+.navbar #notif-btn{
+  position:absolute;
+  padding: 0;
+  margin: 0;
+  right: 195px;
+  top: 2px;
+}
+
+.navbar #notif-body{
+  top: 55px;
+  right: 10px;
+  width: 400px;
+  max-height: 400px;
+  position:absolute;
+  overflow-y: auto;
+  background-color: var(--background-color);
+  border-radius: 0 0 15px 15px;
+  box-shadow: -10px 10px 35px rgba(0,0,0,0.125), 10px 10px 35px rgba(0,0,0,0.125);
+}
+
+.navbar .notif-element{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px;
+  margin-bottom: 5px;
+  height: 100px;
+  user-select: none;
+}
+
+.navbar .notif-element:hover{
+  background-color: #e2e2e2;
+}
+
+.navbar .notif-element:active{
+  background-color: #dbdbdb;
+}

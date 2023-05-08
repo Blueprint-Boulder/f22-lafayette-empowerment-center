@@ -22,5 +22,5 @@ def index(request):
                 # TODO make actual error page, option to report etc
                 return HttpResponse("Internal error: Your account type either is not set, or was not set to a valid value.")
     else:
-        return redirect("accounts:login")
+        return redirect("accounts:login_register")
 

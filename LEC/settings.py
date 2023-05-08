@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'accounts.context_processors.account_types',
             ],
             'libraries': {
                 'custom_tags': 'LEC.templatetags.custom_tags',
