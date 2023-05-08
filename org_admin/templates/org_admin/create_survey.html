@@ -2,19 +2,18 @@
 {% block title %}Create survey{% endblock %}
 {% block content %}
     <div class="relative flex w-screen h-screen max-w-screen flex-col">
-        <div class="relative flex p-10 flex-col space-y-5">
-            <h1 class="relative flex text-3xl pb-5 font-semibold">Create survey for program "{{ program.name }}"</h1>
+        <div class="relative flex p-10 flex-col">
+            <h1 class="relative flex text-3xl font-semibold">Create survey for program "{{ program.name }}"</h1>
             <form method="POST" id="form" action="{% url "org_admin:create_survey" program_pk=program.pk %}" class="relative space-y-5 pb-12 flex-col overflow-y-auto">
                 {% csrf_token %}
                 <label for="survey_title" class="relative flex text-l">Survey Title</label>
                 <input required type="text" id="survey_title" name="survey_title" class="relative flex border-[1px] rounded-xl border-gray-300 h-12 w-72 p-3">
-                <br>
                 <h1 class="relative flex text-l">Questions:</h1>
                 <div id="questions"></div>
                 <input type="button" value="Add another question" class="relative flex h-12 w-52 text-white font-semibold text-l bg-sky-400 hover:bg-sky-500 rounded-xl justify-center items-center" onclick="add_field()">
                 <input type="submit" value="Create Survey" class="relative flex h-12 w-52 text-white font-semibold text-l bg-sky-400 hover:bg-sky-500 rounded-xl justify-center items-center">
             </form>
-
+        
             <script>
                 var fieldsCounter = 0;
                 function add_field() {

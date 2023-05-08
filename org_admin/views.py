@@ -106,7 +106,7 @@ def create_survey(request, program_pk):
 
 @user_passes_test(is_org_admin)
 def survey_responses(request, survey_pk):
-    return render(request, "org_admin/survey_responses.html", {'survey': Survey.objects.get(pk=survey_pk)})
+    return render(request, "org_admin/survey_responses.html", {'survey': Survey.objects.get(pk=survey_pk), "programs": Program.objects.all()})
 
 @user_passes_test(is_org_admin)
 def community_contacts(request):

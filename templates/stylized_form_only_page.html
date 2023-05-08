@@ -1,11 +1,8 @@
 <!--For pages whose entire content is a single form-->
-{% extends "base.html" %}
-
-{% block title %}{{ title }}{% endblock %}
 {% block content %}
     <div class="relative flex w-screen h-screen max-w-screen flex-col">
-        <div class="relative flex p-10 flex-col space-y-5">
-            <h1 class="relative flex text-3xl pb-5 font-semibold">
+        <div class="relative flex p-10 flex-col ">
+            <h1 class="relative flex text-3xl font-semibold">
                 {{ title }}
             </h1>
             {% include "stylized_form_snippet.html" with form=form method=method submit_text=submit_text %}
