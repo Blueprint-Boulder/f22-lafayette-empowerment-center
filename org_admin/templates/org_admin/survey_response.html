@@ -13,7 +13,7 @@
                         </li>
                     {% else %}
                         <div class="relative flex truncate whitespace-nowrap cursor-pointer hover:bg-gray-200 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
-                            <a class="relative flex  text-black hover:bg-gray-200 bg-gray-200" href="{% url "org_admin:view_program" program_pk=program_.pk %}">{{program_.name}}</a>
+                            <a class="relative flex  text-black hover:bg-gray-200 bg-gray-200" href="{% url "org_admin:view_program" program_pk=program.pk %}">{{program_.name}}</a>
                         </div>
                     {% endif %}
                     {% empty %}
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="relative flex w-full flex-col h-full overflow-y-auto p-5 space-y-5">
-            <div class="text-2xl font-semibold">{{ response.respondent}} Survey Responses</div>
+            <div class="text-2xl font-semibold">{{ response.respondent}}'s Responses for {{ survey.name }}</div>
             {% for field_response in response.field_responses.all %}
             <div class="relative flex text-l font-semibold">
                 {{ field_response.field.label}}

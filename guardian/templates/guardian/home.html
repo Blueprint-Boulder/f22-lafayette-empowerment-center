@@ -24,7 +24,7 @@
                     <tr class="relative w-[97%] items-centerspace-x-10 whitespace-nowrap h-16 rounded-lg bg-gray-200 mb-3 cursor-pointer">
                         <td class="flex justify-between items-center h-full">
                             <div class="flex flex-col justify-center ml-4">
-                                <div class="realtive flex text-xl">{{ notif.message }}</div>
+                                <div class="relative flex text-xl overflow-hidden">{{ notif.message|slice:":50" }}</div>
                             </div>
                             <i class="mr-4"><a href="{% url "guardian:view_notification" notification_pk=notif.pk %}">
                                 >
