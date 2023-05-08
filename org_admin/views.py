@@ -8,7 +8,7 @@ from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, UpdateView
 
-from guardian.models import Student
+from guardian.models import Student, SurveyResponse
 from org_admin.models import Program, ProgramAnnouncement, Survey, SurveyField, CommunityContact
 from accounts.models import Notification, LECUser
 
@@ -114,8 +114,8 @@ def survey_responses(request, survey_pk):
     return render(request, "org_admin/survey_responses.html", {'survey': Survey.objects.get(pk=survey_pk), "programs": Program.objects.all()})
 
 @user_passes_test(is_org_admin)
-def survey_responses(request, survey_pk):
-    return render(request, "org_admin/survey_responses.html", {'survey': Survey.objects.get(pk=survey_pk), "programs": Program.objects.all()})
+def survey_response(request, response_pk):
+    return render(request, "org_admin/survey_response.html", {'response': SurveyResponse.objects.get(pk=response_pk), "programs": Program.objects.all()})
 
 
 @user_passes_test(is_org_admin)

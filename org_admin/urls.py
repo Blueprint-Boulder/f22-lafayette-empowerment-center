@@ -18,6 +18,7 @@ urlpatterns = [
     path('programs/<int:program_pk>/surveys/add/', views.create_survey, name="create_survey"),
     path('programs/<int:program_pk>/announcements/add/', views.MakeAnnouncement.as_view(), name="make_announcement"),
     path('surveys/<int:survey_pk>/responses/', views.survey_responses, name="view_survey_responses"),
+    path('surveys/<int:response_pk>/response', views.survey_response, name="survey_response"),
     path('contacts/', views.community_contacts, name="community_contacts"),
     path('contacts/add/', views.AddCommunityContact.as_view(), name="add_community_contact")
 ]

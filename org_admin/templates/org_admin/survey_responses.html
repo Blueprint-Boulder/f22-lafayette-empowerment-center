@@ -48,7 +48,7 @@
                             </td>
                         {% endfor %}
                         <td class="relative flex text-gray-400 text-xl">
-                            <a href="">></a>
+                            <a href="{% url "org_admin:survey_response" response_pk=response.pk %}">></a>
                         </td>
                     </tr>
                     {% empty %}
