@@ -9,12 +9,12 @@
 .navbar ul {
   list-style-type: none;
   margin:0;
-  padding: 0;
+  padding: 4px;
   overflow: hidden;
   background-color: var(--primary-color);
   display: flex;
   text-align: center;
-  justify-content: center;
+  justify-content: left;
   width: 100vw;
 }
 
