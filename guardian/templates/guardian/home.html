@@ -21,14 +21,16 @@
                 </thead>
                 <tbody class="relative flex w-full flex-col items-center overflow-auto">
                 {% for notif in unread_notifs %}
-                    <tr class="relative w-[97%] items-centerspace-x-10 whitespace-nowrap h-16 rounded-lg bg-gray-200 mb-3 cursor-pointer">
-                        <td class="flex justify-between items-center h-full">
-                            <div class="flex flex-col justify-center ml-4">
-                                <div class="relative flex text-xl overflow-hidden">{{ notif.message|slice:":50" }}</div>
-                            </div>
-                            <i class="mr-4"><a href="{% url "guardian:view_notification" notification_pk=notif.pk %}">
-                                >
-                            </a></i>
+                    <tr class="relative w-[97%] items-centerspace-x-10 whitespace-nowrap h-16 rounded-lg bg-gray-200 mb-3 text-lg">
+                        <td class="flex justify-between items-center w-full h-full">
+                            <a class="w-full h-full flex justify-between items-center" href="{% url "guardian:view_notification" notification_pk=notif.pk %}">
+                                <div class="flex flex-col w-[90%] justify-center ml-4">
+                                    <div class="relative w-full flex text-xl overflow-auto">{{ notif.message }}</div>
+                                </div>
+                                <i class="mr-4">                        
+                                        >
+                                </i>
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -63,7 +65,7 @@
                             <a href="{% url "guardian:view_child" child_pk=child.pk %}" class="w-full h-full flex justify-between items-center">
                                 <h2 class="ml-4 text-2xl">{{ child.name }}</h2>
                                 <div class="flex items-center justify-center mr-4">
-                                    <i>(Bell)</i>
+                                    <img class="relative flex h-5" src="http://cdn.onlinewebfonts.com/svg/img_489991.png" />
                                     <i class="ml-8">></i>
                                 </div>
                             </a>
