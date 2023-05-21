@@ -3,7 +3,7 @@
 {% block content %}
     <div class="relative flex w-screen h-screen max-w-screen flex-col">
         <div class="relative flex p-10 flex-col space-y-5">
-            <h1 class="relative flex text-3xl pb-5 font-semibold">
+            <h1 class="relative flex text-3xl font-semibold">
                 {{ survey.name }}
             </h1>
             <form method="POST" action="{% url "guardian:take_survey" survey_pk=survey.pk %}" class="relative space-y-5 pb-12 flex-col overflow-y-auto">

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}All students{% endblock %}
 {% block content %}
-<div class="relative flex h-[90%] w-[95%] flex-col justify-start items-start space-y-3 mx-auto">
+<div class="relative flex h-[90%] w-[95%] flex-col justify-start items-start space-y-3 mx-auto pt-5">
     {% include "org_admin/student_roster_snippet.html" with students=students sort_by=sort_by ascending=ascending search=search %}
 </div>
 {% endblock %}

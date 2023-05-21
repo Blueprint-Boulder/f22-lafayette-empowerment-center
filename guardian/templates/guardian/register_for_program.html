@@ -4,23 +4,23 @@
 {% block title %}Title{% endblock %}
 {% block content %}
 <div class="relative flex w-screen h-screen max-w-screen flex-col">
-    <div class="relative flex p-10 flex-col space-y-5">
+    <div class="relative flex p-10 flex-col">
         {% if unregistered_children.exists %}
 
-            <h2 class="relative flex text-xl pb-5 font-semibold">Select the children you want to register for {{ program.name }}, then click "Register"</h2>
+            <h2 class="relative flex text-2xl font-semibold">Select the children you want to register for {{ program.name }}, then click "Register"</h2>
             <form method="POST" class="relative space-y-5 pb-12 flex-col overflow-y-auto">
                 {% csrf_token %}
 {#                <div class="relative flex space-y-2 flex-col">#}
                         {% for child in unregistered_children %}
-                            <label for="student-{{ child.pk }}">{{ child.name }}</label>
-                            <input type="checkbox" name="students" id="student-{{ child.pk }}" value="{{ child.pk }}">
-                            <br>
+                            <div class="relative flex space-x-3 items-center ">
+                                <label class="relative flex text-xl" for="student-{{ child.pk }}">{{ child.name }}</label>
+                                <input class="relative flex" type="checkbox" name="students" id="student-{{ child.pk }}" value="{{ child.pk }}">
+                            </div>
                         {% endfor %}
                     <a href="{% url "guardian:add_child_then_redirect" redirect_to=request.path %}"
                     class="relative flex h-12 w-52 text-white font-semibold text-l bg-sky-400 hover:bg-sky-500 rounded-xl justify-center items-center"
                     >Add new child</a>
                     <input type="hidden" value="{{ user.pk }}" name="user">
-                    <br>
                     {% if user.children.exists %}
                         <button type="submit" class="relative flex h-12 w-52 text-white font-semibold text-l bg-sky-400 hover:bg-sky-500 rounded-xl justify-center items-center">
                         Register
@@ -30,12 +30,12 @@
             </form>
 
         {% elif not user.children.exists %}
-            You haven't added any children yet.
+            <div class="relative flex mb-1"> You haven't added any children yet. </div>
             <a href="{% url "guardian:add_child_then_redirect" redirect_to=request.path %}"
                     class="relative flex h-12 w-52 text-white font-semibold text-l bg-sky-400 hover:bg-sky-500 rounded-xl justify-center items-center"
                     >Add new child</a>
         {% else %}
-            All of your children are registered for this program.
+        <div class="relative flex mb-1"> All of your children are registered for this program. </div>
             <a href="{% url "guardian:add_child_then_redirect" redirect_to=request.path %}"
                     class="relative flex h-12 w-52 text-white font-semibold text-l bg-sky-400 hover:bg-sky-500 rounded-xl justify-center items-center"
                     >Add new child</a>

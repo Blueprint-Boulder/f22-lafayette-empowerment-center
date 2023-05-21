@@ -3,14 +3,14 @@
 
 {% block title %}Program: {{ program.name }}{% endblock %}
 {% block content %}
-<div class="relative flex w-screen h-screen max-w-screen flex-col">
+<div class="relative flex w-screen h-screen max-w-screen flex-col overflow-hidden">
     <div class="relative flex flex-row h-full w-full">
-        <div class="relative flex h-full w-1/5 justify-center items-center bg-gray-200">
+        <div class="relative flex h-full w-1/5 justify-center items-center bg-gray-200 overflow-y-auto">
             <div class="relative flex w-[82%] h-[90%]">
                 <div class="relative flex flex-col w-full bg-gray-200 space-y-5">
                     {% for program_ in programs %}
                         {% if program_.name == program.name %}
-                            <li class="relative flex truncate whitespace-nowrap h-10 cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
+                            <li class="relative flex truncate whitespace-nowrap cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out">
                                 <a class="relative flex font-semibold text-black bg-gray-200 hover:bg-gray-200" href="{% url "guardian:view_program" program_pk=program.pk %}">{{ program.name }}</a>
                             </li>
                         {% else %}
@@ -24,52 +24,58 @@
                 </div>
             </div>
         </div>
-        <div class="relative m-5 w-full h-full flex-col justify-center items-center overflow-y-auto py-5">
-            <div class="relative flex flex-col w-[90%] my-10 h-full space-y-3">
+        <div class="relative p-5 w-full h-full flex-col justify-center items-center overflow-y-auto pb-5">
+            <div class="relative flex flex-col w-[90%] my-5 pb-5 h-full space-y-3">
                 <div class="relative flex w-full h-1/2 flex-row justify-between">
                     <div class="realtive grid grid-col-2 w-1/2 flex-col space-y-9">
                         <h1 class="relative flex text-3xl text-black font-semibold">{{ program.name }}</h1>
                         <div class="relative flex space-y-5 flex-col">
-                            <div class="relative flex">
-                                <text class="text-black text-lg">Grade Range: TBA</text>
-                            </div>
-                            <div class="relative flex">
-                                <text class="text-black text-lg">Dates:
-                                starts {{ program.program_starts }}; ends {{ program.program_ends }}</text>
+                            <div class="relative flex space-x-2">
+                                <text class="text-black font-semibold text-lg">Dates: </text>
+                                <div class="text-black text-lg">{{ program.program_starts }} - {{ program.program_ends }}</div>
                             </div>
                             <div class="relative flex">
                                 <text class="text-black text-lg">
                                     {% if program.registration_opens <= now and now <= program.registration_closes %}
-                                        Registration for this program will close on {{ program.registration_closes }}.
+                                        Registration for this program will close on {{ program.registration_closes }}
                                     {% elif program.registration_opens > now %}
-                                        Registration for this program will be open from {{ program.registration_opens }} to {{ program.registration_closes }}.
+                                        Registration for this program will be open from {{ program.registration_opens }} to {{ program.registration_closes }}
                                     {% elif now > program.registration_closes %}
-                                        Registration for this program closed on {{ program.registration_closes }}.
+                                        Registration for this program closed on {{ program.registration_closes }}
                                     {% endif %}
                                 </text>
                             </div>
                         </div>
-                        {% if user|has_children_in:program %}
-                            Your children in this program: {{ user|children_in:program|join:", " }}
-                        {% else %}
-                            None of your children are registered for this program.
-                        {% endif %}
-                        {% if program.registration_opens <= now and now <= program.registration_closes %}
-                            <a class="text-white text-mg relative font-semibold flex rounded-2xl h-12 w-48 bg-sky-400 flex-col justify-center items-center cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out" href="{% url "guardian:register_for_program" program_pk=program.pk %}">Register Children</a>
-                        {% endif %}
+                        <div class="relative flex flex-col space-y-5">
+                            <div class="relative flex space-x-2">
+                                <text class="text-black font-semibold text-lg">Children Enrolled:</text>
+                                <div class="relative flex flex-row text-lg">
+                                    {% if user|has_children_in:program %}
+                                        {{ user|children_in:program|join:", " }}
+                                    {% else %}
+                                        None of your children are registered for this program.
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% if program.registration_opens <= now and now <= program.registration_closes %}
+                                <a class="text-white text-mg relative font-semibold flex rounded-2xl h-12 w-48 bg-sky-400 flex-col justify-center items-center cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out" href="{% url "guardian:register_for_program" program_pk=program.pk %}">Register Children</a>
+                            {% endif %}
+                        </div>
+                        
                     </div>
+                    
                     <div class="select2-dropdown relative flex h-full aspect-square bg-blue-900 justify-center items-center rounded-lg">
-                        <text class="text-white">img</text>
+                        <img class="bg-blue-900 rounded-2xl w-full h-full absolute full object-cover" src="{{ program.image.url }}"/>
                     </div>
                 </div>
-                <div class="relative flex w-full h-1/2 flex-col space-y-5 py-5">
-                    <h1 class="relative flex text-black text-lg">Desciption: </h1>
+                <div class="relative flex w-full flex-grow flex-col space-y-5 py-5">
+                    <text class="text-black font-semibold text-lg">Desciption: </text>
                     <p class="relative flex text-black">{{ program.description }}</p>
                 </div>
-                <div class="relative flex flex-col w-[90%] space-y-3 mt-3">
+                <div class="relative flex flex-col w-full space-y-3 mt-3">
                     <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Surveys</h1>
                     {% for survey in program.surveys.all %}
-                        <div class="relative flex flex-row space-x-10 p-3 bg-gray-200 w-96 h-10 items-center rounded-xl justify-between">
+                        <div class="relative flex flex-row space-x-10 p-3 bg-gray-100 w-[50%]h-10 items-center rounded-xl justify-between ">
                                 <div> Name: {{ survey.name }} </div>
                             {% if not user|has_taken_survey:survey %}
                                 <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" href="{% url "guardian:take_survey" survey_pk=survey.pk %}">Take survey</a>
@@ -78,24 +84,31 @@
                             {% endif %}
                         </div>
                     {% empty %}
-                            No surveys have been created for this program yet.
+                            <div>No surveys have been created for this program yet. </div>
                     {% endfor %}
                 </div>
-                <div class="relative flex flex-col w-[90%] space-y-8 mt-3">
+                <div class="relative flex flex-col w-full max-h-[20%] space-y-3 mt-3">
                     <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Announcements</h1>
-                    <div class="space-y-12">
+                    {% if program.announcements.exists %}
+                    <div class="relative flex flex-grow flex-col space-y-4 pb-3 w-full">
                         {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}
-                        <div class="relative flex flex-col w-full h-10 items-center justify-center space-y-1"> 
+                        <div class="relative flex flex-col w-full flex-grow items-center justify-center space-y-1"> 
                             <div class="relative flex flex-row w-full justify-between">
                                 <div class="text-xl font-medium">{{ announcement.title }}</div>
                                 <div class="overflow-auto">(Sent on {{ announcement.time_sent }})</div>
                             </div>
-                            <div class="realtive flex bg-gray-200 h-52 w-full p-3 rounded-xl">
-                            {{ announcement.content}}
+                            <div class="relative flex mt-3 bg-gray-100 flex-grow break-all items-center rounded-lg py-2 px-3 w-full">
+                                <p class="relative flex">
+                                    {{ announcement.content}}
+                                </p>
                             </div>
                         </div>
                         {% endfor %}
                     </div>
+                    {% else %}
+                        <div>No announcments have been created for this program yet. </div>
+                    {% endif %}
+                    <div class="pb-4"></div>
                 </div>
             </div>
         </div>

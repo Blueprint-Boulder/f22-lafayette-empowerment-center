@@ -85,6 +85,10 @@ def view_child(request, child_pk):
     return render(request, "org_admin/view_child.html", {'child': Student.objects.get(pk=child_pk)})
 
 @user_passes_test(is_org_admin)
+def view_community_contact(request, contact_pk):
+    return render(request, "org_admin/view_community_contact.html", {'contact': CommunityContact.objects.get(pk=contact_pk)})
+
+@user_passes_test(is_org_admin)
 def create_survey(request, program_pk):
     if request.method == "GET":
         return render(request, "org_admin/create_survey.html", {'program': Program.objects.get(pk=program_pk)})
@@ -110,12 +114,12 @@ def create_survey(request, program_pk):
         return redirect("org_admin:view_program", program_pk)
 
 @user_passes_test(is_org_admin)
-def survey_responses(request, survey_pk):
-    return render(request, "org_admin/survey_responses.html", {'survey': Survey.objects.get(pk=survey_pk), "programs": Program.objects.all()})
+def survey_responses(request, survey_pk, program_pk):
+    return render(request, "org_admin/survey_responses.html", {'survey': Survey.objects.get(pk=survey_pk), "programs": Program.objects.all(), 'program': Program.objects.get(pk=program_pk)})
 
 @user_passes_test(is_org_admin)
-def survey_response(request, response_pk):
-    return render(request, "org_admin/survey_response.html", {'response': SurveyResponse.objects.get(pk=response_pk), "programs": Program.objects.all()})
+def survey_response(request, survey_pk, response_pk, program_pk):
+    return render(request, "org_admin/survey_response.html", {'survey': Survey.objects.get(pk=survey_pk), 'response': SurveyResponse.objects.get(pk=response_pk), "programs": Program.objects.all(), 'program': Program.objects.get(pk=program_pk)})
 
 
 @user_passes_test(is_org_admin)
