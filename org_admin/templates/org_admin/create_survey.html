@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Create survey{% endblock %}
 {% block content %}
-    <div class="relative flex w-screen h-screen max-w-screen flex-col">
+    <div class="relative flex w-screen h-screen max-w-screen flex-col ">
         <div class="relative flex p-10 flex-col">
             <h1 class="relative flex text-3xl font-semibold">Create survey for program "{{ program.name }}"</h1>
-            <form method="POST" id="form" action="{% url "org_admin:create_survey" program_pk=program.pk %}" class="relative space-y-5 pb-12 flex-col overflow-y-auto">
+            <form method="POST" id="form" action="{% url "org_admin:create_survey" program_pk=program.pk %}" class="relative space-y-5 pb-12 flex-col overflow-visible ">
                 {% csrf_token %}
                 <label for="survey_title" class="relative flex text-l">Survey Title</label>
                 <input required type="text" id="survey_title" name="survey_title" class="relative flex border-[1px] rounded-xl border-gray-300 h-12 w-72 p-3">

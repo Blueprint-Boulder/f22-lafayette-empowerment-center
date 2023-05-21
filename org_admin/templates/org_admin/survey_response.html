@@ -28,8 +28,10 @@
             <div class="relative flex text-l font-semibold">
                 {{ field_response.field.label}}
             </div>
-            <div class="relative flex">
-                {{ field_response.text}}
+             <div class="relative flex mt-3 max-h-[20%] bg-gray-100 items-center rounded-lg py-2 px-3 w-full">
+                <p class="relative flex">
+                    {{ field_response.text}}
+                </p>
             </div>
             {% endfor %}
         </div>

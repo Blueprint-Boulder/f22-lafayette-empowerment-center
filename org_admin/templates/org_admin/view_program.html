@@ -31,7 +31,6 @@
                     <div class="relative flex h-[90%] w-[95%] flex-col justify-start items-start space-y-5">
                         <div class="relative flex w-full h-[5%] flex-row justify-between">
                             <h1 class="relative flex text-2xl font-semibold">Description</h1>
-                            
                         </div>
                         <div class="relative flex mt-3 max-h-[20%] bg-gray-100 items-center rounded-lg py-2 px-3 w-full">
                             <p class="relative flex">
@@ -71,18 +70,20 @@
                             {% endfor %}
                             <a class=" text-white bg-sky-400 relative font-semibold flex rounded-2xl h-12 w-48 third-color flex-col justify-center items-center cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out" href="{% url "org_admin:create_survey" program_pk=program.pk %}">Create survey</a>
                         </div>
-                        <div class="relative flex flex-col w-full space-y-8 mt-3">
+                        <div class="relative flex flex-col w-full max-h-[20%] space-y-3 mt-3">
                             <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Announcements</h1>
                             {% if program.announcements.exists %}
-                            <div class="space-y-12">
+                            <div class="relative flex flex-grow flex-col space-y-4 pb-3 w-full">
                                 {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}
-                                <div class="relative flex flex-col w-full h-10 items-center justify-center space-y-1"> 
+                                <div class="relative flex flex-col w-full flex-grow items-center justify-center space-y-1"> 
                                     <div class="relative flex flex-row w-full justify-between">
                                         <div class="text-xl font-medium">{{ announcement.title }}</div>
                                         <div class="overflow-auto">(Sent on {{ announcement.time_sent }})</div>
                                     </div>
-                                    <div class="realtive flex bg-gray-100 h-52 w-full p-3 rounded-xl">
-                                    {{ announcement.content}}
+                                    <div class="relative flex mt-3 bg-gray-100 flex-grow break-all items-center rounded-lg py-2 px-3 w-full">
+                                        <p class="relative flex">
+                                            {{ announcement.content}}
+                                        </p>
                                     </div>
                                 </div>
                                 {% endfor %}
