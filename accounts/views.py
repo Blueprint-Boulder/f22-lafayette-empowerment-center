@@ -37,7 +37,7 @@ class CreateAccount(CreateView):
     model = LECUser
     form_class = LECUserCreationForm
     template_name = "accounts/create_account.html"
-    success_url = reverse_lazy("accounts:account_created")
+    success_url = reverse_lazy("accounts:login")
 
 
 def account_created(request):
