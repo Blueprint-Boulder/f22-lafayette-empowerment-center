@@ -53,34 +53,36 @@
             <h1 class="relative flex font-semibold text-2xl pb-5">
                 Enrolled Programs
             </h1>
-            <table class="relative mt-5 flex rounded-lg h-[75%] w-full bg-gray-200 flex-col items-center space-y-3">
-                <thead class="relative rounded-t-lg flex flex-row bg-gray-300 h-16 w-full items-center pr-20">
-                    <tr class="flex-row relative flex items-center justify-around w-full space-x-5 whitespace-nowrap">
-                        <th class="relative flex font-normal">Program Name</th>
-                        <th class="relative flex font-normal">Date program starts</th>
-                        <th class="relative flex font-normal">Date program ends</th>
-                        <th class="relative flex font-normal"></th>
-                    </tr>
-                </thead>
-                <tbody class="relative flex w-full flex-col pb-3 items-center">
-                    {% for program in child.programs.all %}
-                    <tr class="relative flex w-[97%] flex-row items-center justify-around space-x-10 whitespace-nowrap h-16 rounded-3xl bg-gray-300">
-                        <td class="relative flex -translate-x-7">
-                            {{ program.name }}
-                        </td>
-                        <td class="relative flex -translate-x-12">
-                            {{ program.program_starts }}
-                        </td>
-                        <td class="relative flex -translate-x-12">
-                            {{ program.program_ends }}
-                        </td>
-                        <td class="relative flex translate-x-10 text-gray-400 text-xl">
-                            <a href="{% url "guardian:view_program" program_pk=program.pk %}">></a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="relative flex overflow-x-auto h-[75%] w-full rounded-lg bg-gray-200">
+                <table class="relative w-full table-auto text-left">
+                    <thead class="relative bg-gray-200">
+                        <tr class="relative algin-start h-16">
+                            <th class="relative px-8 font-normal">Program Name</th>
+                            <th class="relative px-8 font-normal">Program Start Date</th>
+                            <th class="relative px-8 font-normal">Program End Date</th>
+                            <th class="relative px-8 font-normal"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="relative">
+                        {% for program in child.programs.all %}
+                        <tr class="relative border-b border-gray-200 h-16 bg-gray-100">
+                            <td class="relative px-8">
+                                {{ program.name }}
+                            </td>
+                            <td class="relative px-8">
+                                {{ program.program_starts }}
+                            </td>
+                            <td class="relative px-8">
+                                {{ program.program_ends }}
+                            </td>
+                            <td class="relative px-8">
+                                <a href="{% url "guardian:view_program" program_pk=program.pk %}" class="relative text-base text-blue-400 underline hover:text-blue-500 hover:opacity-90 transition-all duration-100 ease-out">View More</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 {% endblock %}d

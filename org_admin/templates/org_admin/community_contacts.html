@@ -1,78 +1,72 @@
 {% extends "base.html" %}
 {% block title %}Community contacts{% endblock %}
 {% block content %}
-{% for contact in contacts %}
-{% empty %}
-    No community contacts added yet.
-{% endfor %}
-
     <div class="relative w-full h-full overflow-y-auto">
         <div class="relative flex justify-center flex-col items-center bg-white pt-5">
             <div class="relative flex h-[95%] w-[95%] flex-col justify-start items-start space-y-3">
-                <div class="relative flex mt-5 w-full h-[5%] flex-row justify-between items-center">
+
+                <div class="relative flex mt-5 w-full h-[5%] flex-row justify-between items-center space-x-8">
                     <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Community Contacts</h1>
                     <div class="relative flex flex-row space-x-10">
-                        <div class="relative flex ring-1 ring-gray-300 w-40 h-10 rounded-xl flex-row justify-between px-5 items-center">
-                            <div class="text-gray-400">
-                                Sort by...
-                            </div>
-                            <div class="text-2xl text-gray-500 mb-3">
-                                &#8964;
-                            </div>
-                        </div>
-                        <div class="relative flex ring-1 ring-gray-300 w-40 h-10 rounded-xl flex-row justify-between px-5 items-center">
-                            <div class="text-gray-400">
-                                Ascending
-                            </div>
-                            <div class="text-2xl text-gray-500 mb-3">
-                                &#8964;
-                            </div>
-                        </div>
-                        <div class="relative flex ring-1 ring-gray-300 w-40 h-10 rounded-xl flex-row justify-between px-5 items-center">
-                            <div class="text-gray-400">
-                                Organization
-                            </div>
-                            <div class="text-2xl text-gray-500 mb-3">
-                                &#8964;
-                            </div>
-                        </div>
-                        <input class="relative flex ring-1 text-gray-500 ring-gray-300 w-40 h-10 rounded-xl flex-row justify-start px-5 items-center" placeholder="Search..." />
-                        </input>
+                        <form class="relative flex flex-row space-x-8 items-center " method="GET">
+                                <select class="relative flex ring-1 bg-white ring-gray-300 w-40 h-10 rounded-xl flex-row justify-between px-5 items-center" name="roster-sort-by">
+                                    <option value="" disabled>Sort by...</option>
+                                    <option value="name" {% if sort_by == "name" %}selected{% endif %}>Name</option>
+                                    <option value="email" {% if sort_by == "email" %}selected{% endif %}>Email</option>
+                                    <option value="phone_number" {% if sort_by == "phone_number" %}selected{% endif %}>Phone Number</option>
+                                </select>
+                                <select class="relative flex ring-1 bg-white ring-gray-300 w-40 h-10 rounded-xl flex-row justify-between px-5 items-center" name="roster-asc">
+                                    <option value="" disabled>Order as...</option>
+                                    <option value="ascending" {% if ascending %}selected{% endif %}>Ascending</option>
+                                    <option value="descending" {% if not ascending %}selected{% endif %}>Descending</option>
+                                </select>
+                            <input value="{{ search }}" placeholder="Search by name" name="roster-search" class="relative flex ring-1 text-gray-500 ring-gray-300 w-40 h-10 rounded-xl flex-row justify-start px-3 items-center"/>
+                            <button class="text-white bg-sky-400 relative font-semibold flex rounded-2xl h-10 w-32 third-color flex-col justify-center items-center cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out" type="submit">View results</button>
+                            <a class="relative flex truncate whitespace-nowrap text-blue-400 cursor-pointer hover:text-blue-500 hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out " href="{{ request.path }}">Reset filters</a>
+                        </form>
                     </div>
                 </div>
-                <table class="relative mt-5 flex rounded-lg h-[75%] w-full bg-gray-200 flex-col items-center space-y-3">
-                    <thead class="relative rounded-t-lg flex flex-row bg-gray-300 h-16 w-full items-center pr-20">
-                        <tr class="flex-row relative flex items-center justify-around w-full space-x-5 whitespace-nowrap">
-                            <th class="relative flex font-normal">Name</th>
-                            <th class="relative flex font-normal">Description</th>
-                            <th class="relative flex font-normal">Email</th>
-                            <th class="relative flex font-normal">Phone Number</th>
-                            <th class="relative flex font-normal">Other Info</th>
-                        </tr>
-                    </thead>
-                    <tbody class="relative flex w-full flex-col items-center space-y-3 pb-3">
-                        {% for contact in contacts %}
-                        <tr class="relative flex w-[97%] flex-row items-center justify-around space-x-10 whitespace-nowrap h-16 rounded-3xl bg-gray-300">
-                            <td class="relative flex">
-                                {{ contact.name }}
-                            </td>
-                            <td class="relative flex">
-                                {{ contact.description }}
-                            </td>
-                            <td class="relative flex">
-                                {{ contact.email|default:"None" }}
-                            </td>
-                            <td class="relative flex">
-                                {{ contact.phone_number|default:"None" }}
-                            </td>
-                            <td class="relative flex">
-                                {{ contact.other_contact_info|default:"None" }}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            <a href="{% url "org_admin:add_community_contact" %}" class="text-blue-600">Add community contact</a>
+                <div class="relative flex overflow-x-auto h-[75%] w-full rounded-lg bg-gray-200">
+                    <table class="relative w-full table-auto text-left">
+                        <thead class="relative bg-gray-200">
+                            <tr class="relative algin-start h-16">
+                                <th class="relative px-8 font-normal">Name</th>
+                                <th class="relative px-8 font-normal">Description</th>
+                                <th class="relative px-8 font-normal">Email</th>
+                                <th class="relative px-8 font-normal">Phone Number</th>
+                                <th class="relative px-8 font-normal">Other Info</th>
+                                <th class="relative px-8 font-normal"></th>
+                            </tr>
+                        </thead>
+                        <div class="relative">
+                            <tbody class="relative">
+                                {% for contact in contacts %}
+                                <tr class="relative border-b border-gray-200 h-16 bg-gray-100">
+                                    <td class="px-8 relative">
+                                        {{ contact.name }}
+                                    </td>
+                                    <td class="px-8 relative">
+                                        {{ contact.description }}
+                                    </td>
+                                    <td class="px-8 relative">
+                                        {{ contact.email|default:"None" }}
+                                    </td>
+                                    <td class="px-8 relative">
+                                        {{ contact.phone_number|default:"None" }}
+                                    </td>
+                                    <td class="px-8 relative">
+                                        {{ contact.other_contact_info|default:"None" }}
+                                    </td>
+                                    <td class="relative px-8 text-gray-400 text-xl">
+                                        <a href="{% url "org_admin:view_community_contact" contact_pk=contact.pk %}" class="relative text-base text-blue-400 underline hover:text-blue-500 hover:opacity-90 transition-all duration-100 ease-out">View More</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </div>
+                    </table>
+                </div>
+            <a href="{% url "org_admin:add_community_contact" %}" class="text-white bg-sky-400 relative font-semibold flex rounded-2xl h-12 w-48 third-color flex-col justify-center items-center cursor-pointer hover:bg-sky-500 transition-all duration-100 ease-out" class="secondary_button">Add Contact</a>
             </div>
         </div>
     </div>

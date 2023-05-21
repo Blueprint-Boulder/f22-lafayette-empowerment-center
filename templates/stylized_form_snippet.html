@@ -1,5 +1,5 @@
 {% load custom_tags %}
-<form method="{{ method }}" enctype="multipart/form-data" class="relative space-y-5 pb-12 flex-col overflow-y-auto">
+<form method="{{ method }}" enctype="multipart/form-data" class="relative space-y-5 pb-12 flex-col overflow-visible">
     {% csrf_token %}
     {% for field in form %}
         <div class="relative flex space-y-2 flex-col">

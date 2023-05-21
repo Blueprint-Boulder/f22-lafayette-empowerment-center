@@ -11,7 +11,7 @@
                         <a class="relative flex  text-black hover:bg-gray-200 bg-gray-200" href="{% url "org_admin:view_program" program_pk=program.pk %}">{{program.name}}</a>
                     </div>
                     {% empty %}
-                        No programs are available yet.
+                        No programs available.
                     {% endfor %}
                 </ul>
             </div>
@@ -28,8 +28,6 @@
                     <a class="text-white text-lg underline cursor-pointer hover:opacity-70 transition-all duration-100 ease-out" href="{% url "org_admin:view_program" program_pk=program.pk %}">View More</a>
                 </div>
             </div>
-            {% empty %}
-                No programs are available yet.
             {% endfor %}
             <a class="flex relative h-52 w-60 rounded-2xl items-center text-white justify-center flex-col m-3 bg-sky-400 text-2xl hover:opacity-90" href="{% url "org_admin:add_program" %}">+</a><br>
         </div>

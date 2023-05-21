@@ -31,27 +31,11 @@
                         <h1 class="relative flex text-3xl text-black font-semibold">{{ program.name }}</h1>
                         <div class="relative flex space-y-5 flex-col">
                             <div class="relative flex space-x-2">
-                                <text class="text-black font-semibold text-lg">Grade Range: </text>
-                                <div class="text-black text-lg">TBA</div>
-                            </div>
-                            <div class="relative flex space-x-2">
                                 <text class="text-black font-semibold text-lg">Dates: </text>
                                 <div class="text-black text-lg">{{ program.program_starts }} - {{ program.program_ends }}</div>
                             </div>
-                            <div class="relative flex space-x-2">
-                                <text class="text-black font-semibold text-lg">Time: </text>
-                                <div class="text-black text-lg">TBA</div>
-                            </div>
-                            <div class="relative flex">
-<<<<<<< HEAD
-                                <text class="text-black underline italic text-lg">
-=======
-                                <text class="text-black text-lg">Dates:
-                                starts {{ program.program_starts }}; ends {{ program.program_ends }}</text>
-                            </div>
                             <div class="relative flex">
                                 <text class="text-black text-lg">
->>>>>>> jacob
                                     {% if program.registration_opens <= now and now <= program.registration_closes %}
                                         Registration for this program will close on {{ program.registration_closes }}.
                                     {% elif program.registration_opens > now %}
@@ -76,21 +60,19 @@
                             <a class="text-white text-mg relative font-semibold flex rounded-2xl h-12 w-48 bg-sky-400 flex-col justify-center items-center cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out" href="{% url "guardian:register_for_program" program_pk=program.pk %}">Register Children</a>
                         {% endif %}
                     </div>
+                    
                     <div class="select2-dropdown relative flex h-full aspect-square bg-blue-900 justify-center items-center rounded-lg">
-                        <text class="text-white">img</text>
+                        <img class="bg-blue-900 rounded-2xl w-full h-full absolute full object-cover" src="{{ program.image.url }}"/>
                     </div>
                 </div>
                 <div class="relative flex w-full flex-grow flex-col space-y-5 py-5">
                     <text class="text-black font-semibold text-lg">Desciption: </text>
                     <p class="relative flex text-black">{{ program.description }}</p>
                 </div>
-<<<<<<< HEAD
-                <div class="relative flex flex-col w-[90%] space-y-8">
-=======
                 <div class="relative flex flex-col w-[90%] space-y-3 mt-3">
                     <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Surveys</h1>
                     {% for survey in program.surveys.all %}
-                        <div class="relative flex flex-row space-x-10 p-3 bg-gray-200 w-96 h-10 items-center rounded-xl justify-between">
+                        <div class="relative flex flex-row space-x-10 p-3 bg-gray-200 w-[50%] h-10 items-center rounded-xl justify-between">
                                 <div> Name: {{ survey.name }} </div>
                             {% if not user|has_taken_survey:survey %}
                                 <a class="text-blue-400 underline hover:opacity-90 transition-all duration-100 ease-out" href="{% url "guardian:take_survey" survey_pk=survey.pk %}">Take survey</a>
@@ -103,7 +85,6 @@
                     {% endfor %}
                 </div>
                 <div class="relative flex flex-col w-[90%] space-y-8 mt-3">
->>>>>>> jacob
                     <h1 class="relative flex text-2xl font-semibold whitespace-nowrap">Announcements</h1>
                     <div class="space-y-12">
                         {% for announcement in program.announcements.all|dictsortreversed:"time_sent" %}

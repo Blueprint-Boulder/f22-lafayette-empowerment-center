@@ -85,6 +85,10 @@ def view_child(request, child_pk):
     return render(request, "org_admin/view_child.html", {'child': Student.objects.get(pk=child_pk)})
 
 @user_passes_test(is_org_admin)
+def view_community_contact(request, contact_pk):
+    return render(request, "org_admin/view_community_contact.html", {'contact': CommunityContact.objects.get(pk=contact_pk)})
+
+@user_passes_test(is_org_admin)
 def create_survey(request, program_pk):
     if request.method == "GET":
         return render(request, "org_admin/create_survey.html", {'program': Program.objects.get(pk=program_pk)})

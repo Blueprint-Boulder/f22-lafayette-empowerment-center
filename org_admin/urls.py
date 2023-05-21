@@ -20,5 +20,6 @@ urlpatterns = [
     path('surveys/<int:program_pk>/<int:survey_pk>/responses/', views.survey_responses, name="view_survey_responses"),
     path('surveys/<int:program_pk>/<int:survey_pk>/<int:response_pk>/response', views.survey_response, name="survey_response"),
     path('contacts/', views.community_contacts, name="community_contacts"),
-    path('contacts/add/', views.AddCommunityContact.as_view(), name="add_community_contact")
+    path('contacts/add/', views.AddCommunityContact.as_view(), name="add_community_contact"),
+    path('contacts/<int:contact_pk>/', views.view_community_contact, name="view_community_contact")
 ]
