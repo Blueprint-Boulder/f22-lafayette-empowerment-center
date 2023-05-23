@@ -124,7 +124,12 @@ def survey_response(request, survey_pk, response_pk, program_pk):
 
 @user_passes_test(is_org_admin)
 def community_contacts(request):
-    return render(request, "org_admin/community_contacts.html", {'contacts': CommunityContact.objects.all()})
+    return render(request, "org_admin/community_contacts.html",
+                  {"sort_by": request.GET.get("contacts-sort-by", default="name") or "name",
+                   "ascending": request.GET.get("contacts-asc", default="ascending") == "ascending",
+                   "search": request.GET.get("contacts-search", default=""),
+                   "contacts": CommunityContact.objects.filter(name__contains=request.GET.get("contacts-search", default=""))})
+
 
 class AddCommunityContact(CreateView):
     model = CommunityContact
