@@ -2,43 +2,45 @@
 {% block content %}
 <div class="relative flex w-screen h-screen max-w-screen flex-col overflow-y-auto"> 
     <div class="relative flex p-10 flex-col space-y-5 justify-between">
-        <div class="relative flex flex-row justify-between">
-            <h1 class="relative flex text-3xl pb-5 font-semibold">
-                {{ contact.name }}
-            </h1>
-        </div>
-        <div class="relative flex flex-row flex-wrap w-full my-5">
-            <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-transparent space-y-1">
-                <h1 class="relative flex text-black text-l font-semibold">
-                    Description: 
+        <div class="relative flex justify-center flex-col bg-gray-50 border-gray-300  border py-8 px-8 rounded-xl">
+            <div class="relative flex flex-row justify-between">
+                <h1 class="relative flex text-3xl pb-5 font-semibold">
+                    {{ contact.name }}
                 </h1>
-                <p class="flex relative text-black text-l">
-                    {{ contact.description }}
-                </p>
             </div>
-            <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-transparent space-y-1">
-                <h1 class="relative flex text-black text-l font-semibold">
-                    Email: 
-                </h1>
-                <p class="flex relative text-black text-l">
-                    {{ contact.email }}
-                </p>
-            </div>
-            <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-transparent space-y-1">
-                <h1 class="relative flex text-black text-l font-semibold">
-                    Phone Number: 
-                </h1>
-                <p class="flex relative text-black text-l">
-                    {{ contact.phone_number }}
-                </p>
-            </div>
-            <div class="flex relative h-52 w-[300px] rounded-2xl flex-col bg-transparent space-y-1">
-                <h1 class="relative flex text-black text-l font-semibold">
-                    Additional Info: 
-                </h1>
-                <p class="flex relative text-black text-l">
-                    {{ contact.other_contact_info}}
-                </p>
+            <div class="relative flex flex-row flex-wrap w-full my-5">
+                <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-transparent space-y-1">
+                    <h1 class="relative flex text-black text-l font-semibold">
+                        Description: 
+                    </h1>
+                    <p class="flex relative text-black text-l">
+                        {{ contact.description }}
+                    </p>
+                </div>
+                <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-transparent space-y-1">
+                    <h1 class="relative flex text-black text-l font-semibold">
+                        Email: 
+                    </h1>
+                    <p class="flex relative text-black text-l">
+                        {{ contact.email }}
+                    </p>
+                </div>
+                <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-transparent space-y-1">
+                    <h1 class="relative flex text-black text-l font-semibold">
+                        Phone Number: 
+                    </h1>
+                    <p class="flex relative text-black text-l">
+                        {{ contact.phone_number }}
+                    </p>
+                </div>
+                <div class="flex relative h-52 w-[300px] rounded-2xl flex-col bg-transparent space-y-1">
+                    <h1 class="relative flex text-black text-l font-semibold">
+                        Additional Info: 
+                    </h1>
+                    <p class="flex relative text-black text-l">
+                        {{ contact.other_contact_info}}
+                    </p>
+                </div>
             </div>
         </div>
     </div>

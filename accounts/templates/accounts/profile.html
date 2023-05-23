@@ -3,6 +3,7 @@
 {% block content %}
 <div class="relative flex w-screen h-screen max-w-screen flex-col overflow-y-auto"> 
     <div class="relative flex p-10 flex-col w-full lspace-y-5 justify-between">
+        <div class="relative flex justify-center flex-col bg-gray-50 border-gray-300  border py-8 px-8 rounded-xl">
         <div class="relative flex flex-row  w-full justify-between">
             <h1 class="relative flex text-3xl pb-5 font-semibold">
                 {{ user.first_name }} {{ user.last_name }}
@@ -56,7 +57,7 @@
             </h1>
             <a class="relative flex text-base text-blue-400 underline hover:text-blue-500 hover:opacity-90 transition-all duration-100 ease-out" href="{% url "guardian:children" %}">Manage children</a>
         </div>
-        <div class="relative flex overflow-x-auto h-[75%] w-full rounded-lg bg-gray-200 flex-col">
+        <div class="relative flex overflow-x-auto h-[75%] w-full rounded-lg bg-gray-200 border border-gray-300 flex-col">
             <table class="relative w-full table-auto text-left flex flex-col">
                 <thead class="relative bg-gray-200">
                     <tr class="relative algin-start h-16">
@@ -66,7 +67,7 @@
                 </thead>
                 <tbody class="relative w-full flex flex-col">
                     {% for child in user.children.all %}
-                    <tr class="relative flex justify-between items-center w-full border-b border-gray-200 h-16 bg-gray-100">
+                    <tr class="relative flex justify-between items-center w-full border-b border-gray-300 h-16 bg-gray-100">
                         <td class="relative px-8">
                             {{ child.name }}
                         </td>
@@ -79,6 +80,7 @@
             </table>
         </div>
         {% endif %}
+    </div>
     </div>
 </div>
 
