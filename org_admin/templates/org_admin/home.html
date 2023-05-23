@@ -19,28 +19,25 @@
 
             <div class="flex flex-col w-full h-[75%]">
                 <div class = "flex flex-col h-48 cursor-pointer">
-                    <div class = "mb-4 rounded-lg border-2 border-gray-500 hover:bg-gray-200 h-16 flex items-center justify-between bg-gray-100">
-                        <span class = "text-2xl text-black h-fit ml-4"><a href="{% url "org_admin:programs" %}">Browse programs</a></span>
+                    <a href="{% url "org_admin:programs" %}" class = "mb-4 rounded-lg border-2 border-gray-500 hover:bg-gray-200 h-16 flex items-center justify-between bg-gray-100">
+                        <span class = "text-2xl text-black h-fit ml-4">Browse programs</span>
                         <div class="text-2xl flex items-center mr-4 justify-center">
                             <i class="text-sky-400">-></i>
                         </div>
-                    </div>
-                    <div class = "mb-4 rounded-lg border-2 border-gray-500 hover:bg-gray-200 h-16 flex items-center justify-between bg-gray-100">
-                        <span class = "text-2xl text-black h-fit ml-4"><a href="{% url "org_admin:community_contacts" %}">View Community Contacts</a></span>
+                    </a>
+                    <a href="{% url "org_admin:community_contacts" %}" class = "mb-4 rounded-lg border-2 border-gray-500 hover:bg-gray-200 h-16 flex items-center justify-between bg-gray-100">
+                        <span class = "text-2xl text-black h-fit ml-4">View Community Contacts</span>
                         <div class="text-2xl flex items-center mr-4 justify-center">
                             <i class="text-sky-400">-></i>
                         </div>
-                    </div>
-                    <div class = "mb-4 rounded-lg border-2 border-gray-500 hover:bg-gray-200 h-16 flex items-center justify-between bg-gray-100">
-                        <span class = "text-2xl text-black h-fit ml-4"><a href="{% url "org_admin:view_students" %}">View Students</a></span>
+                    </a>
+                    <a  href="{% url "org_admin:view_students" %}" class = "mb-4 rounded-lg border-2 border-gray-500 hover:bg-gray-200 h-16 flex items-center justify-between bg-gray-100">
+                        <span class = "text-2xl text-black h-fit ml-4">View Students</span>
                         <div class="text-2xl flex items-center mr-4 justify-center">
                             <i class="text-sky-400">-></i>
                         </div>
-                    </div>
+                    </a>
                 </div>
-
-
-
             </div>
         </div>
         <table class="relative my-10 flex rounded-lg h-full w-full bg-gray-100 flex-col items-center space-y-3">

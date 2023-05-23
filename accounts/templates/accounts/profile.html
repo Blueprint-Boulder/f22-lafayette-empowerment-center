@@ -1,27 +1,88 @@
 {% extends "base.html" %}
 {% block title %}Title{% endblock %}
 {% block content %}
+<div class="relative flex w-screen h-screen max-w-screen flex-col overflow-y-auto"> 
+    <div class="relative flex p-10 flex-col w-full lspace-y-5 justify-between">
+        <div class="relative flex flex-row  w-full justify-between">
+            <h1 class="relative flex text-3xl pb-5 font-semibold">
+                {{ user.first_name }} {{ user.last_name }}
+            </h1>
+            <a class="text-blue-400 -translate-y-1 text-lg bg-transparent underline cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out" href="{% url "accounts:edit_profile" %}">Edit Info</a>
+        </div>
+        <div class="relative flex flex-row flex-wrap w-full my-5">
+            <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-transparent space-y-1">
+                <h1 class="relative flex text-black text-l font-semibold">
+                    Account type:
+                </h1>
+                <p class="flex relative text-black text-l">
+                    {{ user.account_type }}
+                </p>
+            </div>
+            <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-transparent space-y-1">
+                <h1 class="relative flex text-black text-l font-semibold">
+                    Username:
+                </h1>
+                <p class="flex relative text-black text-l">
+                    {{ user.username }}
+                </p>
+            </div>
+            <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-transparent space-y-1">
+                <h1 class="relative flex text-black text-l font-semibold">
+                    Email:
+                </h1>
+                <p class="flex relative text-black text-l">
+                    {{ user.email }}
+                </p>
+            </div>
+            <div class="flex relative h-52 w-[300px] rounded-2xl flex-col bg-transparent space-y-1">
+                <h1 class="relative flex text-black text-l font-semibold">
+                    Admin Request Status:
+                </h1>
+                <p class="flex relative text-black text-l break-all">
+                    {% if user.requesting_org_admin %}
+                        Requesting to have an LEC admin account; waiting on response)
+                    {% elif user.requesting_site_admin %}
+                        Requesting to have a site admin account; waiting on response)
+                    {% else %}
+                        No active requests
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        {% if user.account_type == account_types.GUARDIAN %}
+        <div class="relative flex flex-row  w-full justify-between">
+            <h1 class="relative flex font-semibold text-2xl pb-5">
+                Children
+            </h1>
+            <a class="relative flex text-base text-blue-400 underline hover:text-blue-500 hover:opacity-90 transition-all duration-100 ease-out" href="{% url "guardian:children" %}">Manage children</a>
+        </div>
+        <div class="relative flex overflow-x-auto h-[75%] w-full rounded-lg bg-gray-200 flex-col">
+            <table class="relative w-full table-auto text-left flex flex-col">
+                <thead class="relative bg-gray-200">
+                    <tr class="relative algin-start h-16">
+                        <th class="relative px-8 font-normal">Child Name</th>
+                        <th class="relative px-8 font-normal"></th>
+                    </tr>
+                </thead>
+                <tbody class="relative w-full flex flex-col">
+                    {% for child in user.children.all %}
+                    <tr class="relative flex justify-between items-center w-full border-b border-gray-200 h-16 bg-gray-100">
+                        <td class="relative px-8">
+                            {{ child.name }}
+                        </td>
+                        <td class="relative px-8">
+                            <a href="{% url "guardian:view_child" child_pk=child.pk %}" class="relative text-base text-blue-400 underline hover:text-blue-500 hover:opacity-90 transition-all duration-100 ease-out">View More</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</div>
 
-[<a href="{% url "accounts:edit_profile" %}">Edit</a>]<br>
-Username: {{ user.username }}<br>
-Name: {{ user.first_name }} {{ user.last_name }}<br>
-Account type: {{ user.account_type }}
-{% if user.requesting_org_admin %}
-    (requesting to have an LEC admin account; waiting on response)
-{% elif user.requesting_site_admin %}
-    (requesting to have a site admin account; waiting on response)
-{% endif %}
-<br>
-Email: {{ user.email }}<br>
 
-{% if user.account_type == account_types.GUARDIAN %}
-    Children:<br>
-        {% for child in user.children.all %}
-            {{ child.name }}<br>
-        {% empty %}
-            You haven't added any children yet.
-        {% endfor %}
-        <a href="{% url "guardian:children" %}">Manage children</a>
-{% endif %}
+
 
 {% endblock %}
