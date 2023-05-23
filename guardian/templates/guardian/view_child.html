@@ -2,86 +2,88 @@
 {% block content %}
     <div class="relative flex w-screen h-screen max-w-screen flex-col overflow-y-auto"> 
         <div class="relative flex p-10 flex-col space-y-5 justify-between">
-            <div class="relative flex flex-row justify-between">
-                <h1 class="relative flex text-3xl pb-5 font-semibold">
-                    {{ child.name }}
+            <div class="relative flex justify-center flex-col bg-gray-50 border-gray-300  border py-8 px-8 rounded-xl">
+                <div class="relative flex flex-row justify-between">
+                    <h1 class="relative flex text-3xl pb-5 font-semibold">
+                        {{ child.name }}
+                    </h1>
+                    <a class="text-blue-500 -translate-y-1 text-lg bg-transparent underline cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out" href="{% url "guardian:edit_child" pk=child.pk %}">Edit Info</a>
+                </div>
+                <div class="relative flex flex-row flex-wrap w-full my-5">
+                    <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-transparent space-y-1">
+                        <h1 class="relative flex text-black text-l font-semibold">
+                            Pronouns: 
+                        </h1>
+                        <p class="flex relative text-black text-l">
+                            {{ child.pronouns }}
+                        </p>
+                    </div>
+                    <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-transparent space-y-1">
+                        <h1 class="relative flex text-black text-l font-semibold">
+                            Age: 
+                        </h1>
+                        <p class="flex relative text-black text-l">
+                            {{ child.age }}
+                        </p>
+                    </div>
+                    <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-transparent space-y-1">
+                        <h1 class="relative flex text-black text-l font-semibold">
+                            Grade: 
+                        </h1>
+                        <p class="flex relative text-black text-l">
+                            {{ child.grade }}
+                        </p>
+                    </div>
+                    <div class="flex relative h-52 min-w-[300px] rounded-2xl flex-col bg-transparent space-y-1">
+                        <h1 class="relative flex text-black text-l font-semibold">
+                            Allergies: 
+                        </h1>
+                        <p class="flex relative text-black text-l break-all">
+                            {{ child.allergies }}
+                        </p>
+                    </div>
+                    <div class="flex relative h-52 min-w-[300px] rounded-2xl flex-col bg-transparent space-y-1">
+                        <h1 class="relative flex text-black text-l font-semibold">
+                            Additional Info: 
+                        </h1>
+                        <p class="flex relative text-black text-l break-all">
+                            {{ child.additional_info }}<br>
+                        </p>
+                    </div>
+                </div>
+                <h1 class="relative flex font-semibold text-2xl pb-5">
+                    Enrolled Programs
                 </h1>
-                <a class="text-blue-500 -translate-y-1 text-lg bg-transparent underline cursor-pointer hover:scale-110 hover:opacity-90 transition-all duration-100 ease-out" href="{% url "guardian:edit_child" pk=child.pk %}">Edit Info</a>
-            </div>
-            <div class="relative flex flex-row flex-wrap w-full my-5">
-                <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-transparent space-y-1">
-                    <h1 class="relative flex text-black text-l font-semibold">
-                        Pronouns: 
-                    </h1>
-                    <p class="flex relative text-black text-l">
-                        {{ child.pronouns }}
-                    </p>
+                <div class="relative flex overflow-x-auto h-[75%] w-full rounded-lg bg-gray-200 border border-gray-300">
+                    <table class="relative w-full table-auto text-left">
+                        <thead class="relative bg-gray-200">
+                            <tr class="relative algin-start h-16">
+                                <th class="relative px-8 font-normal">Program Name</th>
+                                <th class="relative px-8 font-normal">Program Start Date</th>
+                                <th class="relative px-8 font-normal">Program End Date</th>
+                                <th class="relative px-8 font-normal"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="relative">
+                            {% for program in child.programs.all %}
+                            <tr class="relative border-b border-gray-300 h-16 bg-gray-100">
+                                <td class="relative px-8">
+                                    {{ program.name }}
+                                </td>
+                                <td class="relative px-8">
+                                    {{ program.program_starts }}
+                                </td>
+                                <td class="relative px-8">
+                                    {{ program.program_ends }}
+                                </td>
+                                <td class="relative px-8">
+                                    <a href="{% url "guardian:view_program" program_pk=program.pk %}" class="relative text-base text-blue-400 underline hover:text-blue-500 hover:opacity-90 transition-all duration-100 ease-out">View More</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
-                <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-transparent space-y-1">
-                    <h1 class="relative flex text-black text-l font-semibold">
-                        Age: 
-                    </h1>
-                    <p class="flex relative text-black text-l">
-                        {{ child.age }}
-                    </p>
-                </div>
-                <div class="flex relative h-52 w-60 rounded-2xl flex-col bg-transparent space-y-1">
-                    <h1 class="relative flex text-black text-l font-semibold">
-                        Grade: 
-                    </h1>
-                    <p class="flex relative text-black text-l">
-                        {{ child.grade }}
-                    </p>
-                </div>
-                <div class="flex relative h-52 w-[300px] rounded-2xl flex-col bg-transparent space-y-1">
-                    <h1 class="relative flex text-black text-l font-semibold">
-                        Allergies: 
-                    </h1>
-                    <p class="flex relative text-black text-l break-all">
-                        {{ child.allergies }}
-                    </p>
-                </div>
-                <div class="flex relative h-52 w-[300px] rounded-2xl flex-col bg-transparent space-y-1">
-                    <h1 class="relative flex text-black text-l font-semibold">
-                        Additional Info: 
-                    </h1>
-                    <p class="flex relative text-black text-l break-all">
-                        {{ child.additional_info }}<br>
-                    </p>
-                </div>
-            </div>
-            <h1 class="relative flex font-semibold text-2xl pb-5">
-                Enrolled Programs
-            </h1>
-            <div class="relative flex overflow-x-auto h-[75%] w-full rounded-lg bg-gray-200">
-                <table class="relative w-full table-auto text-left">
-                    <thead class="relative bg-gray-200">
-                        <tr class="relative algin-start h-16">
-                            <th class="relative px-8 font-normal">Program Name</th>
-                            <th class="relative px-8 font-normal">Program Start Date</th>
-                            <th class="relative px-8 font-normal">Program End Date</th>
-                            <th class="relative px-8 font-normal"></th>
-                        </tr>
-                    </thead>
-                    <tbody class="relative">
-                        {% for program in child.programs.all %}
-                        <tr class="relative border-b border-gray-200 h-16 bg-gray-100">
-                            <td class="relative px-8">
-                                {{ program.name }}
-                            </td>
-                            <td class="relative px-8">
-                                {{ program.program_starts }}
-                            </td>
-                            <td class="relative px-8">
-                                {{ program.program_ends }}
-                            </td>
-                            <td class="relative px-8">
-                                <a href="{% url "guardian:view_program" program_pk=program.pk %}" class="relative text-base text-blue-400 underline hover:text-blue-500 hover:opacity-90 transition-all duration-100 ease-out">View More</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>

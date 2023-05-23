@@ -1,11 +1,13 @@
 <!--For pages whose entire content is a single form-->
 {% block content %}
     <div class="relative flex w-screen h-screen max-w-screen flex-col">
-        <div class="relative flex p-10 flex-col ">
-            <h1 class="relative flex text-3xl font-semibold">
-                {{ title }}
-            </h1>
-            {% include "stylized_form_snippet.html" with form=form method=method submit_text=submit_text %}
+        <div class="relative flex p-10 flex-col justify-center items-center">
+            <div class="relative flex justify-center flex-col bg-gray-50 border-gray-300 border py-8 px-8 rounded-xl">
+                <h1 class="relative flex text-3xl font-semibold">
+                    {{ title }}
+                </h1>
+                {% include "stylized_form_snippet.html" with form=form method=method submit_text=submit_text %}
+            </div>
         </div>
     </div>
 {% endblock %}
