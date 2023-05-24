@@ -76,6 +76,9 @@
                             {{ program.program_ends }}
                         </td>
                         <td class="relative px-8">
+                            <a href="{% url "org_admin:unregister_student" child_pk=child.pk program_pk=program.pk redirect_to=request.path %}" class="relative text-base text-red-400 underline hover:text-blue-500 hover:opacity-90 transition-all duration-100 ease-out">Unregister</a>
+                        </td>
+                        <td class="relative px-8">
                             <a href="{% url "org_admin:view_program" program_pk=program.pk %}" class="relative text-base text-blue-400 underline hover:text-blue-500 hover:opacity-90 transition-all duration-100 ease-out">View More</a>
                         </td>
                     </tr>
